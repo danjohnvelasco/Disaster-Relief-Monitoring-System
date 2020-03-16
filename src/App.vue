@@ -1,4 +1,4 @@
-<template>
+  <template>
   <v-app>
     <Navbar/>
     <v-content>
