@@ -1,32 +1,78 @@
 <template>
 
-  <v-card>
-    
-    <div id="gen_info">
-    <v-card-title>{{disaster.title}}</v-card-title>
-    <v-card-subtitle>Lead School: De La Salle University - Manila</v-card-subtitle>
-    <v-card-text>Disaster Type: {{disaster.type}}</v-card-text>
-    <v-card-text>Location: {{disaster.location}}</v-card-text>
-    <v-card-text>{{disaster.description}}</v-card-text>
-    </div>
+  <v-app>
 
-    <div id="stats">
-    
-    </div>
-    
-    <div id="call_for_donations">
-    
-    </div>
+    <v-content>
 
-    <div id="photos">
-    
-    </div>
+      <v-container id="gen_info">
+        <h1 class="display-3 text-center">{{disaster.title}}</h1>
+        <v-card>
+          <v-card-title>General Information</v-card-title>
+          <table>
+            <tr>
+              <td class="text-right label">Lead School:</td> <td>De La Salle University - Manila</td>
+            </tr>
+            <tr>
+              <td class="text-right label">Disaster Type:</td> <td>{{disaster.type}}</td>
+            </tr>
+            <tr>
+              <td class="text-right label">Location:</td> <td>{{disaster.location}}</td>
+            </tr>
+            <tr>
+              <td class="text-right label">Description:</td> <td>{{disaster.description}}</td>
+            </tr>
+            <tr>
+              <td class="text-right label">Additional Remarks:</td> <td>{{disaster.remarks}}</td>
+            </tr>
+          </table>
+        </v-card>
+      </v-container>
 
-    <div id="graphs">
-    
-    </div>
+      <v-container id="stats">
 
-  </v-card>
+
+        <v-card>
+        <v-card-title>Statistics</v-card-title>
+        
+        </v-card>
+
+        <v-col>
+          <v-row
+          :align="center"
+          justify="center"
+          style="height: 200px;">
+          
+            <v-card class="stats_cards">
+              <v-card-title>Individuals Affected</v-card-title>
+              <v-card-text>1756</v-card-text>
+            </v-card>
+
+            <v-card class="stats_cards">
+              <v-card-title>Families Affected</v-card-title>
+              <v-card-text>1756</v-card-text>
+            </v-card>
+          </v-row>
+      
+        </v-col>
+
+      </v-container>
+
+
+      <v-container id="call_for_donations">
+      
+      </v-container>
+
+      <v-container id="photos">
+      
+      </v-container>
+
+      <v-container id="graphs">
+      
+      </v-container>
+    
+    </v-content>
+
+  </v-app>
   
 </template>
 
@@ -41,7 +87,7 @@ export default {
         description: 'I love cheese, especially airedale queso. Cheese and biscuits halloumi cauliflower cheese cottage cheese swiss boursin fondue caerphilly. Cow port-salut camembert de normandie macaroni cheese feta who moved my cheese babybel boursin.',
         fam_affected: null,
         indiv_affected: null,
-        remarks: null,
+        remarks: 'This is the remarks of the disaster',
         evac_fam_inside: null,
         evac_indiv_inside: null,
         damage_cost: null,
@@ -51,6 +97,7 @@ export default {
         linkProfile: true,
         reliefs: []
       }
+      
       // disaster: {
       //   title: null,
       //   type: null,
@@ -74,5 +121,18 @@ export default {
 </script>
 
 <style scoped>
-  
+h1{
+  padding: 10px 0 20px 0;
+}
+
+.stats_cards{
+  margin: 20px;
+}
+
+td{
+  padding: 10px;
+}
+.label{
+  width: 130px;
+}
 </style>
