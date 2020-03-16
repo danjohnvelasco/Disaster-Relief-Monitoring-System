@@ -1,6 +1,8 @@
 import firebase from 'firebase'
 import firestore from 'firebase/firestore'
 
+var wat = asdad;
+
 var firebaseConfig = {
   apiKey: "AIzaSyBvAjQ2HdtxatVL6lWxhe6JI9SaQlfc6OM",
   authDomain: "sample-lsdr.firebaseapp.com",
