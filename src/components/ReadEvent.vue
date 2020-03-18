@@ -1,11 +1,12 @@
 <template>
   <v-app>
-    <v-content>
+    <v-content class="ml-2">
 
       <v-container id="gen_info">
-        <h1 class="display-3 text-center">{{disaster.title}}</h1>
+        <h1 class="display-2 pb-0">{{disaster.title}}</h1>
+        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: 00/00/0000</h3>
+        <h2 class="headline mb-2">General Information</h2>
         <v-card>
-          <v-card-text class="display-1 text-center">General Information</v-card-text>
           <table>
             <tr>
               <td class="text-right label">Lead School:</td> <td>De La Salle University - Manila</td>
@@ -26,70 +27,79 @@
         </v-card>
       </v-container>
 
-      <v-container id="stats">
-        <v-card class="pb-5">
-          <v-card-text class="display-1 text-center">Statistics</v-card-text>
+      <v-container id="stats" class="pb-5">
+        
+          <h2 class="headline ">Statistics Overview</h2>
 
-          <v-row wrap class="ml-4 mr-4">
+          <v-row wrap class="mx-8">
 
             <v-col cols="6" align="center">
-              <v-card class="text-center" width='350'>
-                <v-icon size='70' class='mt-3'>{{icons.mdiAccount}}</v-icon>
-                <v-card-text class="headline">Individuals Affected</v-card-text>
-                <v-card-text class="display-1">{{disaster.indiv_affected}}</v-card-text>
+              <v-card class="  text-center" width='280'>
+                <v-icon size='70' class='mt-3'>mdi-account</v-icon>
+                <v-card-text class="display-2 font-weight-bold">{{disaster.indiv_affected}}</v-card-text>
+                <v-card-text class="title pt-0">Individuals Affected</v-card-text>
               </v-card>
             </v-col>
 
             <v-col cols="6" align="center">
-              <v-card class="text-center" width="350">
-                <v-icon size='70' class='mt-3'>{{icons.mdiAccountGroup}}</v-icon>
-                <v-card-text class="headline">Families Affected</v-card-text>
-                <v-card-text class="display-1">{{disaster.fam_affected}}</v-card-text>
+              <v-card class="text-center" width="280">
+                <v-icon size='70' class='mt-3'>mdi-account-group</v-icon>
+                <v-card-text class="display-2 font-weight-bold">{{disaster.fam_affected}}</v-card-text>
+                <v-card-text class="title pt-0">Families Affected</v-card-text>
               </v-card>
             </v-col>
 
             <v-col cols="6" align="center" v-if="disaster.evac_indiv_inside != null">
-              <v-card class="text-center" width="350">
-                <v-icon size='70' class='mt-3'>{{icons.mdiHomeVariant}}</v-icon>
-                <v-card-text class="headline">Individuals in Evac Centers</v-card-text>
-                <v-card-text class="display-1">{{disaster.evac_indiv_inside}}</v-card-text>
+              <v-card class="text-center" width="280">
+                <v-icon size='70' class='mt-3'>mdi-home-variant</v-icon>
+                <v-card-text class="display-2 font-weight-bold">{{disaster.evac_indiv_inside}}</v-card-text>
+                <v-card-text class="title pt-0">Individuals in Evac Centers</v-card-text>
               </v-card>
             </v-col>
 
             <v-col cols="6" align="center" v-if="disaster.evac_fam_inside != null">
-              <v-card class="text-center" width="350">
-                <v-icon size='70' class='mt-3'>{{icons.mdiHomeGroup}}</v-icon>
-                <v-card-text class="headline">Families In Evac Centers</v-card-text>
-                <v-card-text class="display-1">{{disaster.evac_fam_inside}}</v-card-text>
+              <v-card class="text-center" width="280">
+                <v-icon size='70' class='mt-3'>mdi-home-group</v-icon>
+                <v-card-text class="display-2 font-weight-bold">{{disaster.evac_fam_inside}}</v-card-text>
+                <v-card-text class="title pt-0">Families In Evac Centers</v-card-text>
               </v-card>
             </v-col>
 
             <v-col cols="6" align="center" v-if="disaster.damage_cost != null">
-              <v-card class="text-center" width="350">
-                <v-icon size='70' class='mt-3'>{{icons.mdiCash}}</v-icon>
-                <v-card-text class="headline">Damage Cost</v-card-text>
-                <v-card-text class="display-1">Php {{disaster.damage_cost}}</v-card-text>
+              <v-card class="text-center" width="280">
+                <v-icon size='70' class='mt-3'>mdi-cash</v-icon>
+                <v-card-text class="display-2 font-weight-bold">{{disaster.damage_cost}}</v-card-text>
+                <v-card-text class="title pt-0">Damage Cost (PHP)</v-card-text>
               </v-card>
             </v-col>
 
             <v-col cols="6" align="center" v-if="disaster.structures_damaged != null">
-              <v-card class="text-center" width="350">
-                <v-icon size='70' class='mt-3'>{{icons.mdiDomain}}</v-icon>
-                <v-card-text class="headline">Structures Damaged</v-card-text>
-                <v-card-text class="display-1">{{disaster.structures_damaged}}</v-card-text>
+              <v-card class="text-center" width="280">
+                <v-icon size='70' class='mt-3'>mdi-domain</v-icon>
+                <v-card-text class="display-2 font-weight-bold">{{disaster.structures_damaged}}</v-card-text>
+                <v-card-text class="title pt-0">Structures Damaged</v-card-text>
               </v-card>
             </v-col>
           </v-row>
 
-        </v-card>
+        
       </v-container>
 
 
       <v-container id="call_for_donations">
+        <h2 class="headline">Call for Donations</h2>
+       <!--
+        <v-row wrap class="ml-4 mr-4">
 
-        <v-card align="center">
-          <v-card-text class="display-1 text-center">Call for Donations</v-card-text>
+          <v-col cols="12" align="center">
+            <v-card class="text-center" width='600'>
+            <v-card-text class="title pt-0">Cash:</v-card-text>
+            <v-card-text align="left" width="400"><pre>{{disaster.donation_details}}</pre></v-card-text>
+              
+            </v-card>
+          </v-col>
 
+        </v-row>
 
           <v-container style="width: 400px">
             <v-card-text>Cash Donations</v-card-text>
@@ -110,53 +120,47 @@
 
            
           </v-container>
-        
-        </v-card>
+        -->
+
       
       </v-container>
 
       <v-container id="gallery">
 
-        <v-card>
-          <v-card-text class="display-1 text-center">Gallery</v-card-text>
-            <v-container class='pl-5 pr-5 pb-5'>
-              <v-carousel
-                cycle
-                height="400"
-                hide-delimiter-background
-                show-arrows-on-hover
+        <h2 class="headline">Gallery</h2>
+          <v-container class='pl-5 pr-5 pb-5'>
+            <v-carousel
+              cycle
+              height="400"
+              hide-delimiter-background
+              show-arrows-on-hover
+            >
+              <v-carousel-item
+                v-for="(slide, i) in slides"
+                :key="i"
               >
-                <v-carousel-item
-                  v-for="(slide, i) in slides"
-                  :key="i"
+                <v-sheet
+                  :color="colors[i]"
+                  height="100%"
                 >
-                  <v-sheet
-                    :color="colors[i]"
-                    height="100%"
+                  <v-row
+                    class="fill-height"
+                    align="center"
+                    justify="center"
                   >
-                    <v-row
-                      class="fill-height"
-                      align="center"
-                      justify="center"
-                    >
-                      <div class="display-3">{{ slide }} Slide</div>
-                    </v-row>
-                  </v-sheet>
-                </v-carousel-item>
-              </v-carousel>
-            </v-container>
-            
-        </v-card>
+                    <div class="display-3">{{ slide }} Slide</div>
+                  </v-row>
+                </v-sheet>
+              </v-carousel-item>
+            </v-carousel>
+          </v-container>
       
       </v-container>
 
       <v-container id="graphs">
 
-        <v-card>
-          <v-card-text class="display-1 text-center">Historical Graphs</v-card-text>
+        <h2 class="headline">Historical Graphs</h2>
 
-        
-        </v-card>
       
       </v-container>
     
@@ -165,11 +169,6 @@
 </template>
 
 <script>
-// icons
-import { 
-  mdiAccount, mdiAccountGroup, mdiCash, mdiDomain, mdiHomeVariant, mdiHomeGroup
-  } from '@mdi/js'
-
 
 export default {
   data(){
@@ -190,14 +189,6 @@ export default {
         donation_details: "UNICEF South Africa:\nBank Name: Nedbank\nAccount Number: 1497216230\nBranch Code: 160445\nBranch Name: Nedbank Pretoria Corporate\nSwift Code: NEDSZAJJ",
         linkProfile: true,
         reliefs: []
-      },
-      icons: {
-        mdiAccount,
-        mdiAccountGroup,
-        mdiCash,
-        mdiDomain,
-        mdiHomeVariant,
-        mdiHomeGroup
       },
       colors: [
         'indigo',
