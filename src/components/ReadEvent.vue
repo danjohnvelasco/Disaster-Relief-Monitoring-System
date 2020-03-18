@@ -2,11 +2,11 @@
   <v-app>
     <v-content class="ml-2">
 
-      <v-container id="gen_info">
+      <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
-        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: 00/00/0000</h3>
-        <h2 class="headline mb-2">General Information</h2>
-        <v-card>
+        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
+        <h2 class="headline mb-2 text-center">General Information</h2>
+        <v-card >
           <table>
             <tr>
               <td class="text-right label">Lead School:</td> <td>De La Salle University - Manila</td>
@@ -29,19 +29,19 @@
 
       <v-container id="stats" class="pb-5">
         
-          <h2 class="headline ">Statistics Overview</h2>
+          <h2 class="headline text-center">Statistics Overview</h2>
 
           <v-row wrap class="mx-8">
 
-            <v-col cols="6" align="center">
-              <v-card class="  text-center" width='280'>
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center">
+              <v-card class="text-center" width='280'>
                 <v-icon size='70' class='mt-3'>mdi-account</v-icon>
                 <v-card-text class="display-2 font-weight-bold">{{disaster.indiv_affected}}</v-card-text>
                 <v-card-text class="title pt-0">Individuals Affected</v-card-text>
               </v-card>
             </v-col>
 
-            <v-col cols="6" align="center">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center">
               <v-card class="text-center" width="280">
                 <v-icon size='70' class='mt-3'>mdi-account-group</v-icon>
                 <v-card-text class="display-2 font-weight-bold">{{disaster.fam_affected}}</v-card-text>
@@ -49,7 +49,7 @@
               </v-card>
             </v-col>
 
-            <v-col cols="6" align="center" v-if="disaster.evac_indiv_inside != null">
+            <v-col  class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.evac_indiv_inside != null">
               <v-card class="text-center" width="280">
                 <v-icon size='70' class='mt-3'>mdi-home-variant</v-icon>
                 <v-card-text class="display-2 font-weight-bold">{{disaster.evac_indiv_inside}}</v-card-text>
@@ -57,7 +57,7 @@
               </v-card>
             </v-col>
 
-            <v-col cols="6" align="center" v-if="disaster.evac_fam_inside != null">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.evac_fam_inside != null">
               <v-card class="text-center" width="280">
                 <v-icon size='70' class='mt-3'>mdi-home-group</v-icon>
                 <v-card-text class="display-2 font-weight-bold">{{disaster.evac_fam_inside}}</v-card-text>
@@ -65,7 +65,7 @@
               </v-card>
             </v-col>
 
-            <v-col cols="6" align="center" v-if="disaster.damage_cost != null">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.damage_cost != null">
               <v-card class="text-center" width="280">
                 <v-icon size='70' class='mt-3'>mdi-cash</v-icon>
                 <v-card-text class="display-2 font-weight-bold">{{disaster.damage_cost}}</v-card-text>
@@ -73,7 +73,7 @@
               </v-card>
             </v-col>
 
-            <v-col cols="6" align="center" v-if="disaster.structures_damaged != null">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.structures_damaged != null">
               <v-card class="text-center" width="280">
                 <v-icon size='70' class='mt-3'>mdi-domain</v-icon>
                 <v-card-text class="display-2 font-weight-bold">{{disaster.structures_damaged}}</v-card-text>
@@ -85,9 +85,24 @@
         
       </v-container>
 
+      <v-container id="call_for_donations" v-if="disaster.donate_option != null">
+        <h2 class="headline text-center">Call for Donations</h2>
 
-      <v-container id="call_for_donations">
-        <h2 class="headline">Call for Donations</h2>
+        <v-row wrap class="">
+          <v-col cols="12" align="center" v-if="disaster.donate_option == 'cash' || disaster.donate_option == 'both'">
+            <v-card width="500">
+              <v-card-text class="title">For Cash:</v-card-text>
+              <v-card-text class="text-left ml-4 pt-0"><pre>{{disaster.donation_details}}</pre></v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" align="center" v-if="disaster.donate_option == 'in-kind' || disaster.donate_option == 'both'">
+            <v-card width="500">
+              <v-card-text class="title">For In-kind:</v-card-text>
+              <v-card-text class="text-left ml-4 pt-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null"> ({{item.spec}})</span></v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+        
        <!--
         <v-row wrap class="ml-4 mr-4">
 
@@ -127,7 +142,7 @@
 
       <v-container id="gallery">
 
-        <h2 class="headline">Gallery</h2>
+        <h2 class="headline text-center">Gallery</h2>
           <v-container class='pl-5 pr-5 pb-5'>
             <v-carousel
               cycle
@@ -159,7 +174,7 @@
 
       <v-container id="graphs">
 
-        <h2 class="headline">Historical Graphs</h2>
+        <h2 class="headline text-center">Historical Graphs</h2>
 
       
       </v-container>
@@ -174,21 +189,31 @@ export default {
   data(){
     return{
       disaster: {
+        created_at: 'March 18, 2020',
         title: 'Leveriza Fire',
         type: 'Fire',
         location: 'Leveriza St, Malate, Manila, 1004 Metro Manila',
-        description: 'I love cheese, especially airedale queso. Cheese and biscuits halloumi cauliflower cheese cottage cheese swiss boursin fondue caerphilly. Cow port-salut camembert de normandie macaroni cheese feta who moved my cheese babybel boursin.',
+        description: 'A fire in Leveriza St. near De La Salle University which was caused by an accident in one of the houses.',
         fam_affected: 100,
         indiv_affected: 1777,
         remarks: 'This is the remarks of the disaster',
-        evac_fam_inside: 111,
-        evac_indiv_inside: 222,
-        damage_cost: 123123,
-        structures_damaged: 112233,
-        donateOption: 'both', // in-kind, cash, both
+        evac_fam_inside: 1111,
+        evac_indiv_inside: 2222,
+        damage_cost: 222,
+        structures_damaged: 222,
+        donate_option: 'both', // in-kind, cash, both, null
         donation_details: "UNICEF South Africa:\nBank Name: Nedbank\nAccount Number: 1497216230\nBranch Code: 160445\nBranch Name: Nedbank Pretoria Corporate\nSwift Code: NEDSZAJJ",
         linkProfile: true,
-        reliefs: []
+        reliefs: [
+          {
+            item: 'Item1',
+            spec: 'This is the specifications of the item'
+          },
+          {
+            item: 'Canned Goods',
+            spec: 'Expiration should not be less than 3 months'
+          },
+        ]
       },
       colors: [
         'indigo',
@@ -198,14 +223,15 @@ export default {
         'deep-purple accent-4',
       ],
       slides: [
-        'First',
-        'Second',
-        'Third',
-        'Fourth',
-        'Fifth',
+        'Filler',
+        'Filler',
+        'Filler',
+        'Filler',
+        'Filler',
       ]
       
       // disaster: {
+      //   created_at: '',
       //   title: null,
       //   type: null,
       //   location: null,
