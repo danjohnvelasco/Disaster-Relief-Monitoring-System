@@ -8,25 +8,25 @@
         <!--Required data fields starts here-->
         <v-text-field
           outlined
-          v-model="disaster.title"
+          v-model="gen_data.title"
           :rules="required_lettersOnly"
           label="Title"
         ></v-text-field>
         <v-text-field
           outlined
-          v-model="disaster.type"
+          v-model="gen_data.type"
           :rules="required_lettersOnly"
           label="Disaster Type"
         ></v-text-field>
         <v-text-field
           outlined
-          v-model="disaster.location"
+          v-model="gen_data.location"
           :rules="required"
           label="Location"
         ></v-text-field>
         <v-textarea
           outlined
-          v-model="disaster.description"
+          v-model="gen_data.description"
           auto-grow
           rows="1"
           :rules="required"
@@ -34,21 +34,21 @@
         ></v-textarea>
         <v-text-field
           outlined
-          v-model="disaster.fam_affected"
+          v-model="hist_data.fam_affected"
           :rules="required_numbersOnly"
           label="Families Affected"  
           suffix="families affected"            
         ></v-text-field>
         <v-text-field
           outlined
-          v-model="disaster.indiv_affected"
+          v-model="hist_data.indiv_affected"
           :rules="required_numbersOnly"
           label="Individuals Affected" 
           suffix="individuals affected"             
         ></v-text-field>
         <v-textarea
           outlined
-          v-model="disaster.remarks"
+          v-model="gen_data.remarks"
           auto-grow
           rows="4"
           label="Remarks (optional)"
@@ -61,14 +61,14 @@
             <v-expansion-panel-content>
               <v-text-field
                 outlined
-                v-model="disaster.evac_fam_inside"
+                v-model="hist_data.evac_fam_inside"
                 :rules="numbersOnly"
                 label="Families Inside Evacuation Center"          
                 suffix="families inside"    
               ></v-text-field>
               <v-text-field
                 outlined
-                v-model="disaster.evac_indiv_inside"
+                v-model="hist_data.evac_indiv_inside"
                 :rules="numbersOnly"
                 label="Individuals Inside Evacuation Center"
                 suffix="individuals inside"              
@@ -80,7 +80,7 @@
             <v-expansion-panel-content>
               <v-text-field
                 outlined
-                v-model="disaster.damage_cost"
+                v-model="hist_data.damage_cost"
                 :rules="currency"
                 hint="ex. 330000 or 330,000 or 330,000.15"
                 persistent-hint
@@ -89,7 +89,7 @@
               ></v-text-field>
               <v-text-field
                 outlined
-                v-model="disaster.structures_damaged"
+                v-model="hist_data.structures_damaged"
                 :rules="numbersOnly"
                 label="Structures damaged"
                 suffix="structures damaged"              
@@ -99,25 +99,25 @@
           <v-expansion-panel> <!--Group 3-->
             <v-expansion-panel-header>Call for Donations</v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-radio-group v-model="disaster.donate_option" row>
+              <v-radio-group v-model="gen_data.donate_option" row>
                 <v-radio label="In-kind" value="in-kind"></v-radio>
                 <v-radio label="Cash" value="cash"></v-radio>
                 <v-radio label="Both" value="both"></v-radio>
               </v-radio-group>
-              <div v-if="disaster.donate_option === 'in-kind' || disaster.donate_option === 'both'">
+              <div v-if="gen_data.donate_option === 'in-kind' || gen_data.donate_option === 'both'">
                 <v-subheader>In-kind Donations</v-subheader>
-                <v-row dense v-for="(relief, index) in disaster.reliefs" :key="index">
+                <v-row dense v-for="(relief, index) in gen_data.reliefs" :key="index">
                   <v-col cols="4">
                     <v-text-field
                       outlined
-                      v-model=disaster.reliefs[index].item          
+                      v-model=gen_data.reliefs[index].item          
                       label="Item"  
                     ></v-text-field>
                   </v-col>
                   <v-col cols="7">
                     <v-text-field
                       outlined
-                      v-model=disaster.reliefs[index].spec            
+                      v-model=gen_data.reliefs[index].spec            
                       label="Specifications" 
                     ></v-text-field>
                   </v-col>
@@ -178,17 +178,17 @@
                   </v-col>
                 </v-row>
               </div>
-              <div v-if="disaster.donate_option === 'cash' || disaster.donate_option === 'both'">
+              <div v-if="gen_data.donate_option === 'cash' || gen_data.donate_option === 'both'">
                 <v-subheader>Cash Donations</v-subheader>
                 <v-textarea
                   outlined
-                  v-model="disaster.donation_details"
+                  v-model="gen_data.donation_details"
                   auto-grow
                   rows="4"
                   label="Donation Details"
                 ></v-textarea>
                 <v-subheader>OR</v-subheader>
-                <v-switch v-model="disaster.link_profile" :label="'Link your profile'"></v-switch>
+                <v-switch v-model="gen_data.link_profile" :label="'Link your profile'"></v-switch>
               </div>
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -207,6 +207,7 @@
 </template>
 
 <script>
+  //import db from '@/firebase/init'
   export default {
     data: () => ({
       valid: true,
@@ -227,41 +228,62 @@
       currency: [
         v => /^(null|$|\d+(,\d{3})*(\.\d*)?)$/.test(v) || 'Invalid format'
       ],
-      disaster: {
+      gen_data: {
         title: null,
         type: null,
         location: null,
-        description: null,
+        description: null, 
+        remarks: null,
+        donate_option: null,
+        donation_details: null,
+        link_profile: true,
+        reliefs: [],
+        archived: false
+      },
+      hist_data: {
         fam_affected: null,
         indiv_affected: null,
-        remarks: null,
         evac_fam_inside: null,
         evac_indiv_inside: null,
         damage_cost: null,
         structures_damaged: null,
-        donate_option: null,
-        donation_details: null,
-        link_profile: true,
-        reliefs: []
+        updatedAt: null
       },
       item: null,
       spec: null,
       add_item_feedback: false,
     }),
-
     methods: {
       validate () {
         if (this.$refs.form.validate()) {
-          console.log(this.disaster);
+          console.log(JSON.stringify(this.gen_data, null, 2));
+          console.log(this.hist_data);
+          /*
+          // Create doc with auto-id
+          let doc = db.collection("disasters2").doc();
+
+          doc.set(this.gen_data)
+          .then(() => {
+            console.log("Top level success: ", doc.id);
+          }).catch(function(error) {
+            console.error("Error adding document: ", error);
+          });
+
+          doc.collection("history").add(this.hist_data)
+          .then(() => {
+            console.log("Subcollection success");
+          }).catch(function(error) {
+            console.error("Error adding document: ", error);
+          });*/
         }
       },
       addItem() {
         if (this.item) {
-          this.disaster.reliefs.push({item: this.item, spec: this.spec});
+          this.gen_data.reliefs.push({item: this.item, spec: this.spec});
           this.item = null;
           this.spec = null;
           this.add_item_feedback = false
-          console.log(this.disaster.reliefs);
+          console.table(this.gen_data.reliefs, ['item', 'spec']);
         } else {
           this.add_item_feedback = true
           console.log('Item field is empty.');
@@ -269,8 +291,8 @@
       },
       deleteItem(added_item) {
         if (added_item !== null) {
-          this.disaster.reliefs.pop(added_item);
-          console.log(this.disaster.reliefs);
+          this.gen_data.reliefs.pop(added_item);
+          console.table(this.gen_data.reliefs, ['item', 'spec']);
         } else {
           console.log('Error deleting item.');
         }
