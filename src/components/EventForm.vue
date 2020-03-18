@@ -9,7 +9,7 @@
         <v-text-field
           outlined
           v-model="disaster.title"
-          :rules="required_lettersOnly"
+          :rules="required"
           label="Title"
         ></v-text-field>
         <v-text-field
@@ -197,7 +197,7 @@
             :disabled="!valid"
             color="success"
             class="mt-10"
-            @click="validate"
+            @click="create"
         >
             Submit
         </v-btn>
@@ -207,8 +207,12 @@
 </template>
 
 <script>
+  import db from '@/firebase/init'
+  import firebase from 'firebase/app'
+
   export default {
     data: () => ({
+      editing: false,
       valid: true,
       required_lettersOnly: [
         v => !!v || 'This field is required',
@@ -227,32 +231,56 @@
       currency: [
         v => /^(null|$|\d+(,\d{3})*(\.\d*)?)$/.test(v) || 'Invalid format'
       ],
-      disaster: {
+      disaster: { // Don't include data the the user doesn't directly manipulates.
         title: null,
         type: null,
         location: null,
-        description: null,
-        fam_affected: null,
-        indiv_affected: null,
+        description: null, 
         remarks: null,
-        evac_fam_inside: null,
-        evac_indiv_inside: null,
-        damage_cost: null,
-        structures_damaged: null,
         donate_option: null,
         donation_details: null,
         link_profile: true,
-        reliefs: []
+        reliefs: [],
+        fam_affected: null,
+        indiv_affected: null,
+        evac_fam_inside: null,
+        evac_indiv_inside: null,
+        damage_cost: null,
+        structures_damaged: null
       },
       item: null,
       spec: null,
       add_item_feedback: false,
     }),
-
     methods: {
-      validate () {
+      create () {
         if (this.$refs.form.validate()) {
-          console.log(this.disaster);
+          console.log(JSON.stringify(this.disaster, null, 2));
+
+          // Create doc with auto-id
+          var doc = db.collection("disasters2").doc();
+          var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+          // Add top level data
+          doc.set({
+            last_updated: timestamp,
+            archived: false
+          }).then(() => {
+            console.log("Top level success: ", doc.id);
+          }).catch(function(error) {
+            console.error("Error adding top level data: ", error);
+          });
+
+          // Add created_at field in disaster object
+          this.disaster.created_at = timestamp;
+          
+          // Create subcollection and create document
+          doc.collection("history").add(this.disaster)
+          .then((docRef) => {
+            console.log("Subcollection success", docRef.id);
+          }).catch(function(error) {
+            console.error("Error adding document: ", error);
+          });
         }
       },
       addItem() {
@@ -261,7 +289,7 @@
           this.item = null;
           this.spec = null;
           this.add_item_feedback = false
-          console.log(this.disaster.reliefs);
+          console.table(this.disaster.reliefs, ['item', 'spec']);
         } else {
           this.add_item_feedback = true
           console.log('Item field is empty.');
@@ -270,7 +298,7 @@
       deleteItem(added_item) {
         if (added_item !== null) {
           this.disaster.reliefs.pop(added_item);
-          console.log(this.disaster.reliefs);
+          console.table(this.disaster.reliefs, ['item', 'spec']);
         } else {
           console.log('Error deleting item.');
         }
