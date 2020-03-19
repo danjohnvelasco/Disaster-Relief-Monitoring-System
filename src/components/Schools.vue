@@ -3,13 +3,12 @@
     <h1>List of Schools</h1>
   
     <v-container id="schoolcard">
-  
       <v-layout row wrap>
-        <v-flex v-for="school in schools" :key="school.name">
+        <v-flex sm8 md6 lg6 xl2 v-for="school in schools" :key="school.name">
           <v-hover>
             <template v-slot="{ hover }">               
               
-              <v-card max-width="520" max-height="400" :elevation="hover ? 24 : 3"
+              <v-card max-width="520" max-height="400" :elevation="hover ? 24 : 2"
                       class="mx-auto pa-2" id="card">
                 <v-img :src="school.img" height="200px"> </v-img>
                 <v-card-title id="title"> {{school.name}} </v-card-title>
@@ -95,5 +94,6 @@ h1{
 
 #card{
         border-radius:20px;
+        padding: 10px 0px;
 }
 </style>
