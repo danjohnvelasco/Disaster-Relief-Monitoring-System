@@ -1,20 +1,20 @@
 <template>
   <div class="schools" align="center">
-  <h1 align="center" class="subheading grey--text">List of Schools</h1>
+  <h1>List of Schools</h1>
   
-  <v-container class="16_schools">
+  <v-container id="16_schools">
   
   <v-layout row wrap>
   <v-flex v-for="school in schools" :key="school.name">
   <v-hover>
   <template v-slot="{ hover }">               
-  <v-card max-width="400" max-height="300" :elevation="hover ? 24 : 6"
-          class="mx-auto pa-6">
+  <v-card max-width="520" max-height="400" :elevation="hover ? 24 : 3"
+          class="mx-auto pa-2">
     <v-img :src="school.img" height="200px"> </v-img>
 
-    <v-card-title> {{school.name}} </v-card-title>
+    <v-card-title id="title"> {{school.name}} </v-card-title>
 
-    <v-card-subtitle> {{school.add}} </v-card-subtitle>
+    <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
 
     <v-card-actions>
       <v-btn color=#184725 text> VISIT </v-btn>
@@ -74,3 +74,23 @@
   }
 }
 </script>
+
+<style scoped>
+h1{
+        text-align: center;
+        font-family: Garamond;
+        color: #184725;
+        padding: 20px 0 20px 0;
+}
+
+#title{
+        text-align: left;
+        font-family: Roboto;
+        font-size: 20px;
+}
+#sub{
+        text-align: left;
+        font-family: Roboto;
+        font-size: 15px;
+}
+</style>
