@@ -6,8 +6,10 @@
   
   <v-layout row wrap>
   <v-flex v-for="school in schools" :key="school.name">
-          
-  <v-card max-width="500" max-height="400">
+  <v-hover>
+  <template v-slot="{ hover }">               
+  <v-card max-width="400" max-height="300" :elevation="hover ? 24 : 6"
+          class="mx-auto pa-6">
     <v-img :src="school.img" height="200px"> </v-img>
 
     <v-card-title> {{school.name}} </v-card-title>
@@ -20,6 +22,8 @@
     </v-card-actions>
 
   </v-card>
+  </template>
+  </v-hover>
   </v-flex>
   </v-layout>
   </v-container>
