@@ -289,6 +289,8 @@
 
           // Add top level data
           doc.set({
+            title: this.disaster.title,
+            type: this.disaster.type,
             last_updated: timestamp,
             archived: false
           }).then(() => {
@@ -319,12 +321,14 @@
           console.log(JSON.stringify(this.disaster, null, 2));
 
           // Create doc with auto-id
-          var dummy_id = 'K03ir5XbyRDepBz69fCd';
+          var dummy_id = '1KXrPC5KV6AMUc9ILSci';
           var doc = db.collection("disasters2").doc(dummy_id);
           var timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
           // Add top level data
           doc.set({
+            title: this.disaster.title,
+            type: this.disaster.type,
             last_updated: timestamp
           }).then(() => {
             console.log("Top level success: ", doc.id);
