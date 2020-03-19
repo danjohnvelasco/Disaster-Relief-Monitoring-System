@@ -1,15 +1,15 @@
 <template>
   <v-app>
-    <v-content class="ml-2">
+    <v-content class="ml-2" v-on:click="test()">
 
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
-        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
+        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{last_updated}}</h3>
         <h2 class="headline mb-2 text-center">General Information</h2>
         <v-card >
           <table>
             <tr>
-              <td class="text-right label">Lead School:</td> <td>De La Salle University - Manila</td>
+              <td class="text-right label">Lead School:</td> <td>LEAD SCHOOL HERE</td>
             </tr>
             <tr>
               <td class="text-right label">Disaster Type:</td> <td>{{disaster.type}}</td>
@@ -20,7 +20,7 @@
             <tr>
               <td class="text-right label">Description:</td> <td>{{disaster.description}}</td>
             </tr>
-            <tr>
+            <tr v-if="disaster.remarks != null">
               <td class="text-right label">Additional Remarks:</td> <td>{{disaster.remarks}}</td>
             </tr>
           </table>
@@ -184,37 +184,14 @@
 </template>
 
 <script>
+import db from '@/firebase/init'
 
 export default {
+
   data(){
     return{
-      disaster: {
-        created_at: 'March 18, 2020',
-        title: 'Leveriza Fire',
-        type: 'Fire',
-        location: 'Leveriza St, Malate, Manila, 1004 Metro Manila',
-        description: 'A fire in Leveriza St. near De La Salle University which was caused by an accident in one of the houses.',
-        fam_affected: 100,
-        indiv_affected: 1777,
-        remarks: 'This is the remarks of the disaster',
-        evac_fam_inside: 1111,
-        evac_indiv_inside: 2222,
-        damage_cost: 222,
-        structures_damaged: 222,
-        donate_option: 'both', // in-kind, cash, both, null
-        donation_details: "UNICEF South Africa:\nBank Name: Nedbank\nAccount Number: 1497216230\nBranch Code: 160445\nBranch Name: Nedbank Pretoria Corporate\nSwift Code: NEDSZAJJ",
-        linkProfile: true,
-        reliefs: [
-          {
-            item: 'Item1',
-            spec: 'This is the specifications of the item'
-          },
-          {
-            item: 'Canned Goods',
-            spec: 'Expiration should not be less than 3 months'
-          },
-        ]
-      },
+      disaster: {},
+      last_updated: '',
       colors: [
         'indigo',
         'warning',
@@ -229,27 +206,60 @@ export default {
         'Filler',
         'Filler',
       ]
-      
-      // disaster: {
-      //   created_at: '',
-      //   title: null,
-      //   type: null,
-      //   location: null,
-      //   description: null,
-      //   fam_affected: null,
-      //   indiv_affected: null,
-      //   remarks: null,
-      //   evac_fam_inside: null,
-      //   evac_indiv_inside: null,
-      //   damage_cost: null,
-      //   structures_damaged: null,
-      //   donateOption: null,
-      //   donation_details: null,
-      //   linkProfile: true,
-      //   reliefs: []
-      // }
     }
+  },
+  methods: {
+    timestampToDate: (timestamp) => {
+      var date = timestamp.toDate()
+      var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+      return newdate
+    }
+  },
+  
+  created(){
+    // real-time listener
+    // db.collection('disasters2').onSnapshot(res =>{
+    //   const changes = res.docChanges()
+
+    //   changes.forEach(change =>{
+    //     if (change.type  === 'added'){
+    //       this.disasters.push({
+    //         ...change.doc.data()
+    //       })
+    //     }
+    //   })
+    //   this.disasters.forEach(disaster =>{
+    //     console.log(disaster.archived)
+    //   })
+    // })
+
+    // grabs last updated date
+    db.collection('disasters2')
+      .doc('4bfdClVX0RjBeFN8Fqp6').get().then(doc =>{
+        if (doc){
+          this.last_updated = this.timestampToDate(doc.data().last_updated)
+        } else{
+          console.log('no last updated date found')
+        }
+      }).catch(err =>{
+        console.log("Error: " + err)
+      })
+
+    // grabs disaster data
+    db.collection('disasters2')
+      .doc('4bfdClVX0RjBeFN8Fqp6')
+      .collection('history')
+      .doc('ah9YvemaMvV2nyn7Mz9M').get().then(doc =>{
+        if (doc){
+          this.disaster = doc.data()
+        } else{
+          console.log('no doc found')
+        }
+      }).catch(err =>{
+        console.log("Error: " + err)
+      })
   }
+ 
 }
 </script>
 
