@@ -9,7 +9,7 @@
         <v-card >
           <table>
             <tr>
-              <td class="text-right label">Lead School:</td> <td>De La Salle University - Manila</td>
+              <td class="text-right label">Lead School:</td> <td>LEAD SCHOOL HERE</td>
             </tr>
             <tr>
               <td class="text-right label">Disaster Type:</td> <td>{{disaster.type}}</td>
@@ -20,7 +20,7 @@
             <tr>
               <td class="text-right label">Description:</td> <td>{{disaster.description}}</td>
             </tr>
-            <tr>
+            <tr v-if="disaster.remarks != null">
               <td class="text-right label">Additional Remarks:</td> <td>{{disaster.remarks}}</td>
             </tr>
           </table>
@@ -184,37 +184,13 @@
 </template>
 
 <script>
+import db from '@/firebase/init'
 
 export default {
+
   data(){
     return{
-      disaster: {
-        created_at: 'March 18, 2020',
-        title: 'Leveriza Fire',
-        type: 'Fire',
-        location: 'Leveriza St, Malate, Manila, 1004 Metro Manila',
-        description: 'A fire in Leveriza St. near De La Salle University which was caused by an accident in one of the houses.',
-        fam_affected: 100,
-        indiv_affected: 1777,
-        remarks: 'This is the remarks of the disaster',
-        evac_fam_inside: 1111,
-        evac_indiv_inside: 2222,
-        damage_cost: 222,
-        structures_damaged: 222,
-        donate_option: 'both', // in-kind, cash, both, null
-        donation_details: "UNICEF South Africa:\nBank Name: Nedbank\nAccount Number: 1497216230\nBranch Code: 160445\nBranch Name: Nedbank Pretoria Corporate\nSwift Code: NEDSZAJJ",
-        linkProfile: true,
-        reliefs: [
-          {
-            item: 'Item1',
-            spec: 'This is the specifications of the item'
-          },
-          {
-            item: 'Canned Goods',
-            spec: 'Expiration should not be less than 3 months'
-          },
-        ]
-      },
+      disaster: {},
       colors: [
         'indigo',
         'warning',
@@ -229,27 +205,49 @@ export default {
         'Filler',
         'Filler',
       ]
-      
-      // disaster: {
-      //   created_at: '',
-      //   title: null,
-      //   type: null,
-      //   location: null,
-      //   description: null,
-      //   fam_affected: null,
-      //   indiv_affected: null,
-      //   remarks: null,
-      //   evac_fam_inside: null,
-      //   evac_indiv_inside: null,
-      //   damage_cost: null,
-      //   structures_damaged: null,
-      //   donateOption: null,
-      //   donation_details: null,
-      //   linkProfile: true,
-      //   reliefs: []
-      // }
     }
+  },
+  methods: {
+    timestampToDate: (timestamp) => {
+      var date = timestamp.toDate()
+      var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+      return newdate
+    }
+  },
+  
+  created(){
+    // real-time listener
+    // db.collection('disasters2').onSnapshot(res =>{
+    //   const changes = res.docChanges()
+
+    //   changes.forEach(change =>{
+    //     if (change.type  === 'added'){
+    //       this.disasters.push({
+    //         ...change.doc.data()
+    //       })
+    //     }
+    //   })
+    //   this.disasters.forEach(disaster =>{
+    //     console.log(disaster.archived)
+    //   })
+    // })
+
+    // grabs latest data in history subcollection
+    db.collection('disasters2')
+      .doc('K03ir5XbyRDepBz69fCd')
+      .collection('history').orderBy('created_at').get().then(doc =>{
+          if (doc){
+            this.disaster = doc.docs.slice(-1)[0].data()
+            this.disaster.created_at = this.timestampToDate(this.disaster.created_at)
+          } else{
+            console.log('no doc found')
+          }
+        }).catch(err =>{
+          console.log("Error: " + err)
+      })
+      
   }
+ 
 }
 </script>
 
