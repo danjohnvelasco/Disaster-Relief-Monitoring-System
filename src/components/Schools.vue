@@ -1,14 +1,13 @@
 <template>
-  <div class="schools">
+  <div class="schools" align="center">
   <h1 align="center" class="subheading grey--text">List of Schools</h1>
   
-  <v-container class="my-16">
+  <v-container class="16_schools">
   
   <v-layout row wrap>
   <v-flex v-for="school in schools" :key="school.name">
           
-  <v-card class="mx-auto" max-width="500" max-height="400">
-  <v-responsive class="pt-3"> </v-responsive>
+  <v-card max-width="500" max-height="400">
     <v-img :src="school.img" height="200px"> </v-img>
 
     <v-card-title> {{school.name}} </v-card-title>
@@ -18,22 +17,8 @@
     <v-card-actions>
       <v-btn color=#184725 text> VISIT </v-btn>
 
-      <v-spacer></v-spacer>
-
-      <!-- <v-btn icon @click="show = !show">
-        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-      </v-btn> -->
     </v-card-actions>
 
-    <!-- <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-        dude pare CHOOOOOOOOOOOOOOOOOONG
-        </v-card-text>
-      </div>
-    </v-expand-transition> -->
   </v-card>
   </v-flex>
   </v-layout>
@@ -44,12 +29,6 @@
 </template>
 
 <script>
-  // export default {
-  //   data: () => ({
-  //     show: false,
-  //   }),
-  // }
-
   export default {
   data() {
     return {
