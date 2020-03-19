@@ -6,7 +6,7 @@
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
         <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
         <h2 class="headline mb-2 text-center">General Information</h2>
-        <v-card >
+        <v-card>
           <table>
             <tr>
               <td class="text-right label">Lead School:</td> <td>LEAD SCHOOL HERE</td>
