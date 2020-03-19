@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content class="ml-2" v-on:click="test()">
+    <v-content class="ml-2">
 
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
