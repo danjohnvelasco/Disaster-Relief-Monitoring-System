@@ -1,32 +1,31 @@
 <template>
   <div class="schools" align="center">
-  <h1>List of Schools</h1>
+    <h1>List of Schools</h1>
   
-  <v-container id="16_schools">
+    <v-container id="schoolcard">
   
-  <v-layout row wrap>
-  <v-flex v-for="school in schools" :key="school.name">
-  <v-hover>
-  <template v-slot="{ hover }">               
-  <v-card max-width="520" max-height="400" :elevation="hover ? 24 : 3"
-          class="mx-auto pa-2">
-    <v-img :src="school.img" height="200px"> </v-img>
+      <v-layout row wrap>
+        <v-flex v-for="school in schools" :key="school.name">
+          <v-hover>
+            <template v-slot="{ hover }">               
+              
+              <v-card max-width="520" max-height="400" :elevation="hover ? 24 : 3"
+                      class="mx-auto pa-2" id="card">
+                <v-img :src="school.img" height="200px"> </v-img>
+                <v-card-title id="title"> {{school.name}} </v-card-title>
+                <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
 
-    <v-card-title id="title"> {{school.name}} </v-card-title>
+                <v-card-actions>
+                <v-btn color=#184725 text> VISIT </v-btn>
 
-    <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
+                </v-card-actions>
 
-    <v-card-actions>
-      <v-btn color=#184725 text> VISIT </v-btn>
-
-    </v-card-actions>
-
-  </v-card>
-  </template>
-  </v-hover>
-  </v-flex>
-  </v-layout>
-  </v-container>
+              </v-card>
+           </template>
+          </v-hover>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 
 
@@ -92,5 +91,9 @@ h1{
         text-align: left;
         font-family: Roboto;
         font-size: 15px;
+}
+
+#card{
+        border-radius:20px;
 }
 </style>
