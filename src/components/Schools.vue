@@ -7,7 +7,7 @@
   <v-layout row wrap>
   <v-flex v-for="school in schools" :key="school.name">
           
-  <v-card class="mx-auto" max-width="500">
+  <v-card class="mx-auto" max-width="500" max-height="400">
   <v-responsive class="pt-3"> </v-responsive>
     <v-img :src="school.img" height="200px"> </v-img>
 
