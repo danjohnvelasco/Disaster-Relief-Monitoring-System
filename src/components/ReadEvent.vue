@@ -4,7 +4,7 @@
 
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
-        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{last_updated}}</h3>
+        <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
         <h2 class="headline mb-2 text-center">General Information</h2>
         <v-card >
           <table>
@@ -191,7 +191,6 @@ export default {
   data(){
     return{
       disaster: {},
-      last_updated: '',
       colors: [
         'indigo',
         'warning',
@@ -233,31 +232,20 @@ export default {
     //   })
     // })
 
-    // grabs last updated date
+    // grabs latest data in history subcollection
     db.collection('disasters2')
-      .doc('4bfdClVX0RjBeFN8Fqp6').get().then(doc =>{
-        if (doc){
-          this.last_updated = this.timestampToDate(doc.data().last_updated)
-        } else{
-          console.log('no last updated date found')
-        }
-      }).catch(err =>{
-        console.log("Error: " + err)
+      .doc('K03ir5XbyRDepBz69fCd')
+      .collection('history').orderBy('created_at').get().then(doc =>{
+          if (doc){
+            this.disaster = doc.docs.slice(-1)[0].data()
+            this.disaster.created_at = this.timestampToDate(this.disaster.created_at)
+          } else{
+            console.log('no doc found')
+          }
+        }).catch(err =>{
+          console.log("Error: " + err)
       })
-
-    // grabs disaster data
-    db.collection('disasters2')
-      .doc('4bfdClVX0RjBeFN8Fqp6')
-      .collection('history')
-      .doc('ah9YvemaMvV2nyn7Mz9M').get().then(doc =>{
-        if (doc){
-          this.disaster = doc.data()
-        } else{
-          console.log('no doc found')
-        }
-      }).catch(err =>{
-        console.log("Error: " + err)
-      })
+      
   }
  
 }
