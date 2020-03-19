@@ -205,7 +205,7 @@
         <v-btn 
           v-if="editing === true"
           color="primary" 
-          @click="create"
+          @click="update"
         > 
           Update
         </v-btn>
@@ -308,7 +308,34 @@
         }
       },
       update() {
+        if (this.$refs.form.validate()) {
+          console.log(JSON.stringify(this.disaster, null, 2));
 
+          // Create doc with auto-id
+          var dummy_id = 'K03ir5XbyRDepBz69fCd';
+          var doc = db.collection("disasters2").doc(dummy_id);
+          var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+          // Add top level data
+          doc.set({
+            last_updated: timestamp
+          }).then(() => {
+            console.log("Top level success: ", doc.id);
+          }).catch(function(error) {
+            console.error("Error adding top level data: ", error);
+          });
+
+          // Add created_at field in disaster object
+          this.disaster.created_at = timestamp;
+          
+          // Create subcollection and create document
+          doc.collection("history").add(this.disaster)
+          .then((docRef) => {
+            console.log("Subcollection success", docRef.id);
+          }).catch(function(error) {
+            console.error("Error adding document: ", error);
+          });
+        }
       },
       addItem() {
         if (this.item) {
