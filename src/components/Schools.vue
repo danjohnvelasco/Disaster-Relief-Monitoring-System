@@ -4,6 +4,7 @@
   
     <v-container id="schoolcard">
       <v-layout row wrap>
+        
         <v-flex sm8 md6 lg6 xl2 v-for="school in schools" :key="school.name">
           <v-hover>
             <template v-slot="{ hover }">               
@@ -93,6 +94,6 @@ h1{
 
 #card{
         border-radius:20px;
-        padding: 10px 0px;
+        margin: 10px;
 }
 </style>
