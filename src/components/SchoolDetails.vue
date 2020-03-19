@@ -9,12 +9,10 @@
 <script>
   export default {
   data() {
-    return {
-      schools: [
-      ]
-    }
-  }
+
+    } 
 }
+
 </script>
 
 <style scoped>
