@@ -1,6 +1,6 @@
 <template>
   <div class="schools">
-  <h1 class="subheading grey--text">List of Schools</h1>
+  <h1 align="center" class="subheading grey--text">List of Schools</h1>
   
   <v-container class="my-16">
   
