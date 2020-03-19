@@ -1,7 +1,7 @@
 <template>
-    <nav>
-      <v-app-bar flat light dense>
-      <v-btn text color="darkgrey" class="px-2">
+  <div class="root">
+    <v-app-bar flat light dense>
+      <v-btn text color="darkgrey" class="px-2" to="/">
         <v-icon small class="pr-2" color="darkgrey">mdi-handshake</v-icon>
           <v-toolbar-title class="pr-3 darkgrey--text">
             <span class="font-weight-light">LS</span>
@@ -24,16 +24,32 @@
         <v-icon small class="pr-2">mdi-comment-question</v-icon>
         <span class="font-weight-light">About</span>
       </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn depressed medium @click="toggleForm">Add event</v-btn>
     </v-app-bar>
-  </nav>
+    <!--Event Form Dialog-->
+    <v-dialog v-model="dialog" scrollable persistent>
+      <EventForm @close="toggleForm"></EventForm>
+    </v-dialog>
+  </div>
 </template>
     
 <script>
+import EventForm from '@/components/EventForm'
+
 export default {
-    data() {
-      return {
-        
-      }
+  components: {
+    EventForm
+  },
+  data() {
+    return {
+      dialog: false
     }
+  },
+  methods: {
+    toggleForm() {
+      this.dialog = !this.dialog;
+    }
+  } 
 }
 </script>
