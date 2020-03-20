@@ -51,6 +51,7 @@
             rows="4"
             label="Remarks (optional)"
           ></v-textarea>
+          <v-file-input v-model="files" chips multiple outlined label="Click to upload photos (optional)"></v-file-input>
           <!--Optional data fields starts here-->
           <v-subheader>Optional Data</v-subheader>
           <v-expansion-panels>
@@ -220,7 +221,7 @@
 </template>
 
 <script>
-  import db from '@/firebase/init'
+  import {db, storage} from '@/firebase/init'
   import firebase from 'firebase/app'
 
   export default {
@@ -237,6 +238,7 @@
       }
     },
     data: () => ({
+      files: null,
       valid: true,
       required_lettersOnly: [
         v => !!v || 'This field is required',
@@ -287,6 +289,8 @@
 
           // Add top level data
           doc.set({
+            title: this.disaster.title,
+            type: this.disaster.type,
             last_updated: timestamp,
             archived: false
           }).then(() => {
@@ -305,6 +309,11 @@
           }).catch(function(error) {
             console.error("Error adding document: ", error);
           });
+
+          // Upload images
+          if (this.files !== null) {
+            this.upload(doc.id);
+          }
         }
       },
       update() {
@@ -312,12 +321,14 @@
           console.log(JSON.stringify(this.disaster, null, 2));
 
           // Create doc with auto-id
-          var dummy_id = 'K03ir5XbyRDepBz69fCd';
+          var dummy_id = '1KXrPC5KV6AMUc9ILSci';
           var doc = db.collection("disasters2").doc(dummy_id);
           var timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
           // Add top level data
           doc.set({
+            title: this.disaster.title,
+            type: this.disaster.type,
             last_updated: timestamp
           }).then(() => {
             console.log("Top level success: ", doc.id);
@@ -335,6 +346,11 @@
           }).catch(function(error) {
             console.error("Error adding document: ", error);
           });
+
+          // Upload images (this might not be the best UX decision)
+          if (this.files !== null) {
+            this.upload(doc.id);
+          } 
         }
       },
       addItem() {
@@ -359,6 +375,22 @@
       },
       closeForm() { // emits close event to parent component
         this.$emit('close');
+      },
+      upload(doc_id) { // add doc_id parameter here, call it from create() and update()
+        console.log(this.files);
+        // Loop through files
+        var files = Object.values(this.files);
+        files.forEach((file) => {
+          // Create storage ref
+          var storageRef = storage.ref(`${doc_id}/${file.name}`);
+          // Upload file
+          storageRef.put(file)
+          .then((ref) => {
+            console.log('Upload success ', ref);
+          });
+        });
+        // Reset files
+        this.files = null;
       }
     },
     created() { // receives the data (if it exists) from parent component --only applies to editing
