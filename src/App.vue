@@ -1,7 +1,6 @@
   <template>
   <v-app>
     <Navbar/>
-    <div class="my-8"></div>
     <v-content>
       <router-view></router-view>
     </v-content>
