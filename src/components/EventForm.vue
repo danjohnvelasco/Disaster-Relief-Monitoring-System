@@ -272,7 +272,8 @@
         evac_fam_inside: null,
         evac_indiv_inside: null,
         damage_cost: null,
-        structures_damaged: null
+        structures_damaged: null,
+        img_urls: []
       },
       item: null,
       spec: null,
@@ -301,6 +302,11 @@
 
           // Add created_at field in disaster object
           this.disaster.created_at = timestamp;
+
+          // Upload images
+          if (this.files !== null) {
+            this.upload(doc.id);
+          }
           
           // Create subcollection and create document
           doc.collection("history").add(this.disaster)
@@ -309,11 +315,6 @@
           }).catch(function(error) {
             console.error("Error adding document: ", error);
           });
-
-          // Upload images
-          if (this.files !== null) {
-            this.upload(doc.id);
-          }
         }
       },
       update() {
@@ -338,6 +339,11 @@
 
           // Add created_at field in disaster object
           this.disaster.created_at = timestamp;
+
+          // Upload images (this might not be the best UX decision)
+          if (this.files !== null) {
+            this.upload(doc.id);
+          } 
           
           // Create subcollection and create document
           doc.collection("history").add(this.disaster)
@@ -346,11 +352,6 @@
           }).catch(function(error) {
             console.error("Error adding document: ", error);
           });
-
-          // Upload images (this might not be the best UX decision)
-          if (this.files !== null) {
-            this.upload(doc.id);
-          } 
         }
       },
       addItem() {
@@ -376,10 +377,19 @@
       closeForm() { // emits close event to parent component
         this.$emit('close');
       },
+      saveImageNames(files){ 
+        files.forEach((file)=>{
+          console.log('file name: ' + file.name);
+          this.disaster.img_urls.push({file_name: file.name});
+        });
+      }
       upload(doc_id) { // add doc_id parameter here, call it from create() and update()
         console.log(this.files);
         // Loop through files
         var files = Object.values(this.files);
+        // Store filename in img_urls array
+        saveImageNames(files);
+        
         files.forEach((file) => {
           // Create storage ref
           var storageRef = storage.ref(`${doc_id}/${file.name}`);
@@ -389,6 +399,7 @@
             console.log('Upload success ', ref);
           });
         });
+        
         // Reset files
         this.files = null;
       }
