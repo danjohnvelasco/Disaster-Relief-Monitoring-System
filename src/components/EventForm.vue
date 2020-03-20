@@ -382,14 +382,14 @@
           console.log('file name: ' + file.name);
           this.disaster.img_urls.push({file_name: file.name});
         });
-      }
+      },
       upload(doc_id) { // add doc_id parameter here, call it from create() and update()
         console.log(this.files);
         // Loop through files
         var files = Object.values(this.files);
         // Store filename in img_urls array
         saveImageNames(files);
-        
+
         files.forEach((file) => {
           // Create storage ref
           var storageRef = storage.ref(`${doc_id}/${file.name}`);
