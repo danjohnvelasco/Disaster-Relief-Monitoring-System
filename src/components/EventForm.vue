@@ -273,7 +273,7 @@
         evac_indiv_inside: null,
         damage_cost: null,
         structures_damaged: null,
-        img_urls: []
+        img_URLs: []
       },
       item: null,
       spec: null,
@@ -380,7 +380,7 @@
       saveImageNames(files){ 
         files.forEach((file)=>{
           console.log('file name: ' + file.name);
-          this.disaster.img_urls.push({file_name: file.name});
+          this.disaster.img_URLs.push(file.name);
         });
       },
       upload(doc_id) { // add doc_id parameter here, call it from create() and update()
@@ -388,7 +388,7 @@
         // Loop through files
         var files = Object.values(this.files);
         // Store filename in img_urls array
-        saveImageNames(files);
+        this.saveImageNames(files);
 
         files.forEach((file) => {
           // Create storage ref
