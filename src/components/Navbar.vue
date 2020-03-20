@@ -14,8 +14,12 @@
         <v-icon small class="pr-2 caption">mdi-view-dashboard</v-icon>
         <span class="font-weight-light">Dashboard</span>
       </v-btn>
+<<<<<<< HEAD
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/schools">
+=======
+      <v-btn text color="darkgrey" class="px-2" href="/schools">
+>>>>>>> 35ca0c324bd1069e21c39cd479eadef230d5ed28
         <v-icon small class="pr-2">mdi-school</v-icon>
         <span class="font-weight-light">Schools</span>
       </v-btn>
@@ -24,8 +28,12 @@
         <v-icon small class="pr-2">mdi-newspaper-variant-multiple</v-icon>
         <span class="font-weight-light">Bulletin</span>
       </v-btn>
+<<<<<<< HEAD
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/about">
+=======
+      <v-btn text color="darkgrey" class="px-2" href="/about">
+>>>>>>> 35ca0c324bd1069e21c39cd479eadef230d5ed28
         <v-icon small class="pr-2">mdi-comment-question</v-icon>
         <span class="font-weight-light">About</span>
       </v-btn>
