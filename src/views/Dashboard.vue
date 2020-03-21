@@ -5,9 +5,7 @@
         <DisasterEvents/>
       </v-col>
       <v-col class="col-md-9 col-lg-9 mb-9">
-        <v-card dark height="90%" width="100%">
           <ReadEvent/>
-        </v-card>
       </v-col>
     </v-row>
   </v-app>
