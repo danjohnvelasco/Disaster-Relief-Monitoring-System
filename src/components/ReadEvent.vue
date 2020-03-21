@@ -102,42 +102,7 @@
             </v-card>
           </v-col>
         </v-row>
-        
-       <!--
-        <v-row wrap class="ml-4 mr-4">
 
-          <v-col cols="12" align="center">
-            <v-card class="text-center" width='600'>
-            <v-card-text class="title pt-0">Cash:</v-card-text>
-            <v-card-text align="left" width="400"><pre>{{disaster.donation_details}}</pre></v-card-text>
-              
-            </v-card>
-          </v-col>
-
-        </v-row>
-
-          <v-container style="width: 400px">
-            <v-card-text>Cash Donations</v-card-text>
-            <v-card-text align="left" width="400"><pre>{{disaster.donation_details}}</pre></v-card-text>
-          </v-container>
-
-          <v-container>
-            <v-card-text>In-kind Donations</v-card-text>
-            <v-list>
-            <v-list-item-group>
-            
-            </v-list-item-group>
-            
-              <v-list-item selectable>Item #1</v-list-item>
-              <v-list-item>Item #2</v-list-item>
-              <v-list-item>Item #2</v-list-item>
-            </v-list>
-
-           
-          </v-container>
-        -->
-
-      
       </v-container>
 
       <v-container id="gallery" v-if="file_URLs != undefined && file_URLs.length > 0">
@@ -173,6 +138,7 @@
             </tbody>
           </v-simple-table>
         </v-card>
+        
       </v-container>
     
     </v-content>
