@@ -102,81 +102,43 @@
             </v-card>
           </v-col>
         </v-row>
-        
-       <!--
-        <v-row wrap class="ml-4 mr-4">
 
-          <v-col cols="12" align="center">
-            <v-card class="text-center" width='600'>
-            <v-card-text class="title pt-0">Cash:</v-card-text>
-            <v-card-text align="left" width="400"><pre>{{disaster.donation_details}}</pre></v-card-text>
-              
-            </v-card>
-          </v-col>
-
-        </v-row>
-
-          <v-container style="width: 400px">
-            <v-card-text>Cash Donations</v-card-text>
-            <v-card-text align="left" width="400"><pre>{{disaster.donation_details}}</pre></v-card-text>
-          </v-container>
-
-          <v-container>
-            <v-card-text>In-kind Donations</v-card-text>
-            <v-list>
-            <v-list-item-group>
-            
-            </v-list-item-group>
-            
-              <v-list-item selectable>Item #1</v-list-item>
-              <v-list-item>Item #2</v-list-item>
-              <v-list-item>Item #2</v-list-item>
-            </v-list>
-
-           
-          </v-container>
-        -->
-
-      
       </v-container>
 
-      <v-container id="gallery">
+      <v-container id="gallery" v-if="file_URLs != undefined && file_URLs.length > 0">
 
         <h2 class="headline text-center">Gallery</h2>
-          <v-container class='pl-5 pr-5 pb-5'>
-            <v-carousel
-              cycle
-              height="400"
-              hide-delimiter-background
-              show-arrows-on-hover
-            >
-              <v-carousel-item
-                v-for="(slide, i) in slides"
-                :key="i"
-              >
-                <v-sheet
-                  :color="colors[i]"
-                  height="100%"
-                >
-                  <v-row
-                    class="fill-height"
-                    align="center"
-                    justify="center"
-                  >
-                    <div class="display-3">{{ slide }} Slide</div>
-                  </v-row>
-                </v-sheet>
+          <v-container class='pl-5 pr-5 pb-5 text-center'>
+            <v-carousel cycle height="auto" style="width: 700px; margin: auto;" hide-delimiter-background show-arrows-on-hover>
+              <v-carousel-item v-for="(link, i) in file_URLs" :key="i" :src="link">
               </v-carousel-item>
             </v-carousel>
           </v-container>
       
       </v-container>
 
-      <v-container id="graphs">
+      <v-container id="historical_data" >
 
-        <h2 class="headline text-center">Historical Graphs</h2>
-
-      
+        <h2 class="headline text-center">Historical Data</h2>
+        <v-card style="width: 800px; margin: auto;" class="mt-4">
+          <v-simple-table class="">
+            <thead>
+              <tr>
+                <th class="">Date</th>
+                <th class="">Individuals Affected</th>
+                <th class="">Families Affected</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(data, i) in history" :key="i">
+                <td>{{data.date}}</td>
+                <td>{{data.indiv_affected}}</td>
+                <td>{{data.fam_affected}}</td>
+              </tr>
+            </tbody>
+          </v-simple-table>
+        </v-card>
+        
       </v-container>
     
     </v-content>
@@ -191,22 +153,9 @@ export default {
   data(){
     return{
       disaster: {},
-      dummy_id: 'TL0eW1n3Waa7ZZgn2wxO',
+      dummy_id: '1KXrPC5KV6AMUc9ILSci',
       file_URLs: [],
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
-      slides: [
-        'Filler',
-        'Filler',
-        'Filler',
-        'Filler',
-        'Filler',
-      ]
+      history: []
     }
   },
   methods: {
@@ -228,6 +177,20 @@ export default {
         })
       })
       console.log(this.file_URLs)
+    },
+    getHistoricalData: function(list){
+      var historical_data = {
+        date: '',
+        indiv_affected: '',
+        fam_affected: ''
+      }
+      list.forEach((disaster) => {
+        historical_data.date = this.timestampToDate(disaster.data().created_at)
+        historical_data.indiv_affected = disaster.data().indiv_affected
+        historical_data.fam_affected = disaster.data().fam_affected
+        this.history.push(historical_data)
+        historical_data = {}
+      })
     }
   },
   
@@ -236,12 +199,17 @@ export default {
       .doc(this.dummy_id)
       .collection('history').orderBy('created_at').get().then(doc =>{
           if (doc){
+            // rearranges disaster historical data array into latest first
+            var disaster_data = doc.docs.reverse()
             // grabs latest data in history subcollection
-            this.disaster = doc.docs.slice(-1)[0].data()
+            this.disaster = disaster_data[0].data()
             // converts timestamp data type into Date
             this.disaster.created_at = this.timestampToDate(this.disaster.created_at)
             // converts image URLs to download URLs and transfers to file_URLs array
-            this.getImageURLs(this.disaster.img_URLs)
+            if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
+              this.getImageURLs(this.disaster.img_URLs)
+            // gets historical data of disaster event
+            this.getHistoricalData(disaster_data)
           } else{
             console.log('no doc found')
           }
