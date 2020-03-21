@@ -16,7 +16,7 @@
                 <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
 
                 <v-card-actions>
-                <v-btn color=#184725 href="../#/school-details" text> VISIT </v-btn>
+                <v-btn color=#184725 to="/school-details" text> VISIT </v-btn>
 
                 </v-card-actions>
 

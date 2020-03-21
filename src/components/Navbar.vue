@@ -33,7 +33,7 @@
     </v-app-bar>
     <!--Event Form Dialog-->
     <v-dialog v-model="dialog" scrollable persistent>
-      <EventForm @close="toggleForm"></EventForm>
+      <EventForm v-if="dialog" @close="toggleForm"></EventForm>
     </v-dialog>
     <div class="py-8"></div>
   </div>
