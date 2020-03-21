@@ -11,6 +11,61 @@
             </v-list-item-content>
           </v-list-item>
         </v-card>
+
+        <v-card width='auto' class="mb-6 mx-4">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline">{{disaster.created_at}}</div>
+              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
+              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+        <v-card width='auto' class="mb-6 mx-4">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline">{{disaster.created_at}}</div>
+              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
+              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+        <v-card width='auto' class="mb-6 mx-4">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline">{{disaster.created_at}}</div>
+              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
+              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+        <v-card width='auto' class="mb-6 mx-4">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline">{{disaster.created_at}}</div>
+              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
+              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+        <v-card width='auto' class="mb-6 mx-4">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline">{{disaster.created_at}}</div>
+              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
+              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+        <v-card width='auto' class="mb-6 mx-4">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline">{{disaster.created_at}}</div>
+              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
+              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
       </v-navigation-drawer>
   </v-app>
 </template>
@@ -48,18 +103,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 ::-webkit-scrollbar {
   width: 5px;
-  border-radius: 10px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: rgb(165, 165, 165); 
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: rgb(100, 100, 100); 
 }
 </style>
