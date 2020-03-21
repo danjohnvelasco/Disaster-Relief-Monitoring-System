@@ -2,6 +2,7 @@
   <v-app>
       <v-navigation-drawer clipped floating fixed width="25%" class="pt-12">
         <h2 class="headline mx-6 mt-8 mb-4">Disaster Events</h2>
+
         <v-card width='auto' class="mb-6 mx-4">
           <v-list-item three-line>
             <v-list-item-content>
@@ -11,6 +12,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-card>
+
       </v-navigation-drawer>
   </v-app>
 </template>
@@ -47,3 +49,18 @@ export default {
   }
 }
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(165, 165, 165); 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 100, 100); 
+}
+</style>
