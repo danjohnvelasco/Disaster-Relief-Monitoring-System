@@ -16,10 +16,12 @@
                 <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
 
                 <v-card-actions>
-                <v-btn color=#184725 @click="toggleInfo" text> VISIT </v-btn>
-                        <v-dialog v-model="dialog" scrollable persistent>
-                        <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails>
-                        </v-dialog>
+                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+                <template v-slot:activator="{ on }">
+                <v-btn color=#184725 @click="toggleInfo"  dark v-on="on"> VISIT </v-btn>
+                </template>      
+                        <!-- <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails> -->
+                </v-dialog>
                 </v-card-actions>
 
               </v-card>
@@ -33,12 +35,12 @@
 </template>
 
 <script>
-import SchoolDetails from '@/components/SchoolDetails'
+// import SchoolDetails from '@/components/SchoolDetails'
 
   export default {
-  components: {
-    SchoolDetails
-  },
+//   components: {
+//     SchoolDetails
+//   },
   data() {
     return {
       schools: [
