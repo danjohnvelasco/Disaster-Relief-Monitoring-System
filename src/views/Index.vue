@@ -2,7 +2,7 @@
   <div class="home">
       <v-btn depressed medium @click="toggleEdit()">Edit</v-btn>
       <v-dialog v-model="dialog" scrollable persistent>
-        <EventForm @close="toggleEdit" :populateWith="disaster" :editing="editing"></EventForm>
+        <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing"></EventForm>
       </v-dialog>
   </div>
 </template>
