@@ -143,29 +143,9 @@
       <v-container id="gallery">
 
         <h2 class="headline text-center">Gallery</h2>
-          <v-container class='pl-5 pr-5 pb-5'>
-            <v-carousel
-              cycle
-              height="400"
-              hide-delimiter-background
-              show-arrows-on-hover
-            >
-              <v-carousel-item
-                v-for="(slide, i) in slides"
-                :key="i"
-              >
-                <v-sheet
-                  :color="colors[i]"
-                  height="100%"
-                >
-                  <v-row
-                    class="fill-height"
-                    align="center"
-                    justify="center"
-                  >
-                    <div class="display-3">{{ slide }} Slide</div>
-                  </v-row>
-                </v-sheet>
+          <v-container class='pl-5 pr-5 pb-5 text-center'>
+            <v-carousel cycle height="auto" style="width: 700px; margin: auto;" hide-delimiter-background show-arrows-on-hover>
+              <v-carousel-item v-for="(link, i) in file_URLs" :key="i" :src="link">
               </v-carousel-item>
             </v-carousel>
           </v-container>
