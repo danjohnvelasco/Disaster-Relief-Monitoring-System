@@ -16,8 +16,10 @@
                 <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
 
                 <v-card-actions>
-                <v-btn color=#184725 to="/school-details" text> VISIT </v-btn>
-
+                <v-btn color=#184725 @click="toggleInfo" text> VISIT </v-btn>
+                        <v-dialog v-model="dialog" scrollable persistent>
+                        <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails>
+                        </v-dialog>
                 </v-card-actions>
 
               </v-card>
@@ -31,7 +33,12 @@
 </template>
 
 <script>
+import SchoolDetails from '@/components/SchoolDetails'
+
   export default {
+  components: {
+    SchoolDetails
+  },
   data() {
     return {
       schools: [
@@ -69,7 +76,13 @@
                 img:'https://miro.medium.com/max/3840/1*s0F0i9hHCwc756pbaYCWrQ.png'},
       ]
     }
-  }
+  },
+
+   methods: {
+    toggleInfo() {
+      this.dialog = !this.dialog;
+    }
+  } 
 }
 </script>
 
