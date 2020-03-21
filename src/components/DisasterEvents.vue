@@ -2,15 +2,6 @@
   <v-app>
       <v-navigation-drawer clipped floating fixed width="25%" class="pt-12">
         <h2 class="headline mx-6 mt-8 mb-4">Disaster Events</h2>
-        <v-card width='auto' class="mb-6 mx-4">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline">{{disaster.created_at}}</div>
-              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
-              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
 
         <v-card width='auto' class="mb-6 mx-4">
           <v-list-item three-line>
@@ -21,51 +12,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-card>
-        <v-card width='auto' class="mb-6 mx-4">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline">{{disaster.created_at}}</div>
-              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
-              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-        <v-card width='auto' class="mb-6 mx-4">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline">{{disaster.created_at}}</div>
-              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
-              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-        <v-card width='auto' class="mb-6 mx-4">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline">{{disaster.created_at}}</div>
-              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
-              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-        <v-card width='auto' class="mb-6 mx-4">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline">{{disaster.created_at}}</div>
-              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
-              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-        <v-card width='auto' class="mb-6 mx-4">
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline">{{disaster.created_at}}</div>
-              <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
-              <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
+
       </v-navigation-drawer>
   </v-app>
 </template>
