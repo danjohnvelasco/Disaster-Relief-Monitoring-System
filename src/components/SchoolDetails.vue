@@ -16,7 +16,7 @@
       </v-col>
       <v-col class="col-md-8 col-lg-8 mb-8">
         <v-container id="info">
-          <h1 id="schoolname"> {{school.name}} </h1>
+          <h1 id="schoolname"> School Name </h1>
           <v-divider></v-divider>
           <br> <br>
           <p>
