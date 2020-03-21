@@ -184,13 +184,15 @@
 </template>
 
 <script>
-import {db} from '@/firebase/init'
+import {db, storage } from '@/firebase/init'
 
 export default {
 
   data(){
     return{
       disaster: {},
+      dummy_id: 'TL0eW1n3Waa7ZZgn2wxO',
+      file_URLs: [],
       colors: [
         'indigo',
         'warning',
@@ -212,40 +214,40 @@ export default {
       var date = timestamp.toDate()
       var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
       return newdate
+    },
+    getImageURLs: function (files){
+      // create storage reference
+      var storageRef = storage.ref()
+      // create child reference, which points to 'disaster_id' folder
+      var imageRef = storageRef.child(this.dummy_id)
+      // pushes each image download URL to file_URLs array
+      files.forEach((file_name) => {
+        imageRef.child(file_name).getDownloadURL().then((link) =>{
+          this.file_URLs.push(link)
+          console.log(link)
+        })
+      })
+      console.log(this.file_URLs)
     }
   },
   
   created(){
-    // real-time listener
-    // db.collection('disasters2').onSnapshot(res =>{
-    //   const changes = res.docChanges()
-
-    //   changes.forEach(change =>{
-    //     if (change.type  === 'added'){
-    //       this.disasters.push({
-    //         ...change.doc.data()
-    //       })
-    //     }
-    //   })
-    //   this.disasters.forEach(disaster =>{
-    //     console.log(disaster.archived)
-    //   })
-    // })
-
-    // grabs latest data in history subcollection
     db.collection('disasters2')
-      .doc('K03ir5XbyRDepBz69fCd')
+      .doc(this.dummy_id)
       .collection('history').orderBy('created_at').get().then(doc =>{
           if (doc){
+            // grabs latest data in history subcollection
             this.disaster = doc.docs.slice(-1)[0].data()
+            // converts timestamp data type into Date
             this.disaster.created_at = this.timestampToDate(this.disaster.created_at)
+            // converts image URLs to download URLs and transfers to file_URLs array
+            this.getImageURLs(this.disaster.img_URLs)
           } else{
             console.log('no doc found')
           }
         }).catch(err =>{
           console.log("Error: " + err)
       })
-      
   }
  
 }
