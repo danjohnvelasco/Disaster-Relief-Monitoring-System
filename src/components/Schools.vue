@@ -1,8 +1,8 @@
 <template>
-  <div class="schools">
+  <div class="schools" align="center">
     <h1>List of Schools</h1>
   
-    <v-container id="schoolcard" align="center">
+    <v-container id="schoolcard">
       <v-layout row wrap>
         
         <v-flex sm8 md6 lg6 xl2 v-for="school in schools" :key="school.name">
@@ -20,7 +20,7 @@
                 <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info">
                 <template v-slot:activator="{ on }">
                 
-                <v-btn id="vbt" color=#184725 @click="toggleInfo"  dark v-on="on"> VISIT </v-btn>
+                <v-btn id="vbt" color=#184725 @click="toggleInfo" dark v-on="on"> VISIT </v-btn>
                 </template>      
                         <!-- <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails> -->
               
