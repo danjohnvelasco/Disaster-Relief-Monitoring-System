@@ -1,5 +1,5 @@
 <template>
-  <div class="schools" align="center">
+  <div class="schools">
     <h1>List of Schools</h1>
   
     <v-container id="schoolcard">
@@ -19,18 +19,17 @@
                 <!-- <v-card-actions> -->
                 <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info">
                 <template v-slot:activator="{ on }">
-                <v-btn color=#184725 @click="toggleInfo"  dark v-on="on"> VISIT </v-btn>
+                
+                <v-btn id="vbt" color=#184725 @click="toggleInfo"  dark v-on="on"> VISIT </v-btn>
                 </template>      
                         <!-- <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails> -->
               
                 <!-- SCHOOL INFO   -->
                 <v-card class="body" id="body">
-                <v-toolbar id="toolbar">
-                <!-- <v-btn icon dark @click="dialog = false">
-                <v-icon>mdi-close</v-icon>
-                </v-btn> -->
 
-                <v-btn @click="closeForm"> Close </v-btn>
+                <v-toolbar id="toolbar">
+                        
+                 <v-btn @click="closeForm"> CLOSE </v-btn>
                 
                 </v-toolbar>
 
@@ -38,7 +37,7 @@
                 <v-col align="center" class="col-md-4 col-lg-4 mb-4">
                         <v-container id="short_intro">
                         <v-layout column align-center>
-                        <v-img :src="school.logo" height="270px" width="27 0px"> </v-img>
+                        <v-img :src="school.logo" height="270px" width="270px"> </v-img>
                         </v-layout>
                         <h1> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
@@ -50,7 +49,7 @@
                         <h5>{{school.address}} </h5>
                         </v-container>
                 </v-col>
-                <v-col class="col-md-7 col-lg-7 mb-7">
+                <v-col class="col-md-6 col-lg-6 mb-6">
                         <v-container id="info">
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
@@ -239,11 +238,6 @@
       ]
     }
   },
-  methods: {
-        closeForm() { // emits close event to parent component
-        this.$emit('close');
-      },        
-  }
 }
 </script>
 
