@@ -43,7 +43,6 @@ export default {
         .then((snapshot) => {
         snapshot.forEach((doc) => {
           var disaster = doc.data();
-          console.log(disaster);
           disaster.id = doc.id;
           disaster.last_updated = this.timestampToDate(disaster.last_updated);
           this.disasters.push(disaster);
