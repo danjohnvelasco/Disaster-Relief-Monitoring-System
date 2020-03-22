@@ -36,15 +36,17 @@ export default {
     }
   },
   created(){
-      db.collection("disasters2").where("archived", "==", false)
+      db.collection("disasters2")
+        .where("archived", "==", false)
+        .orderBy('last_updated', 'desc')
         .get()
         .then((snapshot) => {
         snapshot.forEach((doc) => {
           var disaster = doc.data();
+          console.log(disaster);
           disaster.id = doc.id;
           disaster.last_updated = this.timestampToDate(disaster.last_updated);
           this.disasters.push(disaster);
-          //console.log(doc.id, " => ", doc.data());
         });
         })
         .catch((error) => {

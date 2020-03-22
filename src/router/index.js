@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Index',
-    component: () => import('../views/Index.vue')
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue')
   },
   {
     path: '/about',
@@ -19,11 +19,7 @@ const routes = [
     name: 'Disaster Event',
     component: () => import('../components/ReadEvent.vue')
   },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue')
-  },
+  
   {
     path: '/schools',
     name: 'List of Schools',

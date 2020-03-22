@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <v-content class="ml-2">
-
+      <!--EventForm edit mode dialog-->
+      <v-btn depressed medium @click="toggleEdit()">Edit</v-btn>
+      <v-dialog v-model="dialog" scrollable persistent>
+        <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing"></EventForm>
+      </v-dialog>
+      <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
         <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
@@ -147,18 +152,33 @@
 
 <script>
 import {db, storage } from '@/firebase/init'
+import EventForm from '@/components/EventForm'
 
 export default {
+  components: {
+    EventForm
+  },
   data(){
     return{
       disaster: {},
       dummy_id: '1KXrPC5KV6AMUc9ILSci',
       file_URLs: [],
-      history: []
+      history: [],
+      dialog: false,
+      editing: false,
     }
   },
   props: ['doc_id'],
+  watch: {
+    doc_id(newVal) {
+      this.getData(newVal);
+    }
+  },
   methods: {
+    toggleEdit: function () {
+      this.editing = !this.editing;
+      this.dialog = !this.dialog;
+    },
     timestampToDate: (timestamp) => {
       var date = timestamp.toDate()
       var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
@@ -191,12 +211,10 @@ export default {
         this.history.push(historical_data)
         historical_data = {}
       })
-    }
-  },
-  
-  created(){
-    db.collection('disasters2')
-      .doc(this.dummy_id)
+    },
+    getData: function (doc_id) {
+      db.collection('disasters2')
+      .doc(doc_id)
       .collection('history').orderBy('created_at').get().then(doc =>{
           if (doc){
             // rearranges disaster historical data array into latest first
@@ -216,6 +234,11 @@ export default {
         }).catch(err =>{
           console.log("Error: " + err)
       })
+    }
+  },
+  
+  created() {
+    this.getData(this.doc_id);
   }
  
 }
