@@ -4,7 +4,7 @@
       <!--EventForm edit mode dialog-->
       <v-btn depressed medium @click="toggleEdit()">Edit</v-btn>
       <v-dialog v-model="dialog" scrollable persistent>
-        <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing"></EventForm>
+        <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing" :doc_id="doc_id"></EventForm>
       </v-dialog>
       <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
