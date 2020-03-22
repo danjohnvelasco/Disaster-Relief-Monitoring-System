@@ -195,13 +195,13 @@ export default {
       // create child reference, which points to 'disaster_id' folder
       var imageRef = storageRef.child(doc_id)
       // pushes each image download URL to file_URLs array
-      files.forEach((file_name) => {
-        imageRef.child(file_name).getDownloadURL().then((link) =>{
+      files.forEach((file) => {
+        imageRef.child(file).getDownloadURL().then((link) =>{
           this.file_URLs.push(link)
-          console.log(link)
+        }).catch(err =>{
+          console.log('Image Error: ' + err)
         })
       })
-      console.log(this.file_URLs)
     },
     getHistoricalData: function(list){
       var historical_data = {
