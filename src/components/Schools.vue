@@ -17,25 +17,28 @@
 
                 <!-- FULL SCREEN -->                
                 <!-- <v-card-actions> -->
-                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info">
                 <template v-slot:activator="{ on }">
                 <v-btn color=#184725 @click="toggleInfo"  dark v-on="on"> VISIT </v-btn>
                 </template>      
                         <!-- <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails> -->
               
                 <!-- SCHOOL INFO   -->
-                <v-card class="info">
-                <v-toolbar dark color="primary">
-                <v-btn icon dark @click="dialog = false">
+                <v-card class="body" id="body">
+                <v-toolbar id="toolbar">
+                <!-- <v-btn icon dark @click="dialog = false">
                 <v-icon>mdi-close</v-icon>
-                </v-btn>
+                </v-btn> -->
+
+                <v-btn @click="closeForm"> Close </v-btn>
+                
                 </v-toolbar>
 
                 <v-row>
-                <v-col class="col-md-2 col-lg-2 mb-2">
+                <v-col align="center" class="col-md-4 col-lg-4 mb-4">
                         <v-container id="short_intro">
                         <v-layout column align-center>
-                        <v-img :src="school.logo" height="300px" width="300px"> </v-img>
+                        <v-img :src="school.logo" height="270px" width="27 0px"> </v-img>
                         </v-layout>
                         <h1> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
@@ -236,6 +239,11 @@
       ]
     }
   },
+  methods: {
+        closeForm() { // emits close event to parent component
+        this.$emit('close');
+      },        
+  }
 }
 </script>
 
@@ -269,5 +277,13 @@ h1{
 
 #schoolname{
   text-align: left;
+}
+
+#toolbar{
+  background-color:#427f50;
+}
+
+#info, #body{
+  background-color:#f2f5eb;
 }
 </style>
