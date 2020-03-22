@@ -2,7 +2,7 @@
   <div class="schools">
     <h1>List of Schools</h1>
   
-    <v-container id="schoolcard">
+    <v-container id="schoolcard" align="center">
       <v-layout row wrap>
         
         <v-flex sm8 md6 lg6 xl2 v-for="school in schools" :key="school.name">
@@ -54,6 +54,7 @@
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
                         <br> <br>
+                        <h2> Contact Details </h2>
                         <p>
                         {{school.info}}
                         </p>
@@ -233,7 +234,7 @@
                 contactperson:'Mr. Ros Aldersey',
                 email:'usls@dlsu.edu.ph',
                 webpage:'www.usls.edu.ph/',
-                address:'La Salle Avenue, Bacolod 6100,Negros Occidental',
+                address:'La Salle Avenue, Bacolod 6100, Negros Occidental',
                 info:'XD',},
       ]
     }
@@ -247,6 +248,12 @@ h1{
         font-family: Garamond;
         color: #184725;
         padding: 20px 0 20px 0;
+}
+
+h2{
+        text-align: left;
+        font-family: Garamond;
+        color: #184725;
 }
 
 #title{
