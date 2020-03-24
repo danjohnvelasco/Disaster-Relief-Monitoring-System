@@ -29,7 +29,7 @@
 
                 <v-toolbar id="toolbar">
                         
-                 <v-btn @click="closeForm"> CLOSE </v-btn>
+                 <v-btn @click="toggleInfo"> CLOSE </v-btn>
                 
                 </v-toolbar>
 
@@ -54,7 +54,7 @@
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
                         <br> <br>
-                        <h2> Contact Details </h2>
+                        <h2> Contact Details </h2> <br>
                         <p>
                         {{school.info}}
                         </p>
@@ -88,6 +88,7 @@
 //   },
   data() {
     return {
+        // dialog:false,
       schools: [
         {name: 'De La Salle Andres Soriano Memorial College', add: 'Toledo City, Cebu',
                 img:'https://images.squarespace-cdn.com/content/v1/51ac48dae4b04c1c5aacf799/1372235999068-GBR9ZR4XK74ZEE4XJJ49/ke17ZwdGBToddI8pDm48kL3VKmwKI3leYB51VJjLFB8UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcgK5SGg9Ovb1yloBBOHcruw_mYLfAhRzzgArFCB07Dw0L8n4JypuoE5Tg6Wg5Oyvs/DLSASMC.jpg?format=1500w',
@@ -237,12 +238,11 @@
                 info:'XD',},
       ]
     }
-  },
-  methods: {
-          closeForm(){
-               this.$("#body").modal("hide");
-          } 
-  }
+  }, 
+    methods: {
+    toggleInfo() {
+      this.dialog = !this.dialog;
+    },}
 }
 </script>
 
