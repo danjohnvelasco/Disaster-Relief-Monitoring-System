@@ -2,10 +2,10 @@
   <v-app>
     <v-row>
       <v-col class="col-md-3 col-lg-3 mb-3">
-        <DisasterEvents/>
+        <DisasterEvents @displayEvent="displayEvent"></DisasterEvents>
       </v-col>
       <v-col class="col-md-9 col-lg-9 mb-9">
-          <ReadEvent/>
+          <ReadEvent :doc_id="doc_id"></ReadEvent>
       </v-col>
     </v-row>
   </v-app>
@@ -20,6 +20,17 @@ export default {
   components: {
     DisasterEvents,
     ReadEvent
+  },
+  methods: {
+    displayEvent(payload) { // payload is a firebase doc_id from DisasterEvents
+      this.doc_id = payload;
+      console.log(payload);
+    }
+  },
+  data() {
+    return {
+      doc_id: null
+    }
   }
 }
 </script>

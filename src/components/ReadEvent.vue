@@ -149,7 +149,6 @@
 import {db, storage } from '@/firebase/init'
 
 export default {
-
   data(){
     return{
       disaster: {},
@@ -158,6 +157,7 @@ export default {
       history: []
     }
   },
+  props: ['doc_id'],
   methods: {
     timestampToDate: (timestamp) => {
       var date = timestamp.toDate()
