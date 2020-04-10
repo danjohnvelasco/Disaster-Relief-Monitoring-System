@@ -1,20 +1,11 @@
 <template>
   <div class="home">
-      <v-btn depressed medium @click="toggleEdit()">Edit</v-btn>
-      <v-dialog v-model="dialog" scrollable persistent>
-        <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing"></EventForm>
-      </v-dialog>
   </div>
 </template>
 
 <script>
-import EventForm from '@/components/EventForm'
-
 export default {
   name: 'Index',
-  components: {
-    EventForm
-  },
   data () {
     return {
       dialog: false,

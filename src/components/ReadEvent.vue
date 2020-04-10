@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <v-content class="ml-2">
-
+      <!--EventForm edit mode dialog-->
+      <v-btn depressed medium @click="toggleEdit()">Edit</v-btn>
+      <v-dialog v-model="dialog" scrollable persistent>
+        <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing" :doc_id="doc_id"></EventForm>
+      </v-dialog>
+      <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
         <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
@@ -147,36 +152,56 @@
 
 <script>
 import {db, storage } from '@/firebase/init'
+import EventForm from '@/components/EventForm'
 
 export default {
+  components: {
+    EventForm
+  },
   data(){
     return{
       disaster: {},
       dummy_id: '1KXrPC5KV6AMUc9ILSci',
       file_URLs: [],
-      history: []
+      history: [],
+      dialog: false,
+      editing: false,
     }
   },
   props: ['doc_id'],
+  watch: {
+    doc_id(newVal) {
+      this.getData(newVal);
+    }
+  },
   methods: {
+    clearData: function() {
+      this.disaster = {};
+      this.file_URLs = [];
+      this.history = []
+    },
+    toggleEdit: function () {
+      this.editing = !this.editing;
+      this.dialog = !this.dialog;
+    },
     timestampToDate: (timestamp) => {
       var date = timestamp.toDate()
       var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
       return newdate
     },
-    getImageURLs: function (files){
+    getImageURLs: function (doc_id, files){
       // create storage reference
       var storageRef = storage.ref()
       // create child reference, which points to 'disaster_id' folder
-      var imageRef = storageRef.child(this.dummy_id)
+      var imageRef = storageRef.child(doc_id)
       // pushes each image download URL to file_URLs array
-      files.forEach((file_name) => {
-        imageRef.child(file_name).getDownloadURL().then((link) =>{
+      files.forEach((file) => {
+        imageRef.child(file).getDownloadURL().then((link) =>{
           this.file_URLs.push(link)
-          console.log(link)
+        }).catch(err =>{
+          console.log('Image Error: ' + err)
         })
       })
-      console.log(this.file_URLs)
     },
     getHistoricalData: function(list){
       var historical_data = {
@@ -191,14 +216,14 @@ export default {
         this.history.push(historical_data)
         historical_data = {}
       })
-    }
-  },
-  
-  created(){
-    db.collection('disasters2')
-      .doc(this.dummy_id)
+    },
+    getData: function (doc_id) {
+      db.collection('disasters2')
+      .doc(doc_id)
       .collection('history').orderBy('created_at').get().then(doc =>{
           if (doc){
+            // clears current data in disaster form
+            this.clearData()
             // rearranges disaster historical data array into latest first
             var disaster_data = doc.docs.reverse()
             // grabs latest data in history subcollection
@@ -207,7 +232,7 @@ export default {
             this.disaster.created_at = this.timestampToDate(this.disaster.created_at)
             // converts image URLs to download URLs and transfers to file_URLs array
             if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
-              this.getImageURLs(this.disaster.img_URLs)
+              this.getImageURLs(doc_id, this.disaster.img_URLs)
             // gets historical data of disaster event
             this.getHistoricalData(disaster_data)
           } else{
@@ -216,6 +241,11 @@ export default {
         }).catch(err =>{
           console.log("Error: " + err)
       })
+    }
+  },
+  
+  created() {
+    this.getData(this.doc_id);
   }
  
 }

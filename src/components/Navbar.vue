@@ -10,7 +10,7 @@
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn small text color="darkgrey" class="px-2 mx-2"
-        to="/dashboard">
+        to="/">
         <v-icon small class="pr-2 caption">mdi-view-dashboard</v-icon>
         <span class="font-weight-light">Dashboard</span>
       </v-btn>

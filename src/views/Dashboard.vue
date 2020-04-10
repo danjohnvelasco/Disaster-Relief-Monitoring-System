@@ -5,7 +5,7 @@
         <DisasterEvents @displayEvent="displayEvent"></DisasterEvents>
       </v-col>
       <v-col class="col-md-9 col-lg-9 mb-9">
-          <ReadEvent :doc_id="doc_id"></ReadEvent>
+          <ReadEvent :doc_id="doc_id" v-if="doc_id"></ReadEvent>
       </v-col>
     </v-row>
   </v-app>
