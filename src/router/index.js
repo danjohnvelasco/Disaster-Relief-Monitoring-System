@@ -29,11 +29,6 @@ const routes = [
     name: 'List of Schools',
     component: () => import('../components/Schools.vue')
   },
-  {
-    path: '/school-details',
-    name: 'School Details',
-    component: () => import('../components/SchoolDetails.vue')
-  }
 ]
 
 const router = new VueRouter({
