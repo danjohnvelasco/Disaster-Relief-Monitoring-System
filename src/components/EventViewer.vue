@@ -115,7 +115,7 @@
         <h2 class="headline text-center">Gallery</h2>
           <v-container class='pl-5 pr-5 pb-5 text-center'>
             <v-carousel cycle height="auto" style="width: 700px; margin: auto;" hide-delimiter-background show-arrows-on-hover>
-              <v-carousel-item v-for="(link, i) in file_URLs" :key="i" :src="link">
+              <v-carousel-item v-for="(url, i) in file_URLs" :key="i" :src="url">
               </v-carousel-item>
             </v-carousel>
           </v-container>
@@ -161,7 +161,6 @@ export default {
   data(){
     return{
       disaster: {},
-      dummy_id: '1KXrPC5KV6AMUc9ILSci',
       file_URLs: [],
       history: [],
       dialog: false,
@@ -196,8 +195,8 @@ export default {
       var imageRef = storageRef.child(doc_id)
       // pushes each image download URL to file_URLs array
       files.forEach((file) => {
-        imageRef.child(file).getDownloadURL().then((link) =>{
-          this.file_URLs.push(link)
+        imageRef.child(file).getDownloadURL().then((url) =>{
+          this.file_URLs.push(url)
         }).catch(err =>{
           console.log('Image Error: ' + err)
         })
@@ -236,7 +235,7 @@ export default {
             // gets historical data of disaster event
             this.getHistoricalData(disaster_data)
           } else{
-            console.log('no doc found')
+          console.log('no doc found')
           }
         }).catch(err =>{
           console.log("Error: " + err)
