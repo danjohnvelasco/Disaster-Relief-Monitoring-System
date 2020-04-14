@@ -1,4 +1,4 @@
-  <template>
+<template>
   <v-app>
     <Navbar/>
     <v-content>
@@ -17,3 +17,18 @@ export default {
   }
 };
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(165, 165, 165); 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 100, 100); 
+}
+</style>
