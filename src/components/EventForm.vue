@@ -221,214 +221,198 @@
 </template>
 
 <script>
-  import {db, storage} from '@/firebase/init'
-  import firebase from 'firebase/app'
-
-  export default {
-    props: { // can be changed by parent component
-      populateWith: {
-        type: Object,
-        default: () => {
-          return {};
-        }
-      },
-      editing: { 
-        type: Boolean,
-        default: false
-      },
-      doc_id: {
-        type: String,
-        default: ''
+import {db, storage} from '@/firebase/init'
+import firebase from 'firebase/app'
+export default {
+  props: { // can be changed by parent component
+    populateWith: {
+      type: Object,
+      default: () => {
+        return {};
       }
     },
-    data: () => ({
-      files: null,
-      valid: true,
-      required_lettersOnly: [
-        v => !!v || 'This field is required',
-        v => /^\w+(\s\w+)*$/.test(v) || 'Alphanumeric only. Please remove trailing spaces'
-      ],
-      required_numbersOnly: [
-        v => !!v || 'This field is required',
-        v => /^[0-9]*$/.test(v) || 'Must contain numbers only'
-      ],
-      required: [
-        v => !!v || 'This field is required'
-      ],
-      numbersOnly: [
-        v => /^(null|$|[0-9]*)$/.test(v) || 'Must contain numbers only'
-      ],
-      currency: [
-        v => /^(null|$|\d+(,\d{3})*(\.\d*)?)$/.test(v) || 'Invalid format'
-      ],
-      disaster: { // Don't include data the the user doesn't directly manipulates.
-        title: null,
-        type: null,
-        location: null,
-        description: null, 
-        remarks: null,
-        donate_option: null,
-        donation_details: null,
-        link_profile: true,
-        reliefs: [],
-        fam_affected: null,
-        indiv_affected: null,
-        evac_fam_inside: null,
-        evac_indiv_inside: null,
-        damage_cost: null,
-        structures_damaged: null,
-        img_URLs: []
-      },
-      item: null,
-      spec: null,
-      add_item_feedback: false,
-    }),
-    methods: {
-      create () {
-        if (this.$refs.form.validate()) {
-          console.log(JSON.stringify(this.disaster, null, 2));
-
-          // Create doc with auto-id
-          var doc = db.collection("disasters2").doc();
-          var timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-          // Add top level data
-          doc.set({
-            title: this.disaster.title,
-            type: this.disaster.type,
-            last_updated: timestamp,
-            archived: false
-          }).then(() => {
-            console.log("Top level success: ", doc.id);
-          }).catch(function(error) {
-            console.error("Error adding top level data: ", error);
-          });
-
-          // Add created_at field in disaster object
-          this.disaster.created_at = timestamp;
-
-          // Upload images
-          if (this.files !== null) {
-            this.upload(doc.id);
-          }
-          
-          // Create subcollection and create document
-          doc.collection("history").add(this.disaster)
-          .then((docRef) => {
-            console.log("Subcollection success", docRef.id);
-          }).catch(function(error) {
-            console.error("Error adding document: ", error);
-          });
-        }
-      },
-      update() {
-        if (this.$refs.form.validate()) {
-          console.log(JSON.stringify(this.disaster, null, 2));
-
-          // Create doc with auto-id
-          var doc = db.collection("disasters2").doc(this.doc_id);
-          var timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-          // Add top level data
-          doc.set({
-            title: this.disaster.title,
-            type: this.disaster.type,
-            last_updated: timestamp,
-            archived: false
-          }).then(() => {
-            console.log("Top level success: ", doc.id);
-          }).catch(function(error) {
-            console.error("Error adding top level data: ", error);
-          });
-
-          // Add created_at field in disaster object
-          this.disaster.created_at = timestamp;
-
-          // Upload images (this might not be the best UX decision)
-          if (this.files !== null) {
-            this.upload(doc.id);
-          } 
-          
-          // Create subcollection and create document
-          doc.collection("history").add(this.disaster)
-          .then((docRef) => {
-            console.log("Subcollection success", docRef.id);
-          }).catch(function(error) {
-            console.error("Error adding document: ", error);
-          });
-        }
-      },
-      addItem() {
-        if (this.item) {
-          this.disaster.reliefs.push({item: this.item, spec: this.spec});
-          this.item = null;
-          this.spec = null;
-          this.add_item_feedback = false
-          console.table(this.disaster.reliefs, ['item', 'spec']);
-        } else {
-          this.add_item_feedback = true
-          console.log('Item field is empty.');
-        }
-      },
-      deleteItem(added_item) {
-        if (added_item !== null) {
-          this.disaster.reliefs.pop(added_item);
-          console.table(this.disaster.reliefs, ['item', 'spec']);
-        } else {
-          console.log('Error deleting item.');
-        }
-      },
-      closeForm() { // emits close event to parent component
-        this.$emit('close');
-      },
-      saveImageNames(files){ 
-        files.forEach((file)=>{
-          console.log('file name: ' + file.name);
-          this.disaster.img_URLs.push(file.name);
-        });
-      },
-      upload(doc_id) { // add doc_id parameter here, call it from create() and update()
-        console.log(this.files);
-        // Loop through files
-        var files = Object.values(this.files);
-        // Store filename in img_urls array
-        this.saveImageNames(files);
-
-        files.forEach((file) => {
-          // Create storage ref
-          var storageRef = storage.ref(`${doc_id}/${file.name}`);
-          // Upload file
-          storageRef.put(file)
-          .then((ref) => {
-            console.log('Upload success ', ref);
-          });
-        });
-        
-        // Reset files
-        this.files = null;
-      }
+    editing: { 
+      type: Boolean,
+      default: false
     },
-    created() { // receives the data (if it exists) from parent component --only applies to editing
-      console.log('created');
-      if (Object.keys(this.populateWith).length !== 0) {
-        this.disaster = this.populateWith;
-      } else {
-        console.log('empty');
-      }
-    },
-    beforeDestroy() {
-      console.log('beforeDestroy');
+    doc_id: {
+      type: String,
+      default: ''
     }
+  },
+  data: () => ({
+    files: null,
+    valid: true,
+    required_lettersOnly: [
+      v => !!v || 'This field is required',
+      v => /^\w+(\s\w+)*$/.test(v) || 'Alphanumeric only. Please remove trailing spaces'
+    ],
+    required_numbersOnly: [
+      v => !!v || 'This field is required',
+      v => /^[0-9]*$/.test(v) || 'Must contain numbers only'
+    ],
+    required: [
+      v => !!v || 'This field is required'
+    ],
+    numbersOnly: [
+      v => /^(null|$|[0-9]*)$/.test(v) || 'Must contain numbers only'
+    ],
+    currency: [
+      v => /^(null|$|\d+(,\d{3})*(\.\d*)?)$/.test(v) || 'Invalid format'
+    ],
+    disaster: { // Don't include data the the user doesn't directly manipulates.
+      title: null,
+      type: null,
+      location: null,
+      description: null, 
+      remarks: null,
+      donate_option: null,
+      donation_details: null,
+      link_profile: true,
+      reliefs: [],
+      fam_affected: null,
+      indiv_affected: null,
+      evac_fam_inside: null,
+      evac_indiv_inside: null,
+      damage_cost: null,
+      structures_damaged: null,
+      img_URLs: []
+    },
+    item: null,
+    spec: null,
+    add_item_feedback: false,
+  }),
+  methods: {
+    create () {
+      if (this.$refs.form.validate()) {
+        console.log(JSON.stringify(this.disaster, null, 2));
+        // Create doc with auto-id
+        var doc = db.collection("disasters2").doc();
+        var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+        // Add top level data
+        doc.set({
+          title: this.disaster.title,
+          type: this.disaster.type,
+          last_updated: timestamp,
+          archived: false
+        }).then(() => {
+          console.log("Top level success: ", doc.id);
+        }).catch(function(error) {
+          console.error("Error adding top level data: ", error);
+        });
+        // Add created_at field in disaster object
+        this.disaster.created_at = timestamp;
+        // Upload images
+        if (this.files !== null) {
+          this.upload(doc.id);
+        }
+        
+        // Create subcollection and create document
+        doc.collection("history").add(this.disaster)
+        .then((docRef) => {
+          console.log("Subcollection success", docRef.id);
+        }).catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+      }
+    },
+    update() {
+      if (this.$refs.form.validate()) {
+        console.log(JSON.stringify(this.disaster, null, 2));
+        // Create doc with auto-id
+        var doc = db.collection("disasters2").doc(this.doc_id);
+        var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+        // Add top level data
+        doc.set({
+          title: this.disaster.title,
+          type: this.disaster.type,
+          last_updated: timestamp,
+          archived: false
+        }).then(() => {
+          console.log("Top level success: ", doc.id);
+        }).catch(function(error) {
+          console.error("Error adding top level data: ", error);
+        });
+        // Add created_at field in disaster object
+        this.disaster.created_at = timestamp;
+        // Upload images (this might not be the best UX decision)
+        if (this.files !== null) {
+          this.upload(doc.id);
+        } 
+        
+        // Create subcollection and create document
+        doc.collection("history").add(this.disaster)
+        .then((docRef) => {
+          console.log("Subcollection success", docRef.id);
+        }).catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+      }
+    },
+    addItem() {
+      if (this.item) {
+        this.disaster.reliefs.push({item: this.item, spec: this.spec});
+        this.item = null;
+        this.spec = null;
+        this.add_item_feedback = false
+        console.table(this.disaster.reliefs, ['item', 'spec']);
+      } else {
+        this.add_item_feedback = true
+        console.log('Item field is empty.');
+      }
+    },
+    deleteItem(added_item) {
+      if (added_item !== null) {
+        this.disaster.reliefs.pop(added_item);
+        console.table(this.disaster.reliefs, ['item', 'spec']);
+      } else {
+        console.log('Error deleting item.');
+      }
+    },
+    closeForm() { // emits close event to parent component
+      this.$emit('close');
+    },
+    saveImageNames(files){ 
+      files.forEach((file)=>{
+        console.log('file name: ' + file.name);
+        this.disaster.img_URLs.push(file.name);
+      });
+    },
+    upload(doc_id) { // add doc_id parameter here, call it from create() and update()
+      console.log(this.files);
+      // Loop through files
+      var files = Object.values(this.files);
+      // Store filename in img_urls array
+      this.saveImageNames(files);
+      files.forEach((file) => {
+        // Create storage ref
+        var storageRef = storage.ref(`${doc_id}/${file.name}`);
+        // Upload file
+        storageRef.put(file)
+        .then((ref) => {
+          console.log('Upload success ', ref);
+        });
+      });
+      // Reset files
+      this.files = null;
+    }
+  },
+  created() { // receives the data (if it exists) from parent component --only applies to editing
+    console.log('created');
+    if (Object.keys(this.populateWith).length !== 0) {
+      this.disaster = this.populateWith;
+    } else {
+      console.log('empty');
+    }
+  },
+  beforeDestroy() {
+    console.log('beforeDestroy');
   }
+}
 </script>
 
-<style>
-/*
-    .form {
-      margin: 2em 8em;
-    }*/
-
-    .listButton {
-      padding: 10px 0px;
-    }
+<style scoped>
+.listButton {
+  padding: 10px 0px;
+}
 </style>
