@@ -33,9 +33,8 @@ export default {
     displayEvent(doc_id) {
       //console.log(doc_id);
       this.$emit('displayEvent', doc_id);
-    }
-  },
-  created(){
+    },
+    getActiveDisasters() {
       db.collection("disasters2")
         .where("archived", "==", false)
         .orderBy('last_updated', 'desc')
@@ -51,6 +50,10 @@ export default {
         .catch((error) => {
           console.log("Error getting documents: ", error);
         });
+    }
+  },
+  created(){
+    this.getActiveDisasters();
   }
 }
 </script>
