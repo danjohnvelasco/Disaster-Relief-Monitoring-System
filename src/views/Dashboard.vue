@@ -14,7 +14,7 @@
 <script>
 import EventList from '@/components/EventList'
 import EventViewer from '@/components/EventViewer'
-import {db, storage} from '@/firebase/init'
+import {db} from '@/firebase/init'
 
 export default {
   name: 'Dashboard',
