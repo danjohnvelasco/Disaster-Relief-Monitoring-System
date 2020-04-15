@@ -10,8 +10,9 @@
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0">{{disaster.title}}</h1>
         <h3 class="subtitle-2 grey--text mb-3 ml-1">Last Updated: {{disaster.created_at}}</h3>
-        <h2 class="headline mb-2 text-center">General Information</h2>
-        <v-card>
+        <v-divider></v-divider>
+        <h2 class="headline mb-2 mt-7 ml-5">General Information</h2>
+        
           <table>
             <tr>
               <td class="text-right label"><span class="info-label">Lead School</span></td> <td>LEAD SCHOOL HERE</td>
@@ -29,57 +30,51 @@
               <td class="text-right label"><span class="info-label">Additional Remarks</span></td> <td>{{disaster.remarks}}</td>
             </tr>
           </table>
-        </v-card>
+        
       </v-container>
       <!-- statistics section -->
       <v-container id="stats" class="pb-5">
-        <h2 class="headline text-center">Statistics Overview</h2>
+        <h2 class="headline ml-5">Statistics Overview</h2>
        
-        <!-- for 2 cards -->
-        <v-row wrap class="mx-8" v-if="this.stats_num == 2">
+        <!-- for 2 or 4 cards -->
+        <v-row wrap class="mx-8" v-if="this.stats_num == 2 || this.stats_num == 4">
             <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-6 col-lg-6 mb-6" align="center">
-              <v-card class="text-center" width="280" v-if="stat.value != null">
-                <v-icon size='70' class='mt-3'>{{stat.icon}}</v-icon>
-                <v-card-text class="display-2 font-weight-bold">{{stat.value}}</v-card-text>
-                <v-card-text class="title pt-0">{{stat.title}}</v-card-text>
+              <v-card class="text-center rounded-card" v-if="stat.value != null">
+                <v-row>
+                  <v-col class="col-md-4 col-lg-4">
+                    <v-icon size='70' class="stats-card">{{stat.icon}}</v-icon>
+                  </v-col>
+                  <v-col class="col-md-8 col-lg-8 ">
+                    <v-card-text class="title pb-0 text-left ml-4 mt-3">{{stat.title}}</v-card-text>
+                    <v-card-text class="headline text-left ml-4">{{stat.value}}</v-card-text>
+                  </v-col>
+                </v-row>
               </v-card>
             </v-col>
         </v-row>
-        <!-- for 3 cards -->
-        <v-row wrap class="mx-8" v-else-if="this.stats_num == 3">
-            <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-4 col-lg-4 mb-6" align="center">
-              <v-card class="text-center" width="280" v-if="stat.value != null">
-                <v-icon size='70' class='mt-3'>{{stat.icon}}</v-icon>
-                <v-card-text class="display-2 font-weight-bold">{{stat.value}}</v-card-text>
-                <v-card-text class="title pt-0">{{stat.title}}</v-card-text>
-              </v-card>
-            </v-col>
-        </v-row>
-        <!-- for 4 cards -->
-        <v-row wrap class="mx-8" v-else-if="this.stats_num == 4">
-            <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-3 col-lg-3 mb-6" align="center">
-              <v-card class="text-center" width="280" v-if="stat.value != null">
-                <v-icon size='70' class='mt-3'>{{stat.icon}}</v-icon>
-                <v-card-text class="display-2 font-weight-bold">{{stat.value}}</v-card-text>
-                <v-card-text class="title pt-0">{{stat.title}}</v-card-text>
-              </v-card>
-            </v-col>
-        </v-row>
-        <!-- for 5-6 cards -->
+        <!-- for 3 or 5-6 cards -->
         <v-row wrap class="mx-8" v-else>
             <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-4 col-lg-4 mb-6" align="center">
-              <v-card class="text-center" width="280" v-if="stat.value != null">
-                <v-icon size='70' class='mt-3'>{{stat.icon}}</v-icon>
-                <v-card-text class="display-2 font-weight-bold">{{stat.value}}</v-card-text>
-                <v-card-text class="title pt-0">{{stat.title}}</v-card-text>
+              <v-card class="text-center rounded-card" v-if="stat.value != null">
+                <v-row>
+                  <v-col class="col-md-4 col-lg-4">
+                    <v-icon size='70' class="stats-card">{{stat.icon}}</v-icon>
+                  </v-col>
+                  <v-col class="col-md-8 col-lg-8">
+                    <v-card-text class="title pb-0 text-left ml-4 mt-1">{{stat.title}}</v-card-text>
+                    <v-card-text class="headline text-left ml-4">{{stat.value}}</v-card-text>
+                  </v-col>
+                </v-row>
               </v-card>
             </v-col>
         </v-row>
+
+        
        
       </v-container>
       <!-- call for donation section -->
       <v-container id="call_for_donations" v-if="disaster.donate_option != null">
-        <h2 class="headline text-center">Call for Donations</h2>
+        <h2 class="headline ml-5">Call for Donations</h2>
         <v-row wrap class="">
           <v-col cols="12" align="center" v-if="disaster.donate_option == 'cash' || disaster.donate_option == 'both'">
             <v-card width="500">
@@ -97,7 +92,7 @@
       </v-container>
       <!-- gallery section -->
       <v-container id="gallery" v-if="file_URLs != undefined && file_URLs.length > 0">
-        <h2 class="headline text-center">Gallery</h2>
+        <h2 class="headline ml-5">Gallery</h2>
           <v-container class='pl-5 pr-5 pb-5 text-center'>
             <v-carousel cycle height="auto" style="width: 700px; margin: auto;" hide-delimiter-background show-arrows-on-hover>
               <v-carousel-item v-for="(url, i) in file_URLs" :key="i" :src="url">
@@ -107,9 +102,9 @@
       </v-container>
       <!-- historical data section -->
       <v-container id="historical_data" >
-        <h2 class="headline text-center">History</h2>
-        <v-card style="width: 800px; margin: auto;" class="mt-4">
-          <v-simple-table class="">
+        <h2 class="headline ml-5">History</h2>
+        <v-card style="margin: auto; max-width:1000px;" class="mt-4">
+          <v-simple-table>
             <thead>
               <tr>
                 <th class="">Date</th>
@@ -320,4 +315,9 @@ td{
   font-weight: 500;
 }
 
+.stats-card{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
 </style>
