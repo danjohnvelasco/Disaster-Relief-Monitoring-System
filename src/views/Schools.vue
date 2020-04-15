@@ -19,18 +19,14 @@
                 <!-- <v-card-actions> -->
                 <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info">
                 <template v-slot:activator="{ on }">
-                
-                <v-btn id="vbt" color=#184725 @click="toggleInfo" dark v-on="on"> VISIT </v-btn>
+                <v-btn id="vbt" color=#184725 dark v-on="on" @click="toggleInfo()"> VISIT </v-btn>
                 </template>      
-                        <!-- <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails> -->
-              
+
                 <!-- SCHOOL INFO   -->
                 <v-card class="body" id="body">
 
-                <v-toolbar id="toolbar">
-                        
-                 <v-btn @click="toggleInfo"> CLOSE </v-btn>
-                
+                <v-toolbar id="toolbar">                        
+                 <v-btn v-if="dialog" @close="toggleInfo" id="close"> CLOSE </v-btn>
                 </v-toolbar>
 
                 <v-row>
@@ -62,12 +58,8 @@
                 </v-col>  
                 </v-row>
 
-    <!-- <v-card-actions>
-       <v-btn @click="closeInfo"> Close </v-btn>
-    </v-card-actions> -->
-  </v-card>
+                </v-card>
                 </v-dialog>
-                <!-- </v-card-actions> -->
 
               </v-card>
            </template>
@@ -80,14 +72,10 @@
 </template>
 
 <script>
-// import SchoolDetails from '@/components/SchoolDetails'
-
   export default {
-//   components: {
-//     SchoolDetails
-//   },
   data() {
     return {
+      dialog: false,
       schools: [
         {name: 'De La Salle Andres Soriano Memorial College', add: 'Toledo City, Cebu',
                 img:'https://images.squarespace-cdn.com/content/v1/51ac48dae4b04c1c5aacf799/1372235999068-GBR9ZR4XK74ZEE4XJJ49/ke17ZwdGBToddI8pDm48kL3VKmwKI3leYB51VJjLFB8UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcgK5SGg9Ovb1yloBBOHcruw_mYLfAhRzzgArFCB07Dw0L8n4JypuoE5Tg6Wg5Oyvs/DLSASMC.jpg?format=1500w',
@@ -237,7 +225,12 @@
                 info:'XD',},
       ]
     }
-  }, 
+   },
+   methods: {
+        toggleInfo: function (){
+                this.dialog = !this.dialog;
+        },
+   },
 }
 </script>
 

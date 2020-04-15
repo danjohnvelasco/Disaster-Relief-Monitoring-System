@@ -1,8 +1,8 @@
 <template>
   <div class="about">
     <v-container>
-      <p class="display-1 px-6 pt-6">About</p>
-      <p class="subtitle-1 px-6 py-6">
+      <p id="title" class="display-1 px-6 pt-6">About</p>
+      <p id="sub1" class="subtitle-1 px-6 py-6">
         The Lasallian Mission at DLSU is essentially the mission of the entire University 
         community as expressed in its Vision-Mission Statement. Each member is invited to 
         integrate this Mission with their specific role and expertise; whether in 
@@ -10,7 +10,7 @@
         becoming a resource for Church and nation.
       </p>
       <v-divider></v-divider>
-        <p class="subtitle-1 px-6 py-6">
+        <p id="sub2" class="subtitle-1 px-6 py-6">
         The ultimate goal of the Lasallian Mission is geared towards faith formation and community 
         engagement. This is all to help DLSU stay true to the legacy of its founding founders, 
         which is to be a school of and for the poor. 
@@ -34,3 +34,13 @@
   </div>
 </template>
 
+<style scoped>
+.about{
+  background-color: #f7f5e8;
+}
+
+#title{
+  font-family: Garamond;
+}
+
+</style>
