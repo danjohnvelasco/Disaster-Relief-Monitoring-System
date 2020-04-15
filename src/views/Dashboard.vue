@@ -40,34 +40,6 @@ export default {
       var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
       return newdate
     },
-    getImageURLs: function (doc_id, files) {
-      // create storage reference
-      var storageRef = storage.ref()
-      // create child reference, which points to 'disaster_id' folder
-      var imageRef = storageRef.child(doc_id)
-      // pushes each image download URL to file_URLs array
-      files.forEach((file) => {
-        imageRef.child(file).getDownloadURL().then((url) => {
-          this.file_URLs.push(url)
-        }).catch(err => {
-          console.log('Image Error: ' + err)
-        })
-      })
-    },
-    getHistoricalData: function(list) {
-      var historical_data = {
-        date: '',
-        indiv_affected: '',
-        fam_affected: ''
-      }
-      list.forEach((disaster) => {
-        historical_data.date = this.timestampToDate(disaster.data().created_at)
-        historical_data.indiv_affected = disaster.data().indiv_affected
-        historical_data.fam_affected = disaster.data().fam_affected
-        this.history.push(historical_data)
-        historical_data = {}
-      })
-    },
     getLatestDisasterDoc: function (doc_id) { 
       db.collection('disasters2')
         .doc(doc_id)
