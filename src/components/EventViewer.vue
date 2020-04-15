@@ -149,12 +149,12 @@ export default {
     doc_id: function() {
       // ensures clean state
       this.clearData();
-      // assign data to be displayed
+      // assign preloaded data to be displayed
       this.disaster = this.latestDisasterDocs[this.doc_id];
-      // Download images
+      // Download images (lazy loading)
       if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
         this.getImageURLs(this.doc_id, this.disaster.img_URLs);
-      // get historical data (if any)
+      // get historical data (lazy loading)
       this.getHistoricalData(this.doc_id);
     }
   },

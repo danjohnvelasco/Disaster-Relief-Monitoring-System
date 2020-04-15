@@ -21,6 +21,7 @@ export default {
     activeTopLevelDocs: Array
   },
   methods: {
+    // emits doc_id to parent component
     displayEvent(doc_id) {
       this.$emit('displayEvent', doc_id);
     }

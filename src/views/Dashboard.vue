@@ -34,7 +34,6 @@ export default {
     displayEvent: function (firebase_doc_id) { 
       this.doc_id = firebase_doc_id;
       this.showEventViewer = true;
-      console.log(firebase_doc_id);
     },
     timestampToDate: function (timestamp) {
       var date = timestamp.toDate()
@@ -69,6 +68,29 @@ export default {
         historical_data = {}
       })
     },
+    getLatestDisasterDoc: function (doc_id) { 
+      db.collection('disasters2')
+        .doc(doc_id)
+        .collection('history')
+        .orderBy('created_at')
+        .get()
+        .then(doc => {
+          if (doc) {
+            // rearranges disaster historical data array into latest first
+            var disasterDocs = doc.docs.reverse()
+            // grabs latest data in history subcollection
+            var disaster = disasterDocs[0].data();
+            // converts timestamp data type into Date
+            disaster.created_at = this.timestampToDate(disaster.created_at)
+            // nest the doc inside an object w/ it's doc id as key
+            this.latestDisasterDocs[doc_id] = disaster;
+          } else {
+            console.log('no doc found')
+          }
+        }).catch(err => {
+          console.log("Error: " + err)
+        })
+    },
     getLatestActiveData: function() {
       db.collection("disasters2")
         .where("archived", "==", false) // change to active later
@@ -88,30 +110,6 @@ export default {
         .catch((error) => {
           console.log("Error getting top-level documents: ", error);
         });
-    },
-    getLatestDisasterDoc: function (doc_id) {
-      db.collection('disasters2')
-        .doc(doc_id)
-        .collection('history')
-        .orderBy('created_at')
-        .get()
-        .then(doc => {
-          if (doc) {
-            // rearranges disaster historical data array into latest first
-            var disasterDocs = doc.docs.reverse()
-            // grabs latest data in history subcollection
-            var disaster = disasterDocs[0].data();
-            // converts timestamp data type into Date
-            disaster.created_at = this.timestampToDate(disaster.created_at)
-            // nest the doc inside an object w/ it's doc id as key
-            this.latestDisasterDocs[doc_id] = disaster;
-            // converts image URLs to download URLs and transfers to file_URLs array
-          } else {
-            console.log('no doc found')
-          }
-        }).catch(err => {
-          console.log("Error: " + err)
-        })
     }
   },
   created() {
