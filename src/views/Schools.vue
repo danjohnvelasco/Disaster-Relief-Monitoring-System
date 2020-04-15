@@ -225,11 +225,6 @@
       ]
     }
    },
-   methods: {
-        toggleInfo: function (){
-                this.dialog = !this.dialog;
-        },
-   },
 }
 </script>
 
