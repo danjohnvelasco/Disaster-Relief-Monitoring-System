@@ -168,14 +168,14 @@ export default {
     }
   },
   methods: {
+    toggleEdit: function () {
+      this.editing = !this.editing;
+      this.dialog = !this.dialog;
+    },
     clearData: function() {
       this.disaster = {};
       this.file_URLs = [];
       this.history = []
-    },
-    toggleEdit: function () {
-      this.editing = !this.editing;
-      this.dialog = !this.dialog;
     },
     timestampToDate: function (timestamp) {
       var date = timestamp.toDate()
@@ -218,6 +218,9 @@ export default {
   },
   created() {
     console.log('EventViewer created');
+  },
+  beforeUpdate() {
+    console.log('EventViewer beforeUpdate');
   }
 }
 </script>

@@ -24,6 +24,7 @@ export default {
     // emits doc_id to parent component
     displayEvent(doc_id) {
       this.$emit('displayEvent', doc_id);
+      console.log(doc_id);
     }
   },
   created(){
