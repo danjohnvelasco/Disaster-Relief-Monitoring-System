@@ -5,7 +5,7 @@
     <v-container id="schoolcard">
       <v-layout row wrap>
         
-        <v-flex sm8 md6 lg6 xl2 v-for="school in schools" :key="school.name">
+        <v-flex sm8 md6 lg6 xl4 v-for="school in schools" :key="school.name">
           <v-hover>
             <template v-slot="{ hover }">
               
