@@ -344,6 +344,9 @@ export default {
         doc.collection("history").add(this.disaster)
         .then((docRef) => {
           console.log("Subcollection success", docRef.id);
+          // propagate the data upwards to the parent
+          alert('Update Success!');
+          this.reloadPage();
         }).catch(function(error) {
           console.error("Error adding document: ", error);
         });
@@ -371,6 +374,9 @@ export default {
     },
     closeForm() { // emits close event to parent component
       this.$emit('close');
+    },
+    reloadPage() {
+      window.location.reload()
     },
     saveImageNames(files){ 
       files.forEach((file)=>{
@@ -400,7 +406,8 @@ export default {
   created() { // receives the data (if it exists) from parent component --only applies to editing
     console.log('created');
     if (Object.keys(this.populateWith).length !== 0) {
-      this.disaster = this.populateWith;
+      // Don't use 'this.disaster = this.populateWith;' because it references to the obj from parent. Use Object.assign instead.
+      Object.assign(this.disaster, this.populateWith); 
     } else {
       console.log('empty');
     }

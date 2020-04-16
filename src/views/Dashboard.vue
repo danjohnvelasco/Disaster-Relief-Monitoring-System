@@ -31,8 +31,8 @@ export default {
     }
   },
   methods: {
-    displayEvent: function (firebase_doc_id) { 
-      this.doc_id = firebase_doc_id;
+    displayEvent: function (payloadDocId) { 
+      this.doc_id = payloadDocId;
       this.showEventViewer = true;
     },
     timestampToDate: function (timestamp) {
