@@ -4,7 +4,7 @@
       <v-col class="col-md-3 col-lg-3 mb-3">
         <EventList @displayEvent="displayEvent"></EventList>
       </v-col>
-      <v-col class="col-md-9 col-lg-9 mb-9">
+      <v-col class="col-md-9 col-lg-9 mb-9" id="disaster-event">
         <EventViewer :doc_id="doc_id" v-if="doc_id"></EventViewer>
       </v-col>
     </v-row>
@@ -34,3 +34,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#disaster-event{
+  padding-top: 0;
+}
+</style>
+
