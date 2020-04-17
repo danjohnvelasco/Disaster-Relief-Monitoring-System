@@ -111,14 +111,35 @@
       <!-- gallery section  vh vw-->
       <v-container id="gallery" v-if="file_URLs != undefined && file_URLs.length > 0">
         <h2 class="headline ml-9 mb-4 label-heading">Gallery</h2>
-        <v-card class="ml-8 mr-8 m px-0" id="rounded-card" background="#ecf5ee" style="max-width:100%; margin:auto;">
-          <v-container class='pl-5 pr-5 pb-5 text-center'>
-            <v-carousel cycle height="auto" id="image" style="max-width: 100%; margin: auto;" hide-delimiter-background show-arrows-on-hover>
-              <v-carousel-item v-for="(url, i) in file_URLs" :key="i" :src="url">
-              </v-carousel-item>
-            </v-carousel>
-          </v-container>
+
+        <v-card class="ml-8 mr-8 m pa-4" id="rounded-card" background="#ecf5ee" style="">
+          <v-carousel>
+            <v-carousel-item v-for="(url, i) in file_URLs" :key="i" :src="url" hide-delimiter-background show-arrows-on-hover>
+            </v-carousel-item>
+          </v-carousel>
+
         </v-card>
+          
+          <!--
+          <v-carousel cycle class='text-center' id="image" style="margin: auto;" hide-delimiter-background show-arrows-on-hover>
+            <v-carousel-item style=""  v-for="(url, i) in file_URLs" :key="i" >
+              <img :src="url" style="">
+            </v-carousel-item>
+          </v-carousel>
+-->      
+        <!-- carousel
+        <div style="background:grey;">
+          <v-carousel class="ma-0 test"   style="width: 80vw; height: 35vw;" hide-delimiter-background>
+            <v-carousel-item class="mt-0" v-for="(url, i) in file_URLs" :key="i">
+              <img :src="url" class="mx-auto my-auto" style="display: block; width: 80%; height: auto;">
+            </v-carousel-item>
+          </v-carousel>
+
+        -->
+
+        <!--
+        </v-card> -->
+
       </v-container>
 
       <!-- historical data section -->
