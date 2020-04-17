@@ -79,34 +79,33 @@
       </v-container>
 
       <!-- call for donation section -->
-      <v-container id="call_for_donations" v-if="disaster.donate_option != null">
-        <h2 class="headline ml-9 label-heading">Call for Donations</h2>
+      <v-container id="call_for_donations" class="ml-8" v-if="disaster.donate_option != null">
+        <h2 class="headline label-heading">Call for Donations</h2>
 
+        <v-container class="pa-0"  v-if="disaster.donate_option == 'cash'">
+          <p class="title mb-1">Cash</p>
+          <p class="subtitle-1">{{disaster.donation_details}}</p>
+        </v-container>
 
-        <!--<v-card class="mx-8 mt-4 mb-6" id="rounded-card">-->
+        <v-container class="pa-0" v-else-if="disaster.donate_option == 'in-kind'">
+          <p class="title mb-1">In-kind</p>
+          <p class="subtitle-1" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+        </v-container>
+
+        <v-container class="pa-0" v-else>
           <v-row wrap>
-            <v-col cols="12" class="ml-8" v-if="disaster.donate_option == 'cash' || disaster.donate_option == 'both'">
-              <p class="title">Cash</p>
+            
+            <v-col cols="6">
+              <p class="title mb-1">Cashasdads</p>
               <p class="subtitle-1">{{disaster.donation_details}}</p>
-              <!--
-              <v-card class="mx-5 mt-2 mb-2" id="don-card">
-                <v-card-text class="title ml-4" align="left" >Cash</v-card-text>
-                <v-card-text class="text-left ml-4 pt-0"><pre>{{disaster.donation_details}}</pre></v-card-text>
-              </v-card>
-              -->
             </v-col>
-            <v-col cols="12" class="ml-8" v-if="disaster.donate_option == 'in-kind' || disaster.donate_option == 'both'">
-              <p class="title">In-kind</p>
-              <p class="subtitle-1" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
-              <!--
-              <v-card class="mx-5 mt-2 mb-2" id="don-card">
-                <v-card-text class="title ml-4" align="left">In-kind</v-card-text>
-                <v-card-text class="text-left ml-4 pt-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null"> ({{item.spec}})</span></v-card-text>
-              </v-card>
-              -->
+            <v-col cols="6">
+              <p class="title mb-1">In-kind</p>
+              <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
             </v-col>
           </v-row>
-        <!--</v-card>-->
+        </v-container>
+
       </v-container>
 
       <!-- gallery section  vh vw-->
@@ -121,6 +120,7 @@
           </v-container>
         </v-card>
       </v-container>
+
       <!-- historical data section -->
       <v-container id="historical_data">
         <h2 class="headline ml-9 label-heading mb-3 mt-6">History</h2>
