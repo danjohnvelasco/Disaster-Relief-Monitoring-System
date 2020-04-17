@@ -11,25 +11,25 @@
       <v-spacer></v-spacer>
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/">
-        <v-icon small class="pr-2 caption">mdi-view-dashboard</v-icon>
-        <span class="font-weight-light">Dashboard</span>
+        <v-icon small class="pr-2 caption" style="color:#184725;">mdi-view-dashboard</v-icon>
+        <span class="font-weight-light" style="color:#184725;">Dashboard</span>
       </v-btn>
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/schools">
-        <v-icon small class="pr-2">mdi-school</v-icon>
-        <span class="font-weight-light">Schools</span>
+        <v-icon small class="pr-2" style="color:#184725;">mdi-school</v-icon>
+        <span class="font-weight-light" style="color:#184725;">Schools</span>
       </v-btn>
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/bulletin">
-        <v-icon small class="pr-2">mdi-newspaper-variant-multiple</v-icon>
-        <span class="font-weight-light">Bulletin</span>
+        <v-icon small class="pr-2" style="color:#184725;">mdi-newspaper-variant-multiple</v-icon>
+        <span class="font-weight-light" style="color:#184725;">Bulletin</span>
       </v-btn>
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/about">
-        <v-icon small class="pr-2">mdi-comment-question</v-icon>
-        <span class="font-weight-light">About</span>
+        <v-icon small class="pr-2" style="color:#184725;">mdi-comment-question</v-icon>
+        <span class="font-weight-light" style="color:#184725;">About</span>
       </v-btn>
-      <v-btn small dark @click="toggleForm">+ Event</v-btn>
+      <v-btn small dark style="background:#184725;" @click="toggleForm">+ Event</v-btn>
     </v-app-bar>
     <!--Event Form Dialog-->
     <v-dialog v-model="dialog" scrollable persistent>
