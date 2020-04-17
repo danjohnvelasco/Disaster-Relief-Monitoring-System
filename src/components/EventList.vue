@@ -1,13 +1,15 @@
 <template>
   <v-app>
-    <v-navigation-drawer clipped floating fixed width="25%" class="pt-12">
-      <h2 class="headline mx-6 mt-8 mb-4">Disaster Events</h2>
-      <v-card width='auto' class="mb-6 mx-4" v-for="disaster in disasters" :key="disaster.id" @click="displayEvent(disaster.id)">
+    <v-navigation-drawer clipped floating fixed width="25%" class="pt-12" id="body">
+      <h2 class="headline mx-6 mt-8 mb-4" style="color:white;"><b>Disaster Events</b></h2>
+      
+      <v-card active-class="test" width='auto' class="mb-6 mx-4 d-card" id="card"  v-for="disaster in disasters" :key="disaster.id" @click="displayEvent(disaster.id)">
         <v-list-item three-line>
           <v-list-item-content>
-            <div class="overline">{{disaster.last_updated}}</div>
             <v-list-item-title class="headline mb-1">{{disaster.title}}</v-list-item-title>
             <v-list-item-subtitle>Lead School: //lead school</v-list-item-subtitle>
+            <div class="overline mt-2" >Updated: {{disaster.last_updated}}</div>
+
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -58,3 +60,28 @@ export default {
 }
 </script>
 
+<style scoped>
+
+#card{
+  border-radius:20px;
+  
+}
+
+#body{
+  background-color:#427f50;
+  padding-right: 10px;
+}
+
+.d-card{
+  background-color:#f7f5e8;
+}
+
+</style>
+
+#body{
+  background-color:#e8e8e8;
+}
+
+.d-card{
+  background-color:#e8e8e8;
+}
