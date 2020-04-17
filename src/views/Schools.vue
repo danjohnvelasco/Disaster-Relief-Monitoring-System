@@ -17,7 +17,8 @@
 
                 <!-- FULL SCREEN -->                
                 <!-- <v-card-actions> -->
-                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info">
+                <!-- <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info"> -->
+                <v-dialog v-model="dialog" max-width="1200" id="info">
                 <template v-slot:activator="{ on }">
                 <v-btn id="vbt" color=#184725 dark v-on="on"> VISIT </v-btn>
                 </template>      
@@ -33,7 +34,7 @@
                 <v-col align="center" class="col-md-4 col-lg-4 mb-4">
                         <v-container id="short_intro">
                         <v-layout column align-center>
-                        <v-img :src="school.logo" height="270px" width="270px"> </v-img>
+                        <v-img :src="school.logo" height="230px" width="230px"> </v-img>
                         </v-layout>
                         <h1> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
@@ -254,7 +255,7 @@ h2{
 }
 
 #card{
-        border-radius:20px;
+        border-radius:12px;
         margin: 10px;
 }
 
