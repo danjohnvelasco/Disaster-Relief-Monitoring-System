@@ -119,26 +119,6 @@
           </v-carousel>
 
         </v-card>
-          
-          <!--
-          <v-carousel cycle class='text-center' id="image" style="margin: auto;" hide-delimiter-background show-arrows-on-hover>
-            <v-carousel-item style=""  v-for="(url, i) in file_URLs" :key="i" >
-              <img :src="url" style="">
-            </v-carousel-item>
-          </v-carousel>
--->      
-        <!-- carousel
-        <div style="background:grey;">
-          <v-carousel class="ma-0 test"   style="width: 80vw; height: 35vw;" hide-delimiter-background>
-            <v-carousel-item class="mt-0" v-for="(url, i) in file_URLs" :key="i">
-              <img :src="url" class="mx-auto my-auto" style="display: block; width: 80%; height: auto;">
-            </v-carousel-item>
-          </v-carousel>
-
-        -->
-
-        <!--
-        </v-card> -->
 
       </v-container>
 
@@ -380,15 +360,4 @@ td{
 .label-heading{
   color:#427f50
 }
-/*
-#427f50
-#184725
-#fcfcfc
-#f7f5e8
-#efe8d7
-#7d7d7d
-#b5b5b5
-
-background-color:#dfeee2;
- */
 </style>

@@ -2,8 +2,7 @@
   <v-app>
     <v-navigation-drawer clipped floating fixed width="25%" class="pt-12" id="body">
       <h2 class="headline mx-6 mt-8 mb-4" style="color:#427f50;"><b>Disaster Events</b></h2>
-      
-      <v-card active-class="test" width='auto' class="mb-6 mx-4 d-card" id="card"  v-for="disaster in disasters" :key="disaster.id" @click="displayEvent(disaster.id)">
+      <v-card width='auto' class="mb-6 mx-4 d-card" id="card" v-for="disaster in disasters" :key="disaster.id" @click="displayEvent(disaster.id)">
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{disaster.title}}</v-list-item-title>
@@ -77,5 +76,3 @@ export default {
 }
 
 </style>
-#427f50
-#184725
