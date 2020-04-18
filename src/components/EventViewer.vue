@@ -102,7 +102,7 @@
           <v-row wrap class="mx-0">
             <v-col class="col-md-6 col-lg-6 mb-6 px-0" >
               <v-card class="ma-2 ml-8 pa-3" id="donation-card">
-                <p class="title mb-1">Cashasdads</p>
+                <p class="title mb-1">Cash</p>
                 <p class="subtitle-1">{{disaster.donation_details}}</p>
               </v-card>
             </v-col>
@@ -171,7 +171,27 @@ export default {
   components: {
     EventForm
   },
-  props: ['doc_id'],
+  props: {
+    doc_id: String,
+    latestDisasterDocs: Object
+  },
+  watch: {
+    doc_id: function() {
+      // ensures clean state
+      this.clearData();
+      // assign preloaded data to be displayed
+      this.disaster = this.latestDisasterDocs[this.doc_id];
+      // Download images (lazy loading)
+      if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
+        this.getImageURLs(this.doc_id, this.disaster.img_URLs);
+        
+      // get historical data (lazy loading)
+      this.getHistoricalData(this.doc_id);
+
+      this.assignStats(this.disaster)
+      console.log(this.stats)
+    }
+  },
   data(){
     return{
       disaster: {},
@@ -183,22 +203,17 @@ export default {
       stats_num: ''
     }
   },
-  watch: {
-    doc_id(newVal) {
-      this.getData(newVal);
-    }
-  },
   methods: {
+    toggleEdit: function () {
+      this.editing = !this.editing;
+      this.dialog = !this.dialog;
+    },
     clearData: function() {
       this.disaster = {};
       this.file_URLs = [];
       this.history = []
     },
-    toggleEdit: function () {
-      this.editing = !this.editing;
-      this.dialog = !this.dialog;
-    },
-    timestampToDate: (timestamp) => {
+    timestampToDate: function (timestamp) {
       var date = timestamp.toDate()
       var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
       return newdate
@@ -217,20 +232,6 @@ export default {
         })
       })
     },
-    getHistoricalData: function(list) {
-      var historical_data = {
-        date: '',
-        indiv_affected: '',
-        fam_affected: ''
-      }
-      list.forEach((disaster) => {
-        historical_data.date = this.timestampToDate(disaster.data().created_at)
-        historical_data.indiv_affected = disaster.data().indiv_affected
-        historical_data.fam_affected = disaster.data().fam_affected
-        this.history.push(historical_data)
-        historical_data = {}
-      })
-    },
     assignStats: function(disaster){
       this.stats = []
       this.stats.push({
@@ -244,28 +245,28 @@ export default {
           value: disaster.fam_affected
       })
 
-      if(disaster.evac_indiv_inside != null)
+      if(disaster.evac_indiv_inside != null && disaster.evac_indiv_inside != "")
         this.stats.push({
           title: 'Individuals in Evacuation Centers',
           icon: 'mdi-home-variant',
           value: disaster.evac_indiv_inside
         })
 
-      if(disaster.evac_fam_inside != null)
+      if(disaster.evac_fam_inside != null && disaster.evac_fam_inside != "")
         this.stats.push({
           title: 'Families in Evacuation Centers',
           icon: 'mdi-home-group',
           value: disaster.evac_fam_inside
         })
 
-      if(disaster.damage_cost != null)
+      if(disaster.damage_cost != null && disaster.damage_cost != "")
         this.stats.push({
           title: 'Damage Cost',
           icon: 'mdi-cash',
           value:'₱' + disaster.damage_cost
         })
 
-      if(disaster.structures_damaged != null)
+      if(disaster.structures_damaged != null && disaster.structures_damaged != "")
         this.stats.push({
           title: 'Structures Damaged',
           icon: 'mdi-domain',
@@ -284,36 +285,35 @@ export default {
 
       this.stats_num = count
     },
-    getData: function (doc_id) {
+    getHistoricalData: function(doc_id) {
+      var historical_data = {};
       db.collection('disasters2')
-      .doc(doc_id)
-      .collection('history').orderBy('created_at').get().then(doc => {
-        if (doc) {
-          // clears current data in disaster form
-          this.clearData()
-          // rearranges disaster historical data array into latest first
-          var disaster_data = doc.docs.reverse()
-          // grabs latest data in history subcollection
-          this.disaster = disaster_data[0].data()
-          // converts timestamp data type into Date
-          this.disaster.created_at = this.timestampToDate(this.disaster.created_at)
-          // converts image URLs to download URLs and transfers to file_URLs array
-          if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
-            this.getImageURLs(doc_id, this.disaster.img_URLs)
-          // gets historical data of disaster event
-          this.getHistoricalData(disaster_data)
-          // assigns disaster stats in stats array
-          this.assignStats(this.disaster)
-        } else{
-        console.log('no doc found')
-        }
-      }).catch(err => {
-        console.log("Error: " + err)
-      })
+        .doc(doc_id)
+        .collection('history')
+        .orderBy('created_at', 'desc')
+        .get()
+        .then((docs) => {
+          docs.forEach((doc) => {
+            historical_data.date = this.timestampToDate(doc.data().created_at)
+            historical_data.indiv_affected = doc.data().indiv_affected
+            historical_data.fam_affected = doc.data().fam_affected
+            
+            this.history.push(historical_data)
+            
+            
+
+            historical_data = {}
+          })
+        }).catch(err => {
+          console.log("Error: " + err)
+        })
     }
   },
   created() {
-    this.getData(this.doc_id);
+    console.log('EventViewer created');
+  },
+  beforeUpdate() {
+    console.log('EventViewer beforeUpdate');
   }
 }
 </script>
