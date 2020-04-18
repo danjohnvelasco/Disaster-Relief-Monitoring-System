@@ -90,3 +90,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#disaster-event{
+  padding-top: 0;
+}
+</style>
+

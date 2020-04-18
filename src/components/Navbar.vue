@@ -3,12 +3,12 @@
     <v-app-bar fixed elevate-on-scroll color="white">
       <img class="mr-3" :src="require('../assets/brand.png')" height="40"/>
       <v-spacer></v-spacer>
-      <v-btn small text color="darkgrey" class="px-2 mx-2"
+      <v-btn small text color="#184725" class="px-2 mx-2"
         to="/">
-        <v-icon small class="pr-2 caption">mdi-view-dashboard</v-icon>
+        <v-icon small class="pr-2 caption navbar">mdi-view-dashboard</v-icon>
         <span class="font-weight-light">Dashboard</span>
       </v-btn>
-      <v-btn small text color="darkgrey" class="px-2 mx-2"
+      <v-btn small text color="#184725" class="px-2 mx-2"
         to="/schools">
         <v-icon small class="pr-2">mdi-school</v-icon>
         <span class="font-weight-light">Schools</span>
@@ -23,7 +23,7 @@
         <v-icon small class="pr-2">mdi-comment-question</v-icon>
         <span class="font-weight-light">About</span>
       </v-btn>
-      <v-btn small dark @click="toggleForm">+ Event</v-btn>
+      <v-btn small dark style="background:#184725;" @click="toggleForm">+ Event</v-btn>
     </v-app-bar>
     <!--Event Form Dialog-->
     <v-dialog v-model="dialog" scrollable persistent>
