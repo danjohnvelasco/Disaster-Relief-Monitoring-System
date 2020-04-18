@@ -17,44 +17,19 @@
 </template>
 
 <script>
-import {db} from '@/firebase/init'
-
 export default {
-  data() {
-    return{
-      disasters: []
-    }
+  props: {
+    activeTopLevelDocs: Array
   },
   methods: {
-    timestampToDate: (timestamp) => {
-      var date = timestamp.toDate()
-      var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-      return newdate
-    },
+    // emits doc_id to parent component
     displayEvent(doc_id) {
-      //console.log(doc_id);
       this.$emit('displayEvent', doc_id);
-    },
-    getActiveDisasters() {
-      db.collection("disasters2")
-        .where("archived", "==", false)
-        .orderBy('last_updated', 'desc')
-        .get()
-        .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          var disaster = doc.data();
-          disaster.id = doc.id;
-          disaster.last_updated = this.timestampToDate(disaster.last_updated);
-          this.disasters.push(disaster);
-        });
-        })
-        .catch((error) => {
-          console.log("Error getting documents: ", error);
-        });
+      console.log(doc_id);
     }
   },
   created(){
-    this.getActiveDisasters();
+    console.log('EventList created');
   }
 }
 </script>
