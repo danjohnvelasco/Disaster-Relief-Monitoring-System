@@ -13,11 +13,11 @@
         <v-icon small class="pr-2">mdi-school</v-icon>
         <span class="font-weight-light">Schools</span>
       </v-btn>
-      <v-btn small text color="darkgrey" class="px-2 mx-2"
+      <!-- <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/bulletin">
         <v-icon small class="pr-2">mdi-newspaper-variant-multiple</v-icon>
         <span class="font-weight-light">Bulletin</span>
-      </v-btn>
+      </v-btn> -->
       <v-btn small text color="darkgrey" class="px-2 mx-2"
         to="/about">
         <v-icon small class="pr-2">mdi-comment-question</v-icon>

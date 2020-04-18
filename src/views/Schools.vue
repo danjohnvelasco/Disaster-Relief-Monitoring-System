@@ -7,7 +7,7 @@
         
         <v-flex sm8 md6 lg6 xl2 v-for="school in schools" :key="school.name">
           <v-hover>
-            <template v-slot="{ hover }">
+              <template v-slot="{ hover }">
               
               <v-card max-width="520" max-height="400" :elevation="hover ? 24 : 2"
                       class="mx-auto pa-2" id="card">
@@ -16,45 +16,42 @@
                 <v-card-subtitle id="sub"> {{school.add}} </v-card-subtitle>
 
                 <!-- FULL SCREEN -->                
-                <!-- <v-card-actions> -->
-                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info">
+                <v-card-actions>
+                <!-- <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" id="info"> -->
+                <v-dialog v-model="dialog" max-width="1000" id="info">
                 <template v-slot:activator="{ on }">
-                
-                <v-btn id="vbt" color=#184725 @click="toggleInfo" dark v-on="on"> VISIT </v-btn>
+                <v-btn id="vbt" color=#184725 dark v-on="on"> VISIT </v-btn>
                 </template>      
-                        <!-- <SchoolDetails v-if="dialog" @close="toggleInfo"></SchoolDetails> -->
-              
-                <!-- SCHOOL INFO   -->
+
+                <!-- SCHOOL INFO  -->
                 <v-card class="body" id="body">
 
-                <v-toolbar id="toolbar">
-                        
-                 <v-btn @click="toggleInfo"> CLOSE </v-btn>
-                
-                </v-toolbar>
+                <!-- <v-toolbar id="toolbar">                        
+                 <v-btn  @click="toggleInfo()" id="close"> CLOSE </v-btn>
+                </v-toolbar> -->
 
                 <v-row>
                 <v-col align="center" class="col-md-4 col-lg-4 mb-4">
                         <v-container id="short_intro">
                         <v-layout column align-center>
-                        <v-img :src="school.logo" height="270px" width="270px"> </v-img>
+                        <v-img :src="school.logo" height="200px" width="200px"> </v-img>
                         </v-layout>
-                        <h1> Contact Us </h1>
+                        <h1 id="con"> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
                         <h3>{{school.contactperson}}</h3>
                         <h4>{{school.email}}</h4>
-                        <br> <br>
-                        <h3>{{school.webpage}} </h3>
                         <br>
                         <h5>{{school.address}} </h5>
+                        <br> 
+                        <h3 id="web">{{school.webpage}} </h3>
                         </v-container>
                 </v-col>
-                <v-col class="col-md-6 col-lg-6 mb-6">
+                <v-col class="col-md-7 col-lg-7 mb-7">
                         <v-container id="info">
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
-                        <br> <br>
-                        <h2> Contact Details </h2> <br>
+                        <br>
+                        <h2 id="don"> Donation Details </h2> <br>
                         <p>
                         {{school.info}}
                         </p>
@@ -62,13 +59,9 @@
                 </v-col>  
                 </v-row>
 
-    <!-- <v-card-actions>
-       <v-btn @click="closeInfo"> Close </v-btn>
-    </v-card-actions> -->
-  </v-card>
+                </v-card> 
                 </v-dialog>
-                <!-- </v-card-actions> -->
-
+                </v-card-actions>
               </v-card>
            </template>
           </v-hover>
@@ -80,12 +73,7 @@
 </template>
 
 <script>
-// import SchoolDetails from '@/components/SchoolDetails'
-
   export default {
-//   components: {
-//     SchoolDetails
-//   },
   data() {
     return {
       schools: [
@@ -97,7 +85,7 @@
                 email:'dlsasmc@dlsu.edu.ph',
                 webpage:'www.dlsasmc.edu.ph',
                 address:'Lutopan, Toledo City, Cebu',
-                info:'dito mapupunta pera niyo bezzie',
+                info:'Contact Mr. Holmes via email',
                 },
         {name: 'De La Salle Araneta University', add:'Malabon, Metro Manila',
                 img:'https://www.pacu.org.ph/wordpress/wp-content/uploads/2017/05/De-La-Salle-University-Malabon-City.jpg',
@@ -105,9 +93,9 @@
                 contactnum:'749-165-1532',
                 contactperson:'Ms. Dorolice Gerger',
                 email:'dlsau@dlsu.edu.ph',
-                webpage:'dlsau.edu.ph/',
+                webpage:'dlsau.edu.ph',
                 address:'Salvador Araneta Campus, 303 Victoneta Ave, Potrero, Malabon, 1475 Metro Manila',
-                info:'poTPot',
+                info:'Contact the head of DLSAU for inquiries.',
                 },
         {name: 'De La Salle-College of Saint Benilde', add: 'Taft Ave, Metro Manila',
                 img:'https://balitangviral.com/wp-content/uploads/2015/07/mark.space_.4goo.net_.jpg',
@@ -117,7 +105,7 @@
                 email:'dls-csb@dlsu.edu.ph',
                 webpage:'www.benilde.edu.ph/',
                 address:'2544 Taft Ave, Malate, Manila, 1004 Metro Manila',
-                info:'baraATATATATATATTA',},
+                info:'Send an email to Ms. Roselle McCue before making any donations',},
         {name: 'De La Salle John Bosco College', add:'Mangagoy, Bislig City, Surigao del Sur',
                 img:'https://1.bp.blogspot.com/_vee8AfR9RzE/SGOdLegiQEI/AAAAAAAAAA8/RsQLb9TD9Qk/s320/800px-Dlsadmin2.jpg',
                 logo:'https://images.squarespace-cdn.com/content/v1/5d09ea045609c00001987da2/1568341244186-9EPM4UWZOKB2DMGPEHX1/ke17ZwdGBToddI8pDm48kNiEM88mrzHRsd1mQ3bxVct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0topjEaZcWjtmMYdCWL4dkGbxs35J-ZjFa9s1e3LsxrX8g4qcOj2k2AL08mW_Htcgg/DLSJBC.png?format=300w',
@@ -126,7 +114,7 @@
                 email:'dlsjbc@dlsu.edu.ph',
                 webpage:'www.dlsjbc.edu.ph/',
                 address:'John Bosco Dist., Mangagoy, Bislig, 8311 Surigao del Sur',
-                info:'sisig',},
+                info:'Redirect to DLSU-M for donations.',},
         {name: 'De La Salle Lipa', add: 'Lipa, Batangas',
                 img:'https://www.finduniversity.ph/_resources/business/7702/dlsl-116.jpg',
                 logo:'https://images.squarespace-cdn.com/content/v1/5d09ea045609c00001987da2/1568341790823-91FL2190TB4J0VE43585/ke17ZwdGBToddI8pDm48kNiEM88mrzHRsd1mQ3bxVct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0topjEaZcWjtmMYdCWL4dkGbxs35J-ZjFa9s1e3LsxrX8g4qcOj2k2AL08mW_Htcgg/DLSL.png?format=300w',
@@ -135,7 +123,7 @@
                 email:'dlsl@dlsu.edu.ph',
                 webpage:'www.dlsl.edu.ph/',
                 address:'1962 J.P. Laurel National Highway, Mataas na Lupa, 4217, Batangas',
-                info:'liLIPAd',},
+                info:'In-kind donations can be dropped off under Mr. Ephrayim Cowwell.',},
         {name: 'De La Salle Medical and Health Sciences Institute', add:'Dasmariñas, Cavite',
                 img:'https://www.fenceabroad.com/blogs/wp-content/uploads/2016/12/AKMRC1-469x312.jpg',
                 logo:'https://images.squarespace-cdn.com/content/v1/5d09ea045609c00001987da2/1568341224797-04CIUJT63PHAY14K9GH9/ke17ZwdGBToddI8pDm48kNiEM88mrzHRsd1mQ3bxVct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0topjEaZcWjtmMYdCWL4dkGbxs35J-ZjFa9s1e3LsxrX8g4qcOj2k2AL08mW_Htcgg/DLSMHSI.png?format=300w',
@@ -232,47 +220,83 @@
                 contactnum:'293-449-6456',
                 contactperson:'Mr. Ros Aldersey',
                 email:'usls@dlsu.edu.ph',
-                webpage:'www.usls.edu.ph/',
+                webpage:'www.usls.edu.ph',
                 address:'La Salle Avenue, Bacolod 6100, Negros Occidental',
                 info:'XD',},
       ]
     }
-  }, 
+   },
+//    methods: {
+//         toggleInfo: function(){
+//                 this.dialog = !this.dialog;
+//         }   
+//    }
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
+/* .schools{
+        background-color: #427f50;
+} */
+
 h1{
         text-align: center;
-        font-family: Garamond;
+        font-family: 'EB Garamond', serif;
         color: #184725;
+        font-size: 30px;
         padding: 20px 0 20px 0;
 }
 
 h2{
         text-align: left;
-        font-family: Garamond;
+        font-family: 'EB Garamond', serif;
         color: #184725;
+}
+
+#con
+{
+        font-size: 25px;
+        font-family: 'EB Garamond', serif;
+        color: #184725;
+}
+
+h3{
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+        color: #252525;
+}
+
+#web{
+        color: #427f50;
+}
+
+h4{
+        font-size: 15px;
+        font-family: 'Roboto', sans-serif;
+        color: #616161;
+}
+
+h5{
+        font-size: 12px;
+        font-family: 'Roboto', sans-serif;
+        color: #7d7d7d;
 }
 
 #title{
         text-align: left;
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-size: 20px;
 }
 #sub{
         text-align: left;
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-size: 15px;
 }
 
 #card{
-        border-radius:20px;
+        border-radius:12px;
         margin: 10px;
-}
-
-h1{
-  text-align: center;
 }
 
 #schoolname{
@@ -284,6 +308,8 @@ h1{
 }
 
 #info, #body{
-  background-color:#f2f5eb;
+  background-color:#EAEDEC;
+  overflow-x: hidden;
+  border-radius: 13px;
 }
 </style>
