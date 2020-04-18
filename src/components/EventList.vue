@@ -2,12 +2,12 @@
   <v-app>
     <v-navigation-drawer clipped floating fixed width="25%" class="pt-12" id="body">
       <h2 class="headline mx-6 mt-8 mb-4" style="color:#427f50;"><b>Disaster Events</b></h2>
-      <v-card width='auto' class="mb-6 mx-4 d-card" id="card" v-for="disaster in disasters" :key="disaster.id" @click="displayEvent(disaster.id)">
+      <v-card width='auto' class="mb-6 mx-4 d-card" id="card" v-for="doc in activeTopLevelDocs" :key="doc.id" @click="displayEvent(doc.id)">
         <v-list-item three-line>
           <v-list-item-content>
-            <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{disaster.title}}</v-list-item-title>
+            <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{doc.title}}</v-list-item-title>
             <v-list-item-subtitle >Lead School: //lead school</v-list-item-subtitle>
-            <div class="overline mt-2" >Updated: {{disaster.last_updated}}</div>
+            <div class="overline mt-2" >Updated: {{doc.last_updated}}</div>
 
           </v-list-item-content>
         </v-list-item>
@@ -17,44 +17,19 @@
 </template>
 
 <script>
-import {db} from '@/firebase/init'
-
 export default {
-  data() {
-    return{
-      disasters: []
-    }
+  props: {
+    activeTopLevelDocs: Array
   },
   methods: {
-    timestampToDate: (timestamp) => {
-      var date = timestamp.toDate()
-      var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-      return newdate
-    },
+    // emits doc_id to parent component
     displayEvent(doc_id) {
-      //console.log(doc_id);
       this.$emit('displayEvent', doc_id);
-    },
-    getActiveDisasters() {
-      db.collection("disasters2")
-        .where("archived", "==", false)
-        .orderBy('last_updated', 'desc')
-        .get()
-        .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          var disaster = doc.data();
-          disaster.id = doc.id;
-          disaster.last_updated = this.timestampToDate(disaster.last_updated);
-          this.disasters.push(disaster);
-        });
-        })
-        .catch((error) => {
-          console.log("Error getting documents: ", error);
-        });
+      console.log(doc_id);
     }
   },
   created(){
-    this.getActiveDisasters();
+    console.log('EventList created');
   }
 }
 </script>

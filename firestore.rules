@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+      // For development purposes
+      match /{document=**} {
+      allow read, write: if true;
+      }
+    	
+      // Allow only authenticated content owners access
+   		match /schools/{DLS_CSB}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLS_CSB}
+      
+      match /schools/{DLSLASMC}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSASMC}
+      
+      match /schools/{DLSAU}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSAU}
+			
+      match /schools/{DLSJBC}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSJBC}
+      
+      match /schools/{DLSMHSI}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSMHSI}
+
+      match /schools/{DLSU}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSU}
+      
+      match /schools/{DLSU_D}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSU_D}
+      
+      match /schools/{DLSZ}/{documents=**} {
+    	allow read, write: if request.auth.uid == DLSZ}
+
+      match /schools/{LSA}/{documents=**} {
+    	allow read, write: if request.auth.uid == LSA}
+      
+      match /schools/{LSCA}/{documents=**} {
+    	allow read, write: if request.auth.uid == LSCA}
+      
+      match /schools/{LSGH}/{documents=**} {
+    	allow read, write: if request.auth.uid == LSGH}
+
+      match /schools/{LSU}/{documents=**} {
+    	allow read, write: if request.auth.uid == LSU}
+      
+      match /schools/{SJHS}/{documents=**} {
+    	allow read, write: if request.auth.uid == SJHS}
+      
+      match /schools/{SJSDLSB}/{documents=**} {
+    	allow read, write: if request.auth.uid == SJSDLSB}
+      
+      match /schools/{USLS}/{documents=**} {
+    	allow read, write: if request.auth.uid == USLS}
+      
+      
+    }
+}
