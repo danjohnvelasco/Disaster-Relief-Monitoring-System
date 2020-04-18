@@ -34,7 +34,7 @@
                 <v-col align="center" class="col-md-4 col-lg-4 mb-4">
                         <v-container id="short_intro">
                         <v-layout column align-center>
-                        <v-img :src="school.logo" height="230px" width="230px"> </v-img>
+                        <v-img :src="school.logo" height="200px" width="200px"> </v-img>
                         </v-layout>
                         <h1> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
@@ -46,7 +46,7 @@
                         <h5>{{school.address}} </h5>
                         </v-container>
                 </v-col>
-                <v-col class="col-md-6 col-lg-6 mb-6">
+                <v-col class="col-md-7 col-lg-7 mb-7">
                         <v-container id="info">
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
@@ -235,6 +235,11 @@
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+/* .schools{
+        background-color: #427f50;
+} */
+
 h1{
         text-align: center;
         font-family: Garamond;
@@ -277,7 +282,8 @@ h1{
 }
 
 #info, #body{
-  background-color:#f2f5eb;
+  background-color:#EAEDEC;
   overflow-x: hidden;
+  border-radius: 13px;
 }
 </style>
