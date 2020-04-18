@@ -171,7 +171,23 @@ export default {
   components: {
     EventForm
   },
-  props: ['doc_id'],
+  props: {
+    doc_id: String,
+    latestDisasterDocs: Object
+  },
+  watch: {
+    doc_id: function() {
+      // ensures clean state
+      this.clearData();
+      // assign preloaded data to be displayed
+      this.disaster = this.latestDisasterDocs[this.doc_id];
+      // Download images (lazy loading)
+      if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
+        this.getImageURLs(this.doc_id, this.disaster.img_URLs);
+      // get historical data (lazy loading)
+      this.getHistoricalData(this.doc_id);
+    }
+  },
   data(){
     return{
       disaster: {},
@@ -183,22 +199,17 @@ export default {
       stats_num: ''
     }
   },
-  watch: {
-    doc_id(newVal) {
-      this.getData(newVal);
-    }
-  },
   methods: {
+    toggleEdit: function () {
+      this.editing = !this.editing;
+      this.dialog = !this.dialog;
+    },
     clearData: function() {
       this.disaster = {};
       this.file_URLs = [];
       this.history = []
     },
-    toggleEdit: function () {
-      this.editing = !this.editing;
-      this.dialog = !this.dialog;
-    },
-    timestampToDate: (timestamp) => {
+    timestampToDate: function (timestamp) {
       var date = timestamp.toDate()
       var newdate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
       return newdate
@@ -313,7 +324,10 @@ export default {
     }
   },
   created() {
-    this.getData(this.doc_id);
+    console.log('EventViewer created');
+  },
+  beforeUpdate() {
+    console.log('EventViewer beforeUpdate');
   }
 }
 </script>
