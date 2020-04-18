@@ -36,7 +36,7 @@
                         <v-layout column align-center>
                         <v-img :src="school.logo" height="200px" width="200px"> </v-img>
                         </v-layout>
-                        <h1 id="conU"> Contact Us </h1>
+                        <h1 id="con"> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
                         <h3>{{school.contactperson}}</h3>
                         <h4>{{school.email}}</h4>
@@ -51,7 +51,7 @@
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
                         <br>
-                        <h2 id="conD"> Contact Details </h2> <br>
+                        <h2 id="don"> Donation Details </h2> <br>
                         <p>
                         {{school.info}}
                         </p>
@@ -85,7 +85,7 @@
                 email:'dlsasmc@dlsu.edu.ph',
                 webpage:'www.dlsasmc.edu.ph',
                 address:'Lutopan, Toledo City, Cebu',
-                info:'dito mapupunta pera niyo bezzie',
+                info:'Contact Mr. Holmes via email',
                 },
         {name: 'De La Salle Araneta University', add:'Malabon, Metro Manila',
                 img:'https://www.pacu.org.ph/wordpress/wp-content/uploads/2017/05/De-La-Salle-University-Malabon-City.jpg',
@@ -95,7 +95,7 @@
                 email:'dlsau@dlsu.edu.ph',
                 webpage:'dlsau.edu.ph',
                 address:'Salvador Araneta Campus, 303 Victoneta Ave, Potrero, Malabon, 1475 Metro Manila',
-                info:'poTPot',
+                info:'Contact the head of DLSAU for inquiries.',
                 },
         {name: 'De La Salle-College of Saint Benilde', add: 'Taft Ave, Metro Manila',
                 img:'https://balitangviral.com/wp-content/uploads/2015/07/mark.space_.4goo.net_.jpg',
@@ -105,7 +105,7 @@
                 email:'dls-csb@dlsu.edu.ph',
                 webpage:'www.benilde.edu.ph/',
                 address:'2544 Taft Ave, Malate, Manila, 1004 Metro Manila',
-                info:'baraATATATATATATTA',},
+                info:'Send an email to Ms. Roselle McCue before making any donations',},
         {name: 'De La Salle John Bosco College', add:'Mangagoy, Bislig City, Surigao del Sur',
                 img:'https://1.bp.blogspot.com/_vee8AfR9RzE/SGOdLegiQEI/AAAAAAAAAA8/RsQLb9TD9Qk/s320/800px-Dlsadmin2.jpg',
                 logo:'https://images.squarespace-cdn.com/content/v1/5d09ea045609c00001987da2/1568341244186-9EPM4UWZOKB2DMGPEHX1/ke17ZwdGBToddI8pDm48kNiEM88mrzHRsd1mQ3bxVct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0topjEaZcWjtmMYdCWL4dkGbxs35J-ZjFa9s1e3LsxrX8g4qcOj2k2AL08mW_Htcgg/DLSJBC.png?format=300w',
@@ -114,7 +114,7 @@
                 email:'dlsjbc@dlsu.edu.ph',
                 webpage:'www.dlsjbc.edu.ph/',
                 address:'John Bosco Dist., Mangagoy, Bislig, 8311 Surigao del Sur',
-                info:'sisig',},
+                info:'Redirect to DLSU-M for donations.',},
         {name: 'De La Salle Lipa', add: 'Lipa, Batangas',
                 img:'https://www.finduniversity.ph/_resources/business/7702/dlsl-116.jpg',
                 logo:'https://images.squarespace-cdn.com/content/v1/5d09ea045609c00001987da2/1568341790823-91FL2190TB4J0VE43585/ke17ZwdGBToddI8pDm48kNiEM88mrzHRsd1mQ3bxVct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0topjEaZcWjtmMYdCWL4dkGbxs35J-ZjFa9s1e3LsxrX8g4qcOj2k2AL08mW_Htcgg/DLSL.png?format=300w',
@@ -123,7 +123,7 @@
                 email:'dlsl@dlsu.edu.ph',
                 webpage:'www.dlsl.edu.ph/',
                 address:'1962 J.P. Laurel National Highway, Mataas na Lupa, 4217, Batangas',
-                info:'liLIPAd',},
+                info:'In-kind donations can be dropped off under Mr. Ephrayim Cowwell.',},
         {name: 'De La Salle Medical and Health Sciences Institute', add:'Dasmariñas, Cavite',
                 img:'https://www.fenceabroad.com/blogs/wp-content/uploads/2016/12/AKMRC1-469x312.jpg',
                 logo:'https://images.squarespace-cdn.com/content/v1/5d09ea045609c00001987da2/1568341224797-04CIUJT63PHAY14K9GH9/ke17ZwdGBToddI8pDm48kNiEM88mrzHRsd1mQ3bxVct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0topjEaZcWjtmMYdCWL4dkGbxs35J-ZjFa9s1e3LsxrX8g4qcOj2k2AL08mW_Htcgg/DLSMHSI.png?format=300w',
@@ -244,6 +244,7 @@ h1{
         text-align: center;
         font-family: 'EB Garamond', serif;
         color: #184725;
+        font-size: 30px;
         padding: 20px 0 20px 0;
 }
 
@@ -253,7 +254,7 @@ h2{
         color: #184725;
 }
 
-#conU
+#con
 {
         font-size: 25px;
         font-family: 'EB Garamond', serif;
