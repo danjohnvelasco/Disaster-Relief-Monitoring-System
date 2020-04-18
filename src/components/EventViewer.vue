@@ -79,31 +79,41 @@
       </v-container>
 
       <!-- call for donation section -->
-      <v-container id="call_for_donations" class="ml-8" v-if="disaster.donate_option != null">
-        <h2 class="headline label-heading">Call for Donations</h2>
+      <v-container id="call_for_donations" class="px-0" v-if="disaster.donate_option != null">
+        <h2 class="headline label-heading ml-11">Call for Donations</h2>
 
-        <v-container class="pa-0"  v-if="disaster.donate_option == 'cash'">
-          <p class="title mb-1">Cash</p>
-          <p class="subtitle-1">{{disaster.donation_details}}</p>
+        <v-container v-if="disaster.donate_option == 'cash'">
+          <v-card class="ma-2 ml-8 pa-3" id="donation-card">
+             <p class="title mb-1">Cash</p>
+            <p class="subtitle-1">{{disaster.donation_details}}</p>
+          </v-card>
+          
         </v-container>
 
-        <v-container class="pa-0" v-else-if="disaster.donate_option == 'in-kind'">
-          <p class="title mb-1">In-kind</p>
-          <p class="subtitle-1" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+        <v-container v-else-if="disaster.donate_option == 'in-kind'">
+          <v-card class="ma-2 ml-8 pa-3" id="donation-card">
+             <p class="title mb-1">In-kind</p>
+            <p class="subtitle-1" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+          </v-card>
+         
         </v-container>
 
-        <v-container class="pa-0" v-else>
-          <v-row wrap>
-            
-            <v-col cols="6">
-              <p class="title mb-1">Cashasdads</p>
-              <p class="subtitle-1">{{disaster.donation_details}}</p>
+        <v-container v-else>
+          <v-row wrap class="mx-0">
+            <v-col class="col-md-6 col-lg-6 mb-6 px-0" >
+              <v-card class="ma-2 ml-8 pa-3" id="donation-card">
+                <p class="title mb-1">Cashasdads</p>
+                <p class="subtitle-1">{{disaster.donation_details}}</p>
+              </v-card>
             </v-col>
-            <v-col cols="6">
-              <p class="title mb-1">In-kind</p>
-              <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+            <v-col class="col-md-6 col-lg-6 mb-6">
+              <v-card class="ma-2 mr-6 pa-3" id="donation-card">
+                <p class="title mb-1">In-kind</p>
+                <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+              </v-card>
             </v-col>
           </v-row>
+          
         </v-container>
 
       </v-container>
@@ -125,8 +135,8 @@
       <!-- historical data section -->
       <v-container id="historical_data">
         <h2 class="headline ml-9 label-heading mb-3 mt-6">History</h2>
-        <v-card id="rounded-card" class=" mx-8 pa-2" background="#ecf5ee">
-          <v-card class="ma-4"   style="margin: auto; max-width:100%;">
+        <!--<v-card id="rounded-card" class=" mx-8 pa-2" background="#ecf5ee">-->
+          <v-card class="ma-4 mx-8" id="rounded-card" style="margin: auto; max-width:100%;">
           <v-simple-table class="pa-4">
             <thead>
               <tr >
@@ -144,7 +154,7 @@
             </tbody>
           </v-simple-table>
         </v-card>
-        </v-card>
+        
         
 
         
@@ -338,6 +348,10 @@ td{
   border-radius:18px;
   background-color:#ecf5ee;
   border-style:hidden;
+}
+
+#donation-card{
+  border-radius:18px;
 }
 
 #don-card{
