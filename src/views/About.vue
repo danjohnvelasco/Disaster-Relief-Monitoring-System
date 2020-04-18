@@ -25,22 +25,26 @@
         <br>
         The LaSallian Disaster Relief (LSDR), as part of the Lasallian Social Development 
         Principles, aims to bridge those affected in unforeseen and unfortunate events to those 
-        who can help them. Schools under the De La Salle Philippines and the partner communities 
-        of these schools are able to meet the first wave of relief when disaster strikes. LSDR 
-        offers data transparency that enables the Lasallian community and beyond to see what is 
-        needed and what they, as part of one community, do to contribute. 
+        who can help them. The LSDR system is also opening its door to other La Salle schools in
+        the Philippines and their partner communities to address relief needs when disaster strikes.
+        Schools under the De La Salle Philippines and the partner communities of these schools are
+        able to meet the first wave of relief when disaster strikes. LSDR offers data transparency
+        that enables the Lasallian community and beyond to see what is needed and what they, as part
+        of one community, do to contribute. 
       </p>
     </v-container>
   </div>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
 .about{
   background-color: #f7f5e8;
 }
 
 #title{
-  font-family: Garamond;
+  font-family: 'EB Garamond', serif;
+  color: #184725;
 }
 
 </style>

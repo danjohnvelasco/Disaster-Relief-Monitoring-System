@@ -36,22 +36,22 @@
                         <v-layout column align-center>
                         <v-img :src="school.logo" height="200px" width="200px"> </v-img>
                         </v-layout>
-                        <h1> Contact Us </h1>
+                        <h1 id="conU"> Contact Us </h1>
                         <h3>{{school.contactnum}}</h3>
                         <h3>{{school.contactperson}}</h3>
                         <h4>{{school.email}}</h4>
-                        <br> <br>
-                        <h3>{{school.webpage}} </h3>
                         <br>
                         <h5>{{school.address}} </h5>
+                        <br> 
+                        <h3 id="web">{{school.webpage}} </h3>
                         </v-container>
                 </v-col>
                 <v-col class="col-md-7 col-lg-7 mb-7">
                         <v-container id="info">
                         <h1 id="schoolname">{{school.name}}</h1>
                         <v-divider></v-divider>
-                        <br> <br>
-                        <h2> Contact Details </h2> <br>
+                        <br>
+                        <h2 id="conD"> Contact Details </h2> <br>
                         <p>
                         {{school.info}}
                         </p>
@@ -220,7 +220,7 @@
                 contactnum:'293-449-6456',
                 contactperson:'Mr. Ros Aldersey',
                 email:'usls@dlsu.edu.ph',
-                webpage:'www.usls.edu.ph/',
+                webpage:'www.usls.edu.ph',
                 address:'La Salle Avenue, Bacolod 6100, Negros Occidental',
                 info:'XD',},
       ]
@@ -235,42 +235,67 @@
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
 /* .schools{
         background-color: #427f50;
 } */
 
 h1{
         text-align: center;
-        font-family: Garamond;
+        font-family: 'EB Garamond', serif;
         color: #184725;
         padding: 20px 0 20px 0;
 }
 
 h2{
         text-align: left;
-        font-family: Garamond;
+        font-family: 'EB Garamond', serif;
         color: #184725;
+}
+
+#conU
+{
+        font-size: 25px;
+        font-family: 'EB Garamond', serif;
+        color: #184725;
+}
+
+h3{
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+        color: #252525;
+}
+
+#web{
+        color: #427f50;
+}
+
+h4{
+        font-size: 15px;
+        font-family: 'Roboto', sans-serif;
+        color: #616161;
+}
+
+h5{
+        font-size: 12px;
+        font-family: 'Roboto', sans-serif;
+        color: #7d7d7d;
 }
 
 #title{
         text-align: left;
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-size: 20px;
 }
 #sub{
         text-align: left;
-        font-family: Roboto;
+        font-family: 'Roboto', sans-serif;
         font-size: 15px;
 }
 
 #card{
         border-radius:12px;
         margin: 10px;
-}
-
-h1{
-  text-align: center;
 }
 
 #schoolname{
