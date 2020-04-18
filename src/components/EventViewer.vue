@@ -296,12 +296,8 @@ export default {
           docs.forEach((doc) => {
             historical_data.date = this.timestampToDate(doc.data().created_at)
             historical_data.indiv_affected = doc.data().indiv_affected
-            historical_data.fam_affected = doc.data().fam_affected
-            
+            historical_data.fam_affected = doc.data().fam_affected  
             this.history.push(historical_data)
-            
-            
-
             historical_data = {}
           })
         }).catch(err => {
