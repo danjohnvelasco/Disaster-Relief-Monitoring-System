@@ -63,7 +63,7 @@
             outlined
             v-model="disaster.remarks"
             auto-grow
-            rows="4"
+            rows="2"
             label="Remarks (optional)"
           ></v-textarea>
           <v-file-input v-model="files" chips multiple outlined label="Click to upload one or more photos (optional)"></v-file-input>
@@ -174,7 +174,7 @@
                       <v-text-field
                         outlined
                         v-model="spec"             
-                        hint="ex. 5 liters, atleast 3 months expiration"
+                        hint="e.g. 5 liters, atleast 3 months expiration"
                         persistent-hint
                         label="Specifications (Optional)"  
                       ></v-text-field>
@@ -196,6 +196,33 @@
                       >
                         You must press the '+' button to add an item.
                       </v-alert>
+                    </v-col>
+                  </v-row>
+                  <v-row dense>
+                    <v-col cols="11">
+                      <v-textarea
+                        outlined
+                        v-model="disaster.in_kind_remarks"
+                        auto-grow
+                        rows="2"
+                        hint="e.g. at least 5 months before expiration"
+                        persistent-hint
+                        label="Remarks (optional)"
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
+                  <v-row dense>
+                    <v-col cols="11">
+                      <v-textarea
+                        outlined
+                        v-model="disaster.in_kind_donation_instructions"
+                        auto-grow
+                        rows="4"
+                        hint="e.g. You may drop your donations to the following address: Center for Social Concern and Action Office 2nd Floor Br. Gabriel Connon Hall De La Salle University 2401 Taft Avenue, Manila"
+                        persistent-hint
+                        :rules="required"
+                        label="Donation Instructions"
+                      ></v-textarea>
                     </v-col>
                   </v-row>
                   <v-row dense>
@@ -305,7 +332,9 @@ export default {
       evac_indiv_inside: null,
       damage_cost: null,
       damage_cost_additional_details: null,
-      img_URLs: []
+      img_URLs: [],
+      in_kind_donation_instructions: null,
+      in_kind_remarks: null
     },
     item: null,
     spec: null,
@@ -345,8 +374,11 @@ export default {
         doc.collection("history").add(this.disaster)
         .then((docRef) => {
           console.log("Subcollection success", docRef.id);
-          this.changeFormStatus('success');
-          this.reloadPage();
+          // success & reload when there's no image to upload, else upload() should determine the success
+          if (this.files === null) {
+            this.changeFormStatus('success');
+            this.reloadPage();
+          }
         }).catch(function(error) {
           console.error("Error adding document: ", error);
           this.changeFormStatus('fail');
@@ -382,9 +414,11 @@ export default {
         doc.collection("history").add(this.disaster)
         .then((docRef) => {
           console.log("Subcollection success", docRef.id);
-          // propagate the data upwards to the parent
-          this.changeFormStatus('success');
-          this.reloadPage();
+          // success & reload when there's no image to upload, else upload() should determine the success
+          if (this.files === null) {
+            this.changeFormStatus('success');
+            this.reloadPage();
+          }
         }).catch(function(error) {
           console.error("Error adding document: ", error);
         });
@@ -428,6 +462,7 @@ export default {
       var files = Object.values(this.files);
       // Store filename in img_urls array
       this.saveImageNames(files);
+      console.log('FILESSSS', files);
       files.forEach((file) => {
         // Create storage ref
         var storageRef = storage.ref(`${doc_id}/${file.name}`);
@@ -437,6 +472,9 @@ export default {
           console.log('Upload success ', ref);
         });
       });
+      /* Put all promises in an [] then wait for all of it to resolve
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+      */
       // Reset files
       this.files = null;
     }
