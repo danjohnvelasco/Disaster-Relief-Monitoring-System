@@ -1,7 +1,7 @@
 <template>
   <div class="root">
-    <v-app-bar fixed elevate-on-scroll color="white">
-      <img class="mr-3" :src="require('../assets/brand.png')" height="40"/>
+    <v-app-bar elevate-on-scroll fixed color="white">
+      <img class="mr-12" :src="require('../assets/brand.png')" height="55px"/>
       <v-spacer></v-spacer>
       <v-btn small text color="#184725" class="px-2 mx-2"
         to="/">
@@ -23,7 +23,10 @@
         <v-icon small class="pr-2">mdi-comment-question</v-icon>
         <span class="font-weight-light">About</span>
       </v-btn>
-      <v-btn small dark style="background:#184725;" @click="toggleForm">+ Event</v-btn>
+      <v-btn  small class="px-2 mx-2"
+              dark style="background:#184725;" 
+              @click="toggleForm">+ Event
+      </v-btn>
     </v-app-bar>
     <!--Event Form Dialog-->
     <v-dialog v-model="dialog" scrollable persistent>

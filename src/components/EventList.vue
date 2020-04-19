@@ -1,14 +1,19 @@
 <template>
   <v-app>
     <v-navigation-drawer clipped floating fixed width="25%" class="pt-12" id="body">
-      <h2 class="headline mx-6 mt-8 mb-4" style="color:#427f50;"><b>Disaster Events</b></h2>
+      <h2 class="headline mx-6 mt-8 mb-2" style="color:#427f50;"><b>Disaster Events</b></h2>
+      <v-btn small text color="#184725" class="px-2 mx-4 mb-3">
+        <span>Active</span>
+      </v-btn>
+      <v-btn small text color="#184725" class="px-2 mx-4 mb-3">
+        <span>Archived</span>
+      </v-btn>
       <v-card width='auto' class="mb-6 mx-4 d-card" id="card" v-for="doc in activeTopLevelDocs" :key="doc.id" @click="displayEvent(doc.id)">
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{doc.title}}</v-list-item-title>
             <v-list-item-subtitle >Lead School: //lead school</v-list-item-subtitle>
             <div class="overline mt-2" >Updated: {{doc.last_updated}}</div>
-
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -47,7 +52,7 @@ export default {
 }
 
 .d-card{
-  background-color:;
+  background-color:white;
 }
 
 </style>
