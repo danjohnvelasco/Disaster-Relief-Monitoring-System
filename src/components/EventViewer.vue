@@ -10,10 +10,10 @@
       <v-container id="gen_info" align="center">
         <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
           {{disaster.title}}
-          <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Edit</v-btn>
+          <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Update</v-btn>
           <v-btn depressed medium @click="archiveEvent(doc_id)" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Archive</v-btn>
         </h1>
-        <h3 class="subtitle-2 grey--text mb-3 ml-9">Last Updated: {{disaster.created_at}}</h3>
+        <h3 class="subtitle-2 grey--text mb-3 ml-9 mr-9">Last Updated: {{disaster.created_at}}</h3>
         <v-divider class="ml-7 mr-7"></v-divider>
         <h2 class="headline mb-2 mt-7 ml-9 label-heading">General Information</h2>
        
@@ -84,19 +84,22 @@
         <h2 class="headline label-heading ml-11">Call for Donations</h2>
 
         <v-container v-if="disaster.donate_option == 'cash'">
-          <v-card class="ma-2 ml-8 pa-3" id="donation-card">
+          <v-card class="ma-2 mx-8 pa-3" id="donation-card">
              <p class="title mb-1">Cash</p>
-            <p class="subtitle-1">{{disaster.donation_details}}</p>
+            <p class="subtitle-1 pre-formatted" v-html="disaster.donation_details"></p>
           </v-card>
           
         </v-container>
 
         <v-container v-else-if="disaster.donate_option == 'in-kind'">
-          <v-card class="ma-2 ml-8 pa-3" id="donation-card">
+          <v-card class="ma-2 mx-8 pa-3" id="donation-card">
              <p class="title mb-1">In-kind</p>
-            <p class="subtitle-1" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
-          </v-card>
-         
+                <p class="subtitle-1 mb-0">Items:</p>
+                <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+                <br>
+                <p class="subtitle-1 mb-0">Instructions:</p>
+                <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
+              </v-card>
         </v-container>
 
         <v-container v-else>
@@ -104,13 +107,17 @@
             <v-col class="col-md-6 col-lg-6 mb-6 px-0" >
               <v-card class="ma-2 ml-8 pa-3" id="donation-card">
                 <p class="title mb-1">Cash</p>
-                <p class="subtitle-1">{{disaster.donation_details}}</p>
+                <p class="subtitle-1 pre-formatted">{{disaster.donation_details}}</p>
               </v-card>
             </v-col>
             <v-col class="col-md-6 col-lg-6 mb-6">
               <v-card class="ma-2 mr-6 pa-3" id="donation-card">
                 <p class="title mb-1">In-kind</p>
+                <p class="subtitle-1 mb-0">Items:</p>
                 <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+                <br>
+                <p class="subtitle-1 mb-0">Instructions:</p>
+                <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
               </v-card>
             </v-col>
           </v-row>
@@ -140,7 +147,7 @@
           <v-card class="ma-4 mx-8" id="rounded-card" style="margin: auto; max-width:100%;">
           <v-simple-table class="pa-4">
             <thead>
-              <tr >
+              <tr>
                 <th class="text-left">Date</th>
                 <th class="text-right">Individuals Affected</th>
                 <th class="text-right">Families Affected</th>
@@ -155,10 +162,6 @@
             </tbody>
           </v-simple-table>
         </v-card>
-        
-        
-
-        
       </v-container>
     </v-content>
   </v-app>
@@ -386,4 +389,9 @@ td{
 .label-heading{
   color:#427f50
 }
+
+.pre-formatted{
+  white-space: pre-wrap;
+}
+
 </style>
