@@ -4,7 +4,7 @@
       <v-col class="col-md-3 col-lg-3 mb-3">
         <EventList :activeTopLevelDocs="activeTopLevelDocs" @displayEvent="displayEvent"></EventList>
       </v-col>
-      <v-col class="col-md-9 col-lg-9 mb-9" v-show="showEventViewer">
+      <v-col class="col-md-9 col-lg-9 mb-9" id="disaster-event" v-show="showEventViewer">
         <EventViewer :latestDisasterDocs="latestDisasterDocs" :doc_id="doc_id"></EventViewer>
       </v-col>
     </v-row>

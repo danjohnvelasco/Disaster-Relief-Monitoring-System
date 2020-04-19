@@ -102,7 +102,7 @@
           <v-row wrap class="mx-0">
             <v-col class="col-md-6 col-lg-6 mb-6 px-0" >
               <v-card class="ma-2 ml-8 pa-3" id="donation-card">
-                <p class="title mb-1">Cashasdads</p>
+                <p class="title mb-1">Cash</p>
                 <p class="subtitle-1">{{disaster.donation_details}}</p>
               </v-card>
             </v-col>
@@ -184,8 +184,12 @@ export default {
       // Download images (lazy loading)
       if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
         this.getImageURLs(this.doc_id, this.disaster.img_URLs);
+        
       // get historical data (lazy loading)
       this.getHistoricalData(this.doc_id);
+
+      this.assignStats(this.disaster)
+      console.log(this.stats)
     }
   },
   data(){
@@ -228,6 +232,59 @@ export default {
         })
       })
     },
+    assignStats: function(disaster){
+      this.stats = []
+      this.stats.push({
+          title: 'Individuals Affected',
+          icon: 'mdi-account',
+          value: disaster.indiv_affected
+      })
+      this.stats.push({
+          title: 'Families Affected',
+          icon: 'mdi-account-group',
+          value: disaster.fam_affected
+      })
+
+      if(disaster.evac_indiv_inside != null && disaster.evac_indiv_inside != "")
+        this.stats.push({
+          title: 'Individuals in Evacuation Centers',
+          icon: 'mdi-home-variant',
+          value: disaster.evac_indiv_inside
+        })
+
+      if(disaster.evac_fam_inside != null && disaster.evac_fam_inside != "")
+        this.stats.push({
+          title: 'Families in Evacuation Centers',
+          icon: 'mdi-home-group',
+          value: disaster.evac_fam_inside
+        })
+
+      if(disaster.damage_cost != null && disaster.damage_cost != "")
+        this.stats.push({
+          title: 'Damage Cost',
+          icon: 'mdi-cash',
+          value:'₱' + disaster.damage_cost
+        })
+
+      if(disaster.structures_damaged != null && disaster.structures_damaged != "")
+        this.stats.push({
+          title: 'Structures Damaged',
+          icon: 'mdi-domain',
+          value: disaster.structures_damaged
+        })
+
+      this.getNumberOfStats()
+    },
+    getNumberOfStats: function(){
+      var count = 0
+
+      for(var i = 0; i < this.stats.length; i++){
+        if(this.stats[i].value != null)
+          count++
+      }
+
+      this.stats_num = count
+    },
     getHistoricalData: function(doc_id) {
       var historical_data = {};
       db.collection('disasters2')
@@ -239,7 +296,7 @@ export default {
           docs.forEach((doc) => {
             historical_data.date = this.timestampToDate(doc.data().created_at)
             historical_data.indiv_affected = doc.data().indiv_affected
-            historical_data.fam_affected = doc.data().fam_affected
+            historical_data.fam_affected = doc.data().fam_affected  
             this.history.push(historical_data)
             historical_data = {}
           })
