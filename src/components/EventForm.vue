@@ -332,9 +332,9 @@ export default {
       evac_indiv_inside: null,
       damage_cost: null,
       damage_cost_additional_details: null,
-      img_URLs: [],
       in_kind_donation_instructions: null,
-      in_kind_remarks: null
+      in_kind_remarks: null,
+      img_URLs: []
     },
     item: null,
     spec: null,
