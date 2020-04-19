@@ -11,6 +11,7 @@
         <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
           {{disaster.title}}
           <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Edit</v-btn>
+          <v-btn depressed medium @click="archiveEvent(doc_id)" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Archive</v-btn>
         </h1>
         <h3 class="subtitle-2 grey--text mb-3 ml-9">Last Updated: {{disaster.created_at}}</h3>
         <v-divider class="ml-7 mr-7"></v-divider>
@@ -19,7 +20,7 @@
           <table class="ml-9" style="height:auto; margin: 0px auto;">
             <tr>
               <td class="text-left label px-0 py-1"><span class="info-label">Lead School</span></td> 
-              <td class="px-0 py-1">LEAD SCHOOL HERE</td>
+              <td class="px-0 py-1">De La Salle University</td>
             </tr>
             <tr>
               <td class="text-left label px-0 py-1"><span class="info-label">Disaster Type</span></td>
@@ -43,7 +44,7 @@
 
       <!-- statistics section -->
       <v-container id="stats" class="pb-5">
-        <h2 class="headline ml-9 label-heading">Statistics Overview</h2>
+        <h2 class="headline ml-9 label-heading">National / Local Statistics</h2>
         <!-- for 2 or 4 cards -->
         <v-row wrap class="mx-6" v-if="this.stats_num == 2 || this.stats_num == 4">
             <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-6 col-lg-6 mb-6" align="center">
@@ -165,6 +166,7 @@
 
 <script>
 import { db, storage } from '@/firebase/init'
+import firebase from 'firebase/app'
 import EventForm from '@/components/EventForm'
 
 export default {
@@ -189,7 +191,7 @@ export default {
       this.getHistoricalData(this.doc_id);
 
       this.assignStats(this.disaster)
-      console.log(this.stats)
+      console.log(this.doc_id)
     }
   },
   data(){
@@ -207,6 +209,20 @@ export default {
     toggleEdit: function () {
       this.editing = !this.editing;
       this.dialog = !this.dialog;
+    },
+    archiveEvent: function (doc_id) {
+      var doc = db.collection("disasters2").doc(doc_id);
+      var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+      doc.set({
+        title: this.disaster.title,
+        type: this.disaster.type,
+        last_updated: timestamp,
+        archived: true
+      }).then(() => {
+        console.log("Event " + doc_id +  " archived")
+      }).catch(err => {
+        console.log("Error: " + err)
+      })
     },
     clearData: function() {
       this.disaster = {};
@@ -261,7 +277,7 @@ export default {
 
       if(disaster.damage_cost != null && disaster.damage_cost != "")
         this.stats.push({
-          title: 'Damage Cost',
+          title: 'Estimated Damage Cost',
           icon: 'mdi-cash',
           value:'₱' + disaster.damage_cost
         })
