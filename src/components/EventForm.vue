@@ -1,6 +1,17 @@
 <template>
     <v-card class="form">
-      <v-card-title>Event Details</v-card-title>
+      <v-alert type="success" v-if="form_status === 'success'">Submit successful! Reloading page...</v-alert>
+      <v-card-title>
+        Event Details
+        <v-progress-linear
+          v-if="form_status === 'submitting'"
+          :height='6'
+          rounded
+          indeterminate
+          color="green"
+        ></v-progress-linear>
+      </v-card-title>
+      
       <v-card-text>
         <v-form ref="form">
           <!--Required data fields starts here-->
@@ -8,18 +19,21 @@
             outlined
             v-model="disaster.title"
             :rules="required"
+            hint="e.g. Typhoon Maria Relief Operation"
             label="Title"
           ></v-text-field>
           <v-text-field
             outlined
             v-model="disaster.type"
             :rules="required_lettersOnly"
+            hint="e.g. Typhoon, Fire"
             label="Disaster Type"
           ></v-text-field>
           <v-text-field
             outlined
             v-model="disaster.location"
             :rules="required"
+            hint="CALABARZON area, Tondo area"
             label="Location"
           ></v-text-field>
           <v-textarea
@@ -28,20 +42,21 @@
             auto-grow
             rows="1"
             :rules="required"
+            hint="e.g. Families in the CALABARZON area, specifically Cavite were affected by Typhoon Maria. The relief operations aim to provide assistance to families in Cavite."
             label="Description"
           ></v-textarea>
           <v-text-field
             outlined
             v-model="disaster.fam_affected"
             :rules="required_numbersOnly"
-            label="Families Affected"  
+            label="Number of Families Affected"  
             suffix="families affected"            
           ></v-text-field>
           <v-text-field
             outlined
             v-model="disaster.indiv_affected"
             :rules="required_numbersOnly"
-            label="Individuals Affected" 
+            label="Number of Individuals Affected" 
             suffix="individuals affected"             
           ></v-text-field>
           <v-textarea
@@ -51,59 +66,78 @@
             rows="4"
             label="Remarks (optional)"
           ></v-textarea>
-          <v-file-input v-model="files" chips multiple outlined label="Click to upload photos (optional)"></v-file-input>
+          <v-file-input v-model="files" chips multiple outlined label="Click to upload one or more photos (optional)"></v-file-input>
           <!--Optional data fields starts here-->
           <v-subheader>Optional Data</v-subheader>
           <v-expansion-panels>
             <v-expansion-panel> <!--Group 1-->
-              <v-expansion-panel-header>Evacuation Center Data</v-expansion-panel-header>
+              <v-expansion-panel-header>Evacuation Center Data (optional)</v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-text-field
                   outlined
                   v-model="disaster.evac_fam_inside"
                   :rules="numbersOnly"
-                  label="Families Inside Evacuation Center"          
+                  label="Number of Families Inside Evacuation Center"          
                   suffix="families inside"    
                 ></v-text-field>
                 <v-text-field
                   outlined
                   v-model="disaster.evac_indiv_inside"
                   :rules="numbersOnly"
-                  label="Individuals Inside Evacuation Center"
+                  label="Number of Individuals Inside Evacuation Center"
                   suffix="individuals inside"              
                 ></v-text-field>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel> <!--Group 2-->
-              <v-expansion-panel-header>Damage Level Data</v-expansion-panel-header>
+              <v-expansion-panel-header>Damage Level Data (optional)</v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-text-field
                   outlined
                   v-model="disaster.damage_cost"
                   :rules="currency"
-                  hint="ex. 330000 or 330,000 or 330,000.15"
+                  hint="e.g. 330000 or 330,000 or 330,000.15"
                   persistent-hint
-                  label="Monetary Value (damage cost)"  
+                  label="Estimated Damage Cost"  
                   prefix="₱"            
                 ></v-text-field>
-                <v-text-field
+                <v-textarea
                   outlined
-                  v-model="disaster.structures_damaged"
-                  :rules="numbersOnly"
-                  label="Structures damaged"
-                  suffix="structures damaged"              
-                ></v-text-field>
+                  v-model="disaster.damage_cost_additional_details"
+                  auto-grow
+                  rows="4"
+                  label="Additional details"
+                ></v-textarea>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel> <!--Group 3-->
-              <v-expansion-panel-header>Call for Donations</v-expansion-panel-header>
+              <v-expansion-panel-header>Call for Donations (optional)</v-expansion-panel-header>
               <v-expansion-panel-content>
-                <v-radio-group v-model="disaster.donate_option" row>
-                  <v-radio label="In-kind" value="in-kind"></v-radio>
-                  <v-radio label="Cash" value="cash"></v-radio>
-                  <v-radio label="Both" value="both"></v-radio>
-                </v-radio-group>
-                <div v-if="disaster.donate_option === 'in-kind' || disaster.donate_option === 'both'">
+                <v-row no-gutters :align="'center'">
+                  <v-col :cols='1'>
+                    <label>Options: </label>
+                  </v-col>
+                  <v-col :cols='1'>
+                    <v-checkbox label="Cash" v-model="disaster.is_cash"></v-checkbox>
+                  </v-col>
+                  <v-col :cols='1'>
+                    <v-checkbox label="In-kind" v-model="disaster.is_inkind"></v-checkbox>
+                  </v-col>
+                  
+                </v-row>
+                <!-- Cash Donation Form -->
+                <div v-if="disaster.is_cash">
+                  <v-subheader>Cash Donations</v-subheader>
+                  <v-textarea
+                    outlined
+                    v-model="disaster.donation_details"
+                    auto-grow
+                    rows="4"
+                    label="Donation Details"
+                  ></v-textarea>
+                </div>
+                <!-- In-kind Donation Form -->
+                <div v-if="disaster.is_inkind">
                   <v-subheader>In-kind Donations</v-subheader>
                   <v-row dense v-for="(relief, index) in disaster.reliefs" :key="index">
                     <v-col cols="4">
@@ -131,7 +165,7 @@
                       <v-text-field
                         outlined
                         v-model="item"  
-                        hint="ex. water, canned goods, slippers"   
+                        hint="e.g. water, canned goods, slippers"   
                         persistent-hint 
                         label="Item"    
                       ></v-text-field>
@@ -177,18 +211,6 @@
                     </v-col>
                   </v-row>
                 </div>
-                <div v-if="disaster.donate_option === 'cash' || disaster.donate_option === 'both'">
-                  <v-subheader>Cash Donations</v-subheader>
-                  <v-textarea
-                    outlined
-                    v-model="disaster.donation_details"
-                    auto-grow
-                    rows="4"
-                    label="Donation Details"
-                  ></v-textarea>
-                  <v-subheader>OR</v-subheader>
-                  <v-switch v-model="disaster.link_profile" :label="'Link your profile'"></v-switch>
-                </div>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -197,22 +219,27 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn 
-          v-if="editing === false"
-          color="success" 
           @click="create"
+          v-if="editing === false"
+          :disabled="form_status !== 'fillup'"
+          class="white--text"
+          color="#184725"
         > 
           Submit 
         </v-btn>
         <v-btn 
-          v-if="editing === true"
-          color="primary" 
           @click="update"
+          v-if="editing === true"
+          :disabled="form_status !== 'fillup'"
+          class="white--text"
+          color="#184725"
         > 
           Update
         </v-btn>
         <!-- Emits an event back to parent component -->
         <v-btn 
           @click="closeForm"
+          :disabled="form_status !== 'fillup'"
         > 
           Close 
         </v-btn>
@@ -267,6 +294,8 @@ export default {
       description: null, 
       remarks: null,
       donate_option: null,
+      is_inkind: false,
+      is_cash: false,
       donation_details: null,
       link_profile: true,
       reliefs: [],
@@ -275,16 +304,21 @@ export default {
       evac_fam_inside: null,
       evac_indiv_inside: null,
       damage_cost: null,
-      structures_damaged: null,
+      damage_cost_additional_details: null,
       img_URLs: []
     },
     item: null,
     spec: null,
     add_item_feedback: false,
+    form_status: 'fillup' // form_status_options: ['fillup', 'submitting', 'success', 'fail]
   }),
   methods: {
+    changeFormStatus(status) {
+      this.form_status = status;
+    },
     create () {
       if (this.$refs.form.validate()) {
+        this.changeFormStatus('submitting');
         console.log(JSON.stringify(this.disaster, null, 2));
         // Create doc with auto-id
         var doc = db.collection("disasters2").doc();
@@ -311,13 +345,17 @@ export default {
         doc.collection("history").add(this.disaster)
         .then((docRef) => {
           console.log("Subcollection success", docRef.id);
+          this.changeFormStatus('success');
+          this.reloadPage();
         }).catch(function(error) {
           console.error("Error adding document: ", error);
+          this.changeFormStatus('fail');
         });
       }
     },
     update() {
       if (this.$refs.form.validate()) {
+        this.changeFormStatus('submitting');
         console.log(JSON.stringify(this.disaster, null, 2));
         // Create doc with auto-id
         var doc = db.collection("disasters2").doc(this.doc_id);
@@ -345,7 +383,7 @@ export default {
         .then((docRef) => {
           console.log("Subcollection success", docRef.id);
           // propagate the data upwards to the parent
-          alert('Update Success!');
+          this.changeFormStatus('success');
           this.reloadPage();
         }).catch(function(error) {
           console.error("Error adding document: ", error);
