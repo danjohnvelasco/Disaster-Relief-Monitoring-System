@@ -6,7 +6,7 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{doc.title}}</v-list-item-title>
-            <v-list-item-subtitle >Lead School: //lead school</v-list-item-subtitle>
+            <v-list-item-subtitle >Lead School: De La Salle University</v-list-item-subtitle>
             <div class="overline mt-2" >Updated: {{doc.last_updated}}</div>
 
           </v-list-item-content>

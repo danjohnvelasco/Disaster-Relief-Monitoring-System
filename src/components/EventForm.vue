@@ -83,7 +83,7 @@
                   :rules="currency"
                   hint="ex. 330000 or 330,000 or 330,000.15"
                   persistent-hint
-                  label="Monetary Value (damage cost)"  
+                  label="Estimated Damage Cost"  
                   prefix="₱"            
                 ></v-text-field>
                 <v-text-field
