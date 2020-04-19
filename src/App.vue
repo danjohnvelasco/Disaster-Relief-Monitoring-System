@@ -20,7 +20,7 @@ export default {
 
 <style>
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
