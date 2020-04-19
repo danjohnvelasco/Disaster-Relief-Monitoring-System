@@ -42,7 +42,7 @@
 
       </v-container>
 
-      <!-- statistics section -->
+      <!-- statistics section (WILL REMOVE DAMAGE LEVEL DATA IN THIS PART)-->
       <v-container id="stats" class="pb-5">
         <h2 class="headline ml-9 label-heading">National / Local Statistics</h2>
         <!-- for 2 or 4 cards -->
@@ -79,13 +79,53 @@
         </v-row>
       </v-container>
 
+      <!-- damage level data -->
+      <v-container id="damage_level_data">
+        <h2 class="headline ml-9 label-heading">Damage Level</h2>
+        <v-row wrap class="mx-6">
+            <!-- ESTIMATED DAMAGE COST -->
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center">
+              <v-card class="text-center" id="rounded-card" outlined>
+                <v-row>
+                 <v-col class="col-md-8 col-lg-8 ">
+                    <v-card-text class="title pb-0 text-left ml-4 mt-3">Estimated Damage Cost</v-card-text>
+                    <v-card-text class="headline text-left ml-4">$$$</v-card-text>
+                  </v-col>
+                  <v-col class="col-md-4 col-lg-4">
+                    <v-icon size='70' class="stats-card card-icon mr-5">mdi-cash</v-icon>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+            <!-- STRUCTURES DAMAGED -->
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center">
+              <v-card class="text-center" id="rounded-card" outlined>
+                <v-row>
+                 <v-col class="col-md-8 col-lg-8 ">
+                    <v-card-text class="title pb-0 text-left ml-4 mt-3">No. of Structures Damaged</v-card-text>
+                    <v-card-text class="headline text-left ml-4">$$$</v-card-text>
+                  </v-col>
+                  <v-col class="col-md-4 col-lg-4">
+                    <v-icon size='70' class="stats-card card-icon mr-5">mdi-domain</v-icon>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+            <!-- ADDITIONAL DETAILS -->
+            <v-card class="ma-2  pa-3" id="donation-card">
+              <p class="title mb-1">Additional Details</p>
+              <p class="subtitle-1 mb-0 pre-formatted">// ADDITIONAL DETAILS HERE</p>
+          </v-card>
+        </v-row>
+      </v-container>
+
       <!-- call for donation section -->
       <v-container id="call_for_donations" class="px-0" v-if="disaster.donate_option != null">
         <h2 class="headline label-heading ml-11">Call for Donations</h2>
 
         <v-container v-if="disaster.donate_option == 'cash'">
           <v-card class="ma-2 mx-8 pa-3" id="donation-card">
-             <p class="title mb-1">Cash</p>
+            <p class="title mb-1">Cash</p>
             <p class="subtitle-1 pre-formatted" v-html="disaster.donation_details"></p>
           </v-card>
           
@@ -93,13 +133,13 @@
 
         <v-container v-else-if="disaster.donate_option == 'in-kind'">
           <v-card class="ma-2 mx-8 pa-3" id="donation-card">
-             <p class="title mb-1">In-kind</p>
-                <p class="subtitle-1 mb-0">Items:</p>
-                <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
-                <br>
-                <p class="subtitle-1 mb-0">Instructions:</p>
-                <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
-              </v-card>
+            <p class="title mb-1">In-kind</p>
+            <p class="subtitle-1 mb-0">Items:</p>
+            <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+            <br>
+            <p class="subtitle-1 mb-0">Instructions:</p>
+            <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
+          </v-card>
         </v-container>
 
         <v-container v-else>
