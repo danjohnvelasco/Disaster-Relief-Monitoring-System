@@ -1,5 +1,7 @@
 # lsdr
 
+`![alt text](src/assets/repoArt.png)
+
 ## Project setup
 ```
 npm install
