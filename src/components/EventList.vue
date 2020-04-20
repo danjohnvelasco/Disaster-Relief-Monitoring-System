@@ -8,7 +8,6 @@
 
       <div class="mb-6 mx-4">
         <v-tabs
-          v-model="tab"
           background-color="transparent"
           color="#184725"
           grow
