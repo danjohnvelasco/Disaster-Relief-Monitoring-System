@@ -158,6 +158,7 @@
                 <br>
                 <p class="subtitle-1 mb-0">Instructions:</p>
                 <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
+                
               </v-card>
             </v-col>
           </v-row>
@@ -172,7 +173,8 @@
 
         <v-card class="ml-8 mr-8 m pa-4" id="rounded-card" background="#ecf5ee" style="">
           <v-carousel>
-            <v-carousel-item v-for="(url, i) in file_URLs" :key="i" :src="url" hide-delimiter-background show-arrows-on-hover>
+            <v-carousel-item class="gallery-item" v-for="(url, i) in file_URLs" :key="i" hide-delimiter-background show-arrows-on-hover>
+              <img :src="url">
             </v-carousel-item>
           </v-carousel>
 
@@ -191,6 +193,8 @@
                 <th class="text-left">Date</th>
                 <th class="text-right">Individuals Affected</th>
                 <th class="text-right">Families Affected</th>
+                <th class="text-right">Total Cash Donations</th>
+                <th class="text-right">Total No. of Relief Packs Distributed</th>
               </tr>
             </thead>
             <tbody>
@@ -198,6 +202,8 @@
                 <td class="text-left">{{data.date}}</td>
                 <td class="text-right">{{data.indiv_affected}}</td>
                 <td class="text-right">{{data.fam_affected}}</td>
+                <td class="text-right">// DISASTER.CASHDONATIONS</td>
+                <td class="text-right">// DISASTER.RELIEFPACKS</td>
               </tr>
             </tbody>
           </v-simple-table>
@@ -356,6 +362,8 @@ export default {
             historical_data.date = this.timestampToDate(doc.data().created_at)
             historical_data.indiv_affected = doc.data().indiv_affected
             historical_data.fam_affected = doc.data().fam_affected  
+            // historical_data. CASH DONS = doc.data(). CASH DONS
+            // historical_data. RELIEF PACKS DISTRIBUTED = doc.data(). RELIEF PACKS DISTRIBUTED
             this.history.push(historical_data)
             historical_data = {}
           })
@@ -434,4 +442,9 @@ td{
   white-space: pre-wrap;
 }
 
+.gallery-item img{
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+}
 </style>
