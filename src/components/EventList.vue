@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <v-navigation-drawer clipped floating fixed width="25%" class="pt-12" id="body">
-      <h2 class="headline mx-6 mt-8 mb-2" style="color:#427f50;"><b>Disaster Events</b></h2>
+    <v-navigation-drawer clipped floating fixed width="25%" class="mt-12 pt-2" id="body">
+      <h2 class="headline mx-6 mt-8 mb-2 font-weight-medium" style="color:#184725;">
+        Disaster Events
+      </h2>
       <v-btn 
         small text color="#184725" 
         class="px-2 mx-4 mb-3"
@@ -78,12 +80,10 @@ export default {
 
 #card{
   border-radius:15px;
-  
 }
 
 #body{
-  background-color:#f8f8f8;
-  padding-right: 10px;
+  background-color:#fcfcfc;
 }
 
 .d-card{
