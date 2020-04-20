@@ -465,9 +465,9 @@ export default {
         console.log('Item field is empty.');
       }
     },
-    deleteItem(added_item) {
-      if (added_item !== null) {
-        this.disaster.reliefs.pop(added_item);
+    deleteItem(item_index) {
+      if (item_index !== null) {
+        this.disaster.reliefs.splice(item_index, 1);
         console.table(this.disaster.reliefs, ['item', 'spec']);
       } else {
         console.log('Error deleting item.');
