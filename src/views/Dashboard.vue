@@ -86,7 +86,7 @@ export default {
   },
   created() {
     console.log('Dashboard created');
-    //this.getLatestActiveData();
+    this.getLatestActiveData();
   }
 }
 </script>
