@@ -92,7 +92,7 @@
           <v-file-input v-model="files" prepend-icon="mdi-camera" chips multiple outlined label="Click to upload one or more photos (optional)"></v-file-input>
           <!--Optional data fields starts here-->
           <v-subheader>Optional Data</v-subheader>
-          <v-expansion-panels>
+          <v-expansion-panels :multiple="true" :hover="true">
             <v-expansion-panel> <!--Group 1-->
               <v-expansion-panel-header>Evacuation Center Data (optional)</v-expansion-panel-header>
               <v-expansion-panel-content>
