@@ -32,11 +32,11 @@
             </tr>
             <tr>
               <td class="text-left label px-0 py-1"><span class="info-label">Description</span></td> 
-              <td class="px-0 py-1">{{disaster.description}}</td>
+              <td class="px-0 py-1 pre-formatted">{{disaster.description}}</td>
             </tr>
             <tr v-if="disaster.remarks != null">
               <td class="text-left label px-0 py-1"><span class="info-label">Additional Remarks</span></td> 
-              <td class="px-0 py-1">{{disaster.remarks}}</td>
+              <td class="px-0 py-1 pre-formatted">{{disaster.remarks}}</td>
             </tr>
           </table>
 
@@ -63,16 +63,28 @@
       </v-container>
 
       <!-- damage level data -->
-      <v-container id="damage_level_data" v-if="disaster.damage_cost != null || disaster.structures_damaged != null" > <!-- || disaster.ADDITIONAL DETAILS != null -->
-        <h2 class="headline ml-9 label-heading">Damage Level</h2>
+      <v-container class="mb-5" id="damage_level_data" v-if="disaster.damage_cost != null || disaster.damage_cost_additional_details != null" >
+        <h2 class="headline ml-9 mb-2 label-heading">Damage Level</h2>
+
+        <table class="ml-9" style="height:auto; margin: 0px auto;">
+          <tr>
+            <td class="text-left label px-0 py-1"><span class="info-label">Estimated Damage Cost</span></td> 
+            <td class="px-0 pl-2 py-1">₱{{disaster.damage_cost}}</td>
+          </tr>
+          <tr v-if="disaster.damage_cost_additional_details != null">
+            <td class="text-left label px-0 py-1"><span class="info-label">Additional Details</span></td> 
+            <td class="px-0 pl-2 py-1 pre-formatted">{{disaster.damage_cost_additional_details}}</td>
+          </tr>
+        </table>
+        <!--
         <v-row wrap class="mx-6">
-            <!-- ESTIMATED DAMAGE COST -->
+             //ESTIMATED DAMAGE COST 
             <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.damage_cost != null">
               <v-card class="text-center" id="rounded-card" outlined>
                 <v-row>
                  <v-col class="col-md-8 col-lg-8">
                     <v-card-text class="title pb-0 text-left ml-4 mt-3">Estimated Damage Cost</v-card-text>
-                    <v-card-text class="headline text-left ml-4">$$$</v-card-text>
+                    <v-card-text class="headline text-left ml-4">₱{{disaster.damage_cost}}</v-card-text>
                   </v-col>
                   <v-col class="col-md-4 col-lg-4">
                     <v-icon size='70' class="stats-card card-icon mr-5">mdi-cash</v-icon>
@@ -80,38 +92,56 @@
                 </v-row>
               </v-card>
             </v-col>
-            <!-- STRUCTURES DAMAGED -->
-            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.structures_damaged != null">
+             //ADDITIONAL DETAILS 
+            <v-card class="ma-2  pa-3" id="donation-card" v-if="disaster.damage_cost_additional_details != null">
+              <p class="title mb-1">Additional Details</p>
+              <p class="subtitle-1 mb-0 pre-formatted">{{disaster.damage_cost_additional_details}}</p>
+          </v-card>
+        </v-row>
+        -->
+      </v-container>
+
+      <!-- beneficiaries section -->
+      <v-container id="beneficiaries" v-if="disaster.beneficiary_indiv_affected != null || disaster.beneficiary_fam_affected != null">
+        <h2 class="headline ml-9 label-heading">Lead School Assistance Beneficiaries</h2>
+        <v-row wrap class="mx-6">
+
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_indiv_affected != null">
               <v-card class="text-center" id="rounded-card" outlined>
                 <v-row>
                  <v-col class="col-md-8 col-lg-8 ">
-                    <v-card-text class="title pb-0 text-left ml-4 mt-3">No. of Structures Damaged</v-card-text>
-                    <v-card-text class="headline text-left ml-4">$$$</v-card-text>
+                    <v-card-text class="title pb-0 text-left ml-4 mt-3">No. of Individuals</v-card-text>
+                    <v-card-text class="headline text-left ml-4">{{disaster.beneficiary_indiv_affected}}</v-card-text>
                   </v-col>
                   <v-col class="col-md-4 col-lg-4">
-                    <v-icon size='70' class="stats-card card-icon mr-5">mdi-domain</v-icon>
+                    <v-icon size='70' class="stats-card card-icon mr-5">mdi-account</v-icon>
                   </v-col>
                 </v-row>
               </v-card>
             </v-col>
-            <!-- ADDITIONAL DETAILS -->
-            <v-card class="ma-2  pa-3" id="donation-card"> <!-- v-if="disaster.ADDITIONAL DETAILS != null" -->
-              <p class="title mb-1">Additional Details</p>
-              <p class="subtitle-1 mb-0 pre-formatted">// ADDITIONAL DETAILS HERE</p>
-          </v-card>
-        </v-row>
-      </v-container>
 
-      <!-- beneficiaries section -->
-      <v-container id="beneficiaries">
-        <h2 class="headline ml-9 label-heading">Beneficiaries</h2>
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_fam_affected != null">
+              <v-card class="text-center" id="rounded-card" outlined>
+                <v-row>
+                 <v-col class="col-md-8 col-lg-8 ">
+                    <v-card-text class="title pb-0 text-left ml-4 mt-3">No. of Families</v-card-text>
+                    <v-card-text class="headline text-left ml-4">{{disaster.beneficiary_fam_affected}}</v-card-text>
+                  </v-col>
+                  <v-col class="col-md-4 col-lg-4">
+                    <v-icon size='70' class="stats-card card-icon mr-5">mdi-account-group</v-icon>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+            
+        </v-row> 
       </v-container>
 
       <!-- call for donation section -->
-      <v-container id="call_for_donations" class="px-0" v-if="disaster.donate_option != null">
+      <v-container id="call_for_donations" class="px-0" v-if="disaster.is_cash || disaster.is_inkind">
         <h2 class="headline label-heading ml-11">Call for Donations</h2>
 
-        <v-container v-if="disaster.donate_option == 'cash'">
+        <v-container v-if="disaster.is_cash && !disaster.is_inkind">
           <v-card class="ma-2 mx-8 pa-3" id="donation-card">
             <p class="title mb-1">Cash</p>
             <p class="subtitle-1 pre-formatted" v-html="disaster.donation_details"></p>
@@ -119,14 +149,17 @@
           
         </v-container>
 
-        <v-container v-else-if="disaster.donate_option == 'in-kind'">
+        <v-container v-else-if="disaster.is_inkind && !disaster.is_cash">
           <v-card class="ma-2 mx-8 pa-3" id="donation-card">
             <p class="title mb-1">In-kind</p>
+            <p class="subtitle-1 mb-0">Donation Instructions:</p>
+            <p class="subtitle-1 mb-0 pre-formatted">{{disaster.in_kind_dropoff_instructions}}</p>
+            <br>
+            <p class="subtitle-1 mb-0" v-if="disaster.in_kind_general_specs != null">General Specifications:</p>
+            <p class="subtitle-1 mb-0 pre-formatted" v-if="disaster.in_kind_general_specs != null">{{disaster.in_kind_general_specs}}</p>
+            <br>
             <p class="subtitle-1 mb-0">Items:</p>
             <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
-            <br>
-            <p class="subtitle-1 mb-0">Instructions:</p>
-            <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
           </v-card>
         </v-container>
 
@@ -141,33 +174,30 @@
             <v-col class="col-md-6 col-lg-6 mb-6">
               <v-card class="ma-2 mr-6 pa-3" id="donation-card">
                 <p class="title mb-1">In-kind</p>
+                <p class="subtitle-1 mb-0">Drop-off Instructions:</p>
+                <p class="subtitle-1 mb-0 pre-formatted">{{disaster.in_kind_dropoff_instructions}}</p>
+                <br>
+                <p class="subtitle-1 mb-0" v-if="disaster.in_kind_general_specs != null">General Specifications:</p>
+                <p class="subtitle-1 mb-0 pre-formatted" v-if="disaster.in_kind_general_specs != null">{{disaster.in_kind_general_specs}}</p>
+                <br>
                 <p class="subtitle-1 mb-0">Items:</p>
                 <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
-                <br>
-                <p class="subtitle-1 mb-0">Instructions:</p>
-                <p class="subtitle-1 mb-0 pre-formatted">// INSTRUCTIONS HERE</p>
-                
               </v-card>
             </v-col>
           </v-row>
-          
         </v-container>
-
       </v-container>
 
       <!-- gallery section  vh vw-->
       <v-container id="gallery" v-if="file_URLs != undefined && file_URLs.length > 0">
         <h2 class="headline ml-9 mb-4 label-heading">Gallery</h2>
-
         <v-card class="ml-8 mr-8 m pa-4" id="rounded-card" background="#ecf5ee" style="">
           <v-carousel>
             <v-carousel-item class="gallery-item" v-for="(url, i) in file_URLs" :key="i" hide-delimiter-background show-arrows-on-hover>
               <img :src="url">
             </v-carousel-item>
           </v-carousel>
-
         </v-card>
-
       </v-container>
 
       <!-- historical data section -->
@@ -188,8 +218,8 @@
             <tbody>
               <tr v-for="(data, i) in history" :key="i">
                 <td class="text-left">{{data.date}}</td>
-                <td class="text-right">{{data.indiv_affected}}</td>
-                <td class="text-right">{{data.fam_affected}}</td>
+                <td class="text-right">{{data.general_indiv_affected}}</td>
+                <td class="text-right">{{data.general_fam_affected}}</td>
                 <td class="text-right">// DISASTER.CASHDONATIONS</td>
                 <td class="text-right">// DISASTER.RELIEFPACKS</td>
               </tr>
@@ -288,26 +318,26 @@ export default {
     assignStats: function(disaster){
       this.stats = []
       this.stats.push({
-          title: 'Individuals Affected',
+          title: 'No. of Individuals Affected',
           icon: 'mdi-account',
-          value: disaster.indiv_affected
+          value: disaster.general_indiv_affected
       })
       this.stats.push({
-          title: 'Families Affected',
+          title: 'No. of Families Affected',
           icon: 'mdi-account-group',
-          value: disaster.fam_affected
+          value: disaster.general_fam_affected
       })
 
       if(disaster.evac_indiv_inside != null && disaster.evac_indiv_inside != "")
         this.stats.push({
-          title: 'Individuals in Evacuation Centers',
+          title: 'No. of Individuals in Evacuation Centers',
           icon: 'mdi-home-variant',
           value: disaster.evac_indiv_inside
         })
 
       if(disaster.evac_fam_inside != null && disaster.evac_fam_inside != "")
         this.stats.push({
-          title: 'Families in Evacuation Centers',
+          title: 'No. of Families in Evacuation Centers',
           icon: 'mdi-home-group',
           value: disaster.evac_fam_inside
         })
@@ -348,8 +378,8 @@ export default {
         .then((docs) => {
           docs.forEach((doc) => {
             historical_data.date = this.timestampToDate(doc.data().created_at)
-            historical_data.indiv_affected = doc.data().indiv_affected
-            historical_data.fam_affected = doc.data().fam_affected  
+            historical_data.general_indiv_affected = doc.data().general_indiv_affected
+            historical_data.general_fam_affected = doc.data().general_fam_affected  
             // historical_data. CASH DONS = doc.data(). CASH DONS
             // historical_data. RELIEF PACKS DISTRIBUTED = doc.data(). RELIEF PACKS DISTRIBUTED
             this.history.push(historical_data)
