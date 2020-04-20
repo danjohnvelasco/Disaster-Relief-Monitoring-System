@@ -42,11 +42,10 @@
 
       </v-container>
 
-      <!-- statistics section (WILL REMOVE DAMAGE LEVEL DATA IN THIS PART)-->
+      <!-- statistics section -->
       <v-container id="stats" class="pb-5">
         <h2 class="headline ml-9 label-heading">National / Local Statistics</h2>
-        <!-- for 2 or 4 cards -->
-        <v-row wrap class="mx-6" v-if="this.stats_num == 2 || this.stats_num == 4">
+        <v-row wrap class="mx-6">
             <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-6 col-lg-6 mb-6" align="center">
               <v-card class="text-center" id="rounded-card" outlined v-if="stat.value != null">
                 <v-row>
@@ -60,34 +59,18 @@
                 </v-row>
               </v-card>
             </v-col>
-        </v-row>
-        <!-- for 3 or 5-6 cards -->
-        <v-row wrap class="mx-6" v-else>
-            <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-4 col-lg-6 mb-6" align="center">
-              <v-card class="text-center" id="rounded-card" height="170px" outlined v-if="stat.value != null">
-                <v-row>
-                <v-col class="col-md-8 col-lg-8">
-                    <v-card-text class="title pb-0 text-left ml-4 mt-1">{{stat.title}}</v-card-text>
-                    <v-card-text class="headline text-left ml-4">{{stat.value}}</v-card-text>
-                  </v-col>
-                  <v-col class="col-md-4 col-lg-4">
-                    <v-icon size='70' class="stats-card card-icon mr-5">{{stat.icon}}</v-icon>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-        </v-row>
+        </v-row> 
       </v-container>
 
       <!-- damage level data -->
-      <v-container id="damage_level_data">
+      <v-container id="damage_level_data" v-if="disaster.damage_cost != null || disaster.structures_damaged != null" > <!-- || disaster.ADDITIONAL DETAILS != null -->
         <h2 class="headline ml-9 label-heading">Damage Level</h2>
         <v-row wrap class="mx-6">
             <!-- ESTIMATED DAMAGE COST -->
-            <v-col class="col-md-6 col-lg-6 mb-6" align="center">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.damage_cost != null">
               <v-card class="text-center" id="rounded-card" outlined>
                 <v-row>
-                 <v-col class="col-md-8 col-lg-8 ">
+                 <v-col class="col-md-8 col-lg-8">
                     <v-card-text class="title pb-0 text-left ml-4 mt-3">Estimated Damage Cost</v-card-text>
                     <v-card-text class="headline text-left ml-4">$$$</v-card-text>
                   </v-col>
@@ -98,7 +81,7 @@
               </v-card>
             </v-col>
             <!-- STRUCTURES DAMAGED -->
-            <v-col class="col-md-6 col-lg-6 mb-6" align="center">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.structures_damaged != null">
               <v-card class="text-center" id="rounded-card" outlined>
                 <v-row>
                  <v-col class="col-md-8 col-lg-8 ">
@@ -112,11 +95,16 @@
               </v-card>
             </v-col>
             <!-- ADDITIONAL DETAILS -->
-            <v-card class="ma-2  pa-3" id="donation-card">
+            <v-card class="ma-2  pa-3" id="donation-card"> <!-- v-if="disaster.ADDITIONAL DETAILS != null" -->
               <p class="title mb-1">Additional Details</p>
               <p class="subtitle-1 mb-0 pre-formatted">// ADDITIONAL DETAILS HERE</p>
           </v-card>
         </v-row>
+      </v-container>
+
+      <!-- beneficiaries section -->
+      <v-container id="beneficiaries">
+        <h2 class="headline ml-9 label-heading">Beneficiaries</h2>
       </v-container>
 
       <!-- call for donation section -->
@@ -324,19 +312,19 @@ export default {
           value: disaster.evac_fam_inside
         })
 
-      if(disaster.damage_cost != null && disaster.damage_cost != "")
-        this.stats.push({
-          title: 'Estimated Damage Cost',
-          icon: 'mdi-cash',
-          value:'₱' + disaster.damage_cost
-        })
+      // if(disaster.damage_cost != null && disaster.damage_cost != "")
+      //   this.stats.push({
+      //     title: 'Estimated Damage Cost',
+      //     icon: 'mdi-cash',
+      //     value:'₱' + disaster.damage_cost
+      //   })
 
-      if(disaster.structures_damaged != null && disaster.structures_damaged != "")
-        this.stats.push({
-          title: 'Structures Damaged',
-          icon: 'mdi-domain',
-          value: disaster.structures_damaged
-        })
+      // if(disaster.structures_damaged != null && disaster.structures_damaged != "")
+      //   this.stats.push({
+      //     title: 'Structures Damaged',
+      //     icon: 'mdi-domain',
+      //     value: disaster.structures_damaged
+      //   })
 
       this.getNumberOfStats()
     },
