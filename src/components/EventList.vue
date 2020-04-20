@@ -4,24 +4,31 @@
       <h2 class="headline mx-6 mt-8 mb-2 font-weight-medium" style="color:#184725;">
         Disaster Events
       </h2>
-      <v-btn 
-        small text color="#184725" 
-        class="px-2 mx-4 mb-3"
-        @click="toggleActive">
-        <span>Active</span>
-      </v-btn>
-      <v-btn 
-        small text color="#184725" 
-        class="px-2 mx-4 mb-3"
-        @click="toggleArchived">
-        <span>Archived</span>
-      </v-btn>
+      <v-tabs
+        v-model="tab"
+        color="#184725"
+        grow
+        height="30px"
+        class="mb-6 mx-4"
+      >
+        <v-tab @click="toggleActive">
+          Active
+        </v-tab>
+        <v-tab @click="toggleArchived">
+          Archived
+        </v-tab>
+      </v-tabs>
+
       <div 
         class="activeEvents"
         v-if="activeList" 
         @close="toggleActive"
       >
-        <v-card width='auto' class="mb-6 mx-4 d-card" id="card" v-for="doc in activeTopLevelDocs" :key="doc.id" @click="displayEvent(doc.id)">
+        <v-card 
+          width='auto' class="mb-6 mx-4 d-card" id="card" 
+          v-for="doc in activeTopLevelDocs" :key="doc.id" 
+          @click="displayEvent(doc.id)"
+        >
           <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{doc.title}}</v-list-item-title>
@@ -37,7 +44,7 @@
         v-if="archivedList" 
         @close="toggleArchived"
       >
-        Display archived here.
+        Display Archived here.
       </div>
 
     </v-navigation-drawer>

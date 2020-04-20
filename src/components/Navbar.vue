@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <v-app-bar height="70px" elevate-on-scroll fixed color="white">
-      <v-btn text color="white" class="mr-12 px-1" height="55px" to="/">
+      <v-btn text color="white" class="mr-12 px-2" height="55px" to="/">
         <img :src="require('../assets/brand.png')" height="55px"/>
       </v-btn>
       <v-spacer></v-spacer>
