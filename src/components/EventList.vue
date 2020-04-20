@@ -1,23 +1,27 @@
 <template>
   <v-app>
     <v-navigation-drawer clipped floating fixed width="25%" class="mt-12 pt-2" id="body">
+
       <h2 class="headline mx-6 mt-8 mb-2 font-weight-medium" style="color:#184725;">
         Disaster Events
       </h2>
-      <v-tabs
-        v-model="tab"
-        color="#184725"
-        grow
-        height="30px"
-        class="mb-6 mx-4"
-      >
-        <v-tab @click="toggleActive">
-          Active
-        </v-tab>
-        <v-tab @click="toggleArchived">
-          Archived
-        </v-tab>
-      </v-tabs>
+
+      <div class="mb-6 mx-4">
+        <v-tabs
+          v-model="tab"
+          background-color="transparent"
+          color="#184725"
+          grow
+          height="40px"
+        >
+          <v-tab @click="toggleActive">
+            Active
+          </v-tab>
+          <v-tab @click="toggleArchived">
+            Archived
+          </v-tab>
+        </v-tabs>
+      </div>
 
       <div 
         class="activeEvents"
