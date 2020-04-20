@@ -15,6 +15,7 @@
       <v-card-text>
         <v-form ref="form">
           <!--Required data fields starts here-->
+          <v-subheader>General Information</v-subheader>
           <v-text-field
             outlined
             v-model="disaster.title"
@@ -45,28 +46,50 @@
             hint="e.g. Families in the CALABARZON area, specifically Cavite were affected by Typhoon Maria. The relief operations aim to provide assistance to families in Cavite."
             label="Description"
           ></v-textarea>
-          <v-text-field
-            outlined
-            v-model="disaster.fam_affected"
-            :rules="required_numbersOnly"
-            label="Number of Families Affected"  
-            suffix="families affected"            
-          ></v-text-field>
-          <v-text-field
-            outlined
-            v-model="disaster.indiv_affected"
-            :rules="required_numbersOnly"
-            label="Number of Individuals Affected" 
-            suffix="individuals affected"             
-          ></v-text-field>
           <v-textarea
             outlined
             v-model="disaster.remarks"
             auto-grow
-            rows="2"
+            rows="4"
             label="Remarks (optional)"
           ></v-textarea>
-          <v-file-input v-model="files" chips multiple outlined label="Click to upload one or more photos (optional)"></v-file-input>
+          <v-row>
+            <v-col>
+              <v-subheader>National/Local Statistics</v-subheader>
+              <v-text-field
+                outlined
+                v-model="disaster.general_fam_affected"
+                :rules="required_numbersOnly"
+                label="Number of Families Affected"  
+                suffix="families affected"            
+              ></v-text-field>
+              <v-text-field
+                outlined
+                v-model="disaster.general_indiv_affected"
+                :rules="required_numbersOnly"
+                label="Number of Individuals Affected" 
+                suffix="individuals affected"             
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-subheader>Beneficiaries Statistics</v-subheader>
+              <v-text-field
+                outlined
+                v-model="disaster.beneficiary_fam_affected"
+                label="Number of Families Affected (Beneficiary)"  
+                suffix="families affected"            
+              ></v-text-field>
+              <v-text-field
+                outlined
+                v-model="disaster.beneficiary_indiv_affected"
+                label="Number of Individuals Affected (Beneficiary)" 
+                suffix="individuals affected"             
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-subheader>Upload Photos</v-subheader>
+          <!-- Upload field -->
+          <v-file-input v-model="files" prepend-icon="mdi-camera" chips multiple outlined label="Click to upload one or more photos (optional)"></v-file-input>
           <!--Optional data fields starts here-->
           <v-subheader>Optional Data</v-subheader>
           <v-expansion-panels>
@@ -122,15 +145,16 @@
                   </v-col>
                   <v-col :cols='1'>
                     <v-checkbox label="In-kind" v-model="disaster.is_inkind"></v-checkbox>
-                  </v-col>
-                  
+                  </v-col> 
                 </v-row>
                 <!-- Cash Donation Form -->
                 <div v-if="disaster.is_cash">
+                  <v-divider></v-divider>
                   <v-subheader>Cash Donations</v-subheader>
                   <v-textarea
                     outlined
                     v-model="disaster.donation_details"
+                    :rules="required"
                     auto-grow
                     rows="4"
                     label="Donation Details"
@@ -138,6 +162,7 @@
                 </div>
                 <!-- In-kind Donation Form -->
                 <div v-if="disaster.is_inkind">
+                  <v-divider></v-divider>
                   <v-subheader>In-kind Donations</v-subheader>
                   <v-row dense v-for="(relief, index) in disaster.reliefs" :key="index">
                     <v-col cols="4">
@@ -167,6 +192,7 @@
                         v-model="item"  
                         hint="e.g. water, canned goods, slippers"   
                         persistent-hint 
+                        :rules="forgotToAddItem"
                         label="Item"    
                       ></v-text-field>
                     </v-col>
@@ -186,6 +212,18 @@
                     </v-col>
                   </v-row>
                   <v-row dense>
+                    <v-col cols="11">
+                      <v-alert
+                        outlined
+                        dense
+                        type="error"
+                        v-if="add_item_feedback"
+                      >
+                        Please input item name.
+                      </v-alert>
+                    </v-col>
+                  </v-row>
+                  <v-row dense>
                     <v-col cols="11"> 
                       <v-alert
                         outlined
@@ -202,12 +240,12 @@
                     <v-col cols="11">
                       <v-textarea
                         outlined
-                        v-model="disaster.in_kind_remarks"
+                        v-model="disaster.in_kind_general_specs"
                         auto-grow
-                        rows="2"
+                        rows="4"
                         hint="e.g. at least 5 months before expiration"
                         persistent-hint
-                        label="Remarks (optional)"
+                        label="General Specifications (optional)"
                       ></v-textarea>
                     </v-col>
                   </v-row>
@@ -215,7 +253,7 @@
                     <v-col cols="11">
                       <v-textarea
                         outlined
-                        v-model="disaster.in_kind_donation_instructions"
+                        v-model="disaster.in_kind_dropoff_instructions"
                         auto-grow
                         rows="4"
                         hint="e.g. You may drop your donations to the following address: Center for Social Concern and Action Office 2nd Floor Br. Gabriel Connon Hall De La Salle University 2401 Taft Avenue, Manila"
@@ -223,18 +261,6 @@
                         :rules="required"
                         label="Donation Instructions"
                       ></v-textarea>
-                    </v-col>
-                  </v-row>
-                  <v-row dense>
-                    <v-col cols="11">
-                      <v-alert
-                        outlined
-                        dense
-                        type="error"
-                        v-if="add_item_feedback"
-                      >
-                        Please input item name.
-                      </v-alert>
                     </v-col>
                   </v-row>
                 </div>
@@ -314,6 +340,9 @@ export default {
     currency: [
       v => /^(null|$|\d+(,\d{3})*(\.\d*)?)$/.test(v) || 'Invalid format'
     ],
+    forgotToAddItem: [
+      v => !v || 'You forgot to add this item. Please click add button on the right. If you don\'t wish to add this item, please leave this field blank.'
+    ],
     disaster: { // Don't include data the the user doesn't directly manipulates.
       title: null,
       type: null,
@@ -326,14 +355,14 @@ export default {
       donation_details: null,
       link_profile: true,
       reliefs: [],
-      fam_affected: null,
-      indiv_affected: null,
+      general_fam_affected: null,
+      general_indiv_affected: null,
       evac_fam_inside: null,
       evac_indiv_inside: null,
       damage_cost: null,
       damage_cost_additional_details: null,
-      in_kind_donation_instructions: null,
-      in_kind_remarks: null,
+      in_kind_dropoff_instructions: null,
+      in_kind_general_specs: null,
       img_URLs: []
     },
     item: null,
