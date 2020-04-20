@@ -18,6 +18,7 @@
           <v-subheader>General Information</v-subheader>
           <v-text-field
             outlined
+            color="#427f50"
             v-model="disaster.title"
             :rules="required"
             hint="e.g. Typhoon Maria Relief Operation"
@@ -25,6 +26,7 @@
           ></v-text-field>
           <v-text-field
             outlined
+            color="#427f50"
             v-model="disaster.type"
             :rules="required_lettersOnly"
             hint="e.g. Typhoon, Fire"
@@ -32,6 +34,7 @@
           ></v-text-field>
           <v-text-field
             outlined
+            color="#427f50"
             v-model="disaster.location"
             :rules="required"
             hint="CALABARZON area, Tondo area"
@@ -39,6 +42,7 @@
           ></v-text-field>
           <v-textarea
             outlined
+            color="#427f50"
             v-model="disaster.description"
             auto-grow
             rows="1"
@@ -48,6 +52,7 @@
           ></v-textarea>
           <v-textarea
             outlined
+            color="#427f50"
             v-model="disaster.remarks"
             auto-grow
             rows="4"
@@ -58,6 +63,7 @@
               <v-subheader>National/Local Statistics</v-subheader>
               <v-text-field
                 outlined
+                color="#427f50"
                 v-model="disaster.general_fam_affected"
                 :rules="required_numbersOnly"
                 label="Number of Families Affected"  
@@ -65,6 +71,7 @@
               ></v-text-field>
               <v-text-field
                 outlined
+                color="#427f50"
                 v-model="disaster.general_indiv_affected"
                 :rules="required_numbersOnly"
                 label="Number of Individuals Affected" 
@@ -75,12 +82,14 @@
               <v-subheader>Beneficiaries Statistics</v-subheader>
               <v-text-field
                 outlined
+                color="#427f50"
                 v-model="disaster.beneficiary_fam_affected"
                 label="Number of Families Affected (Beneficiary)"  
                 suffix="families affected"            
               ></v-text-field>
               <v-text-field
                 outlined
+                color="#427f50"
                 v-model="disaster.beneficiary_indiv_affected"
                 label="Number of Individuals Affected (Beneficiary)" 
                 suffix="individuals affected"             
@@ -89,7 +98,7 @@
           </v-row>
           <v-subheader>Upload Photos</v-subheader>
           <!-- Upload field -->
-          <v-file-input v-model="files" prepend-icon="mdi-camera" chips multiple outlined label="Click to upload one or more photos (optional)"></v-file-input>
+          <v-file-input v-model="files" prepend-icon="mdi-camera" chips multiple outlined color="#427f50" label="Click to upload one or more photos (optional)"></v-file-input>
           <!--Optional data fields starts here-->
           <v-subheader>Optional Data</v-subheader>
           <v-expansion-panels :multiple="true" :hover="true">
@@ -98,6 +107,7 @@
               <v-expansion-panel-content>
                 <v-text-field
                   outlined
+                  color="#427f50"
                   v-model="disaster.evac_fam_inside"
                   :rules="numbersOnly"
                   label="Number of Families Inside Evacuation Center"          
@@ -105,6 +115,7 @@
                 ></v-text-field>
                 <v-text-field
                   outlined
+                  color="#427f50"
                   v-model="disaster.evac_indiv_inside"
                   :rules="numbersOnly"
                   label="Number of Individuals Inside Evacuation Center"
@@ -117,6 +128,7 @@
               <v-expansion-panel-content>
                 <v-text-field
                   outlined
+                  color="#427f50"
                   v-model="disaster.damage_cost"
                   :rules="currency"
                   hint="e.g. 330000 or 330,000 or 330,000.15"
@@ -126,6 +138,7 @@
                 ></v-text-field>
                 <v-textarea
                   outlined
+                  color="#427f50"
                   v-model="disaster.damage_cost_additional_details"
                   auto-grow
                   rows="4"
@@ -153,6 +166,7 @@
                   <v-subheader>Cash Donations</v-subheader>
                   <v-textarea
                     outlined
+                    color="#427f50"
                     v-model="disaster.donation_details"
                     :rules="required"
                     auto-grow
@@ -168,6 +182,7 @@
                     <v-col cols="4">
                       <v-text-field
                         outlined
+                        color="#427f50"
                         v-model=disaster.reliefs[index].item          
                         label="Item"  
                       ></v-text-field>
@@ -175,6 +190,7 @@
                     <v-col cols="7">
                       <v-text-field
                         outlined
+                        color="#427f50"
                         v-model=disaster.reliefs[index].spec            
                         label="Specifications" 
                       ></v-text-field>
@@ -189,6 +205,7 @@
                     <v-col cols="4">
                       <v-text-field
                         outlined
+                        color="#427f50"
                         v-model="item"  
                         hint="e.g. water, canned goods, slippers"   
                         persistent-hint 
@@ -199,6 +216,7 @@
                     <v-col cols="7">
                       <v-text-field
                         outlined
+                        color="#427f50"
                         v-model="spec"             
                         hint="e.g. 5 liters, atleast 3 months expiration"
                         persistent-hint
@@ -215,6 +233,7 @@
                     <v-col cols="11">
                       <v-alert
                         outlined
+                        color="#427f50"
                         dense
                         type="error"
                         v-if="add_item_feedback"
@@ -227,6 +246,7 @@
                     <v-col cols="11"> 
                       <v-alert
                         outlined
+                        color="#427f50"
                         dense
                         dismissible
                         type="info"
@@ -240,6 +260,7 @@
                     <v-col cols="11">
                       <v-textarea
                         outlined
+                        color="#427f50"
                         v-model="disaster.in_kind_general_specs"
                         auto-grow
                         rows="4"
@@ -253,6 +274,7 @@
                     <v-col cols="11">
                       <v-textarea
                         outlined
+                        color="#427f50"
                         v-model="disaster.in_kind_dropoff_instructions"
                         auto-grow
                         rows="4"
