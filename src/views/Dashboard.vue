@@ -2,10 +2,10 @@
   <v-app>
     <v-row>
       <v-col class="col-md-3 col-lg-3 mb-3">
-        <EventList :activeTopLevelDocs="activeTopLevelDocs" :archivedTopLevelDocs="archivedTopLevelDocs" @displayEvent="displayEvent"></EventList>
+        <EventList :activeTopLevelDocs="activeTopLevelDocs" :archivedTopLevelDocs="archivedTopLevelDocs" @displayEvent="displayEvent" @getListType="getListType"></EventList>
       </v-col>
       <v-col class="col-md-9 col-lg-9 mb-9" id="disaster-event" v-show="showEventViewer">
-        <EventViewer :latestDisasterDocs="latestDisasterDocs" :doc_id="doc_id"></EventViewer>
+        <EventViewer :latestDisasterDocs="latestDisasterDocs" :doc_id="doc_id" :list_type="list_type"></EventViewer>
       </v-col>
     </v-row>
   </v-app>
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       doc_id: '',
+      list_type: 'active',
       activeTopLevelDocs: [],
       archivedTopLevelDocs: [],
       latestDisasterDocs: {},
@@ -35,6 +36,9 @@ export default {
     displayEvent: function (payloadDocId) { 
       this.doc_id = payloadDocId;
       this.showEventViewer = true;
+    },
+    getListType: function(listType){
+      this.list_type = listType
     },
     timestampToDate: function (timestamp) {
       var date = timestamp.toDate()
