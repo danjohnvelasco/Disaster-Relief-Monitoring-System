@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer clipped floating fixed width="25%" class="mt-12 pt-2" id="body">
 
-      <h2 class="headline mx-6 mt-8 mb-2" id="DE">
+      <h2 class="mx-6 mt-8 mb-2" id="DE">
         Disaster Events
       </h2>
 
@@ -121,7 +121,7 @@ export default {
 }
 
 #DE{
-  font-size: 30px;
+  font-size: 25px;
   font-family: 'EB Garamond', serif;
   color: #184725;
 }

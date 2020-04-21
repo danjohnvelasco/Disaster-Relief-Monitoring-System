@@ -37,16 +37,10 @@
       
       <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
-<<<<<<< HEAD
-        <!-- <h1 class="display-2 pb-0 ml-9" style="color: #184725;"> -->
-          <h1 id="title"> {{disaster.title}} </h1>
-          <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Update</v-btn>
-          <v-btn depressed medium @click="archiveEvent(doc_id)" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Archive</v-btn>
-        <!-- </h1> -->
-=======
         <v-row>
           <v-col cols="8">
-            <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
+            <!-- <h1 class="display-2 pb-0 ml-9" style="color: #184725;"> -->
+            <h1 id="title" class="pb-0 ml-9">
               {{disaster.title}}
             </h1>
           </v-col>
@@ -87,10 +81,9 @@
             </div>
           </v-col>
         </v-row>
->>>>>>> master
         <h3 class="subtitle-2 grey--text mb-3 ml-9 mr-9">Last Updated: {{disaster.created_at}}</h3>
         <v-divider class="ml-7 mr-7"></v-divider>
-        <h2 class="headline mb-2 mt-7 ml-9 label-heading">General Information</h2>
+        <h2 id="GI" class="mb-2 mt-7 ml-9">General Information</h2>
        
           <table class="ml-9" style="height:auto; margin: 0px auto;">
             <tr>
@@ -119,7 +112,7 @@
 
       <!-- statistics section -->
       <v-container id="stats" class="pb-5">
-        <h2 class="headline ml-9 label-heading">National / Local Statistics</h2>
+        <h2 id="ST" class="ml-9">National / Local Statistics</h2>
         <v-row wrap class="mx-6">
             <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-6 col-lg-6 mb-6" align="center">
               <v-card class="text-center" id="rounded-card" outlined v-if="stat.value != null">
@@ -139,7 +132,7 @@
 
       <!-- damage level data -->
       <v-container class="mb-5" id="damage_level_data" v-if="disaster.damage_cost != null || disaster.damage_cost_additional_details != null" >
-        <h2 class="headline ml-9 mb-2 label-heading">Damage Level</h2>
+        <h2 id="DL" class="ml-9 mb-2">Damage Level</h2>
 
         <table class="ml-9" style="height:auto; margin: 0px auto;">
           <tr>
@@ -155,7 +148,7 @@
 
       <!-- beneficiaries section -->
       <v-container id="beneficiaries" v-if="disaster.beneficiary_indiv_affected != null || disaster.beneficiary_fam_affected != null">
-        <h2 class="headline ml-9 label-heading">Lead School Assistance Beneficiaries</h2>
+        <h2 id="LSAB" class="ml-9 mb-2">Lead School Assistance Beneficiaries</h2>
         <v-row wrap class="mx-6">
 
             <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_indiv_affected != null">
@@ -191,7 +184,7 @@
 
       <!-- call for donation section -->
       <v-container id="call_for_donations" class="px-0" v-if="disaster.is_cash || disaster.is_inkind">
-        <h2 class="headline label-heading ml-11">Call for Donations</h2>
+        <h2 id="CD" class="ml-9 mb-2">Call for Donations</h2>
 
         <v-container v-if="disaster.is_cash && !disaster.is_inkind">
           <v-card class="ma-2 mx-8 pa-3" id="donation-card">
@@ -242,7 +235,7 @@
 
       <!-- gallery section  vh vw-->
       <v-container id="gallery" v-if="file_URLs != undefined && file_URLs.length > 0">
-        <h2 class="headline ml-9 mb-4 label-heading">Gallery</h2>
+        <h2 id="GL" class="ml-9 mb-2">Gallery</h2>
         <v-card class="ml-8 mr-8 m pa-4" id="rounded-card" background="#ecf5ee" style="">
           <v-carousel>
             <v-carousel-item class="gallery-item" v-for="(url, i) in file_URLs" :key="i" hide-delimiter-background show-arrows-on-hover>
@@ -254,7 +247,7 @@
 
       <!-- historical data section -->
       <v-container id="historical_data">
-        <h2 class="headline ml-9 label-heading mb-3 mt-6">History</h2>
+        <h2 id="H" class="ml-9 mb-2">History</h2>
           <v-card class="ma-4 mx-8" id="rounded-card" style="margin: auto; max-width:100%;">
           <v-simple-table class="pa-4">
             <thead>
@@ -527,16 +520,19 @@ td{
   height: 100%;
 }
 
-<<<<<<< HEAD
-title{
-  font-size: 30px;
+#title{
+  font-size: 50px;
   font-family: 'EB Garamond', serif;
-  color: red;
+  color: #184725;
 }
 
-=======
 .archive-dialog h1{
   color: black;
 }
->>>>>>> master
+
+#GI, #ST, #DL, #LSAB, #CD, #GL, #H{
+  font-size: 25px;
+  font-family: 'EB Garamond', serif;
+  color: #427f50;
+}
 </style>
