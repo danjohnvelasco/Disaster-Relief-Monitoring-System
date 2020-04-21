@@ -3,6 +3,10 @@
       <v-alert type="success" v-if="form_status === 'success'">Submit successful! Reloading page...</v-alert>
       <v-card-title>
         Event Details
+        <v-spacer></v-spacer>
+        <v-btn icon color="#427f50" @click="closeForm" :disabled="form_status !== 'fillup'">
+              <v-icon large>mdi-close</v-icon>
+        </v-btn>
         <v-progress-linear
           v-if="form_status === 'submitting'"
           :height='6'
@@ -11,7 +15,6 @@
           color="green"
         ></v-progress-linear>
       </v-card-title>
-      
       <v-card-text>
         <v-form ref="form">
           <!--Required data fields starts here-->
