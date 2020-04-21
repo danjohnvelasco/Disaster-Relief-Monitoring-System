@@ -52,3 +52,12 @@ export default {
   } 
 }
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
+
+span, v-btn{
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+}
+</style>
