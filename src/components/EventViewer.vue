@@ -3,16 +3,83 @@
     <v-content class="ml-2">
       <!--EventForm edit mode dialog-->
       
-      <v-dialog v-model="dialog" scrollable persistent>
+      <v-dialog v-model="edit_dialog" scrollable persistent>
         <EventForm v-if="editing" @close="toggleEdit" :populateWith="disaster" :editing="editing" :doc_id="doc_id"></EventForm>
       </v-dialog>
+      
+      <v-dialog v-model="archive_dialog" max-width="700" persistent>
+        <v-card v-if="archiving" @close="toggleArchive" rounded>
+          <v-alert type="success" v-if="archive_status === 'success' && current_list_type == 'active'" >Archive successful! Reloading page...</v-alert>
+          <v-alert type="success" v-if="archive_status === 'success' && current_list_type == 'archived'" >Undo Archive successful! Reloading page...</v-alert>
+          <v-card-title>
+            <v-progress-linear
+            v-if="archive_status === 'submitting'"
+            :height='6'
+            rounded
+            indeterminate
+            color="green"
+          ></v-progress-linear>
+          </v-card-title>
+          <v-card-text align="center" class="archive-dialog">
+            <v-container v-if="current_list_type == 'active'">
+              <h1>Are you sure you want to archive this event?</h1>
+              <v-btn dark color="#184725" class="ma-2" @click="changeEventStatus(doc_id, 'to_archive')">Yes</v-btn>
+              <v-btn dark color="#D02F3A" class="ma-2" @click="toggleArchive">No</v-btn>
+            </v-container>
+            <v-container v-else>
+              <h1>Are you sure you want to unarchive this event?</h1>
+              <v-btn dark color="#184725" class="ma-2" @click="changeEventStatus(doc_id, 'to_unarchive')">Yes</v-btn>
+              <v-btn dark color="#D02F3A" class="ma-2" @click="toggleArchive">No</v-btn>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      
       <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
-        <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
-          {{disaster.title}}
-          <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Update</v-btn>
-          <v-btn depressed medium @click="archiveEvent(doc_id)" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Archive</v-btn>
-        </h1>
+        <v-row>
+          <v-col cols="8">
+            <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
+              {{disaster.title}}
+            </h1>
+          </v-col>
+          <v-col align="right" cols="4">
+            <div class="mr-9">
+              <v-btn 
+                depressed 
+                medium 
+                @click="toggleEdit()" 
+                color="#184725" 
+                dark 
+                class="mt-3 ml-3 mb-3 edit"
+              > 
+                Update 
+              </v-btn>
+              <v-btn 
+                v-if="current_list_type == 'active'"
+                depressed 
+                medium 
+                @click="toggleArchive()" 
+                color="#184725" 
+                outlined 
+                class="mt-3 ml-3 mb-3 edit" 
+              >
+                Archive
+              </v-btn>
+              <v-btn 
+                v-else
+                depressed 
+                medium 
+                @click="toggleArchive()" 
+                color="#184725"
+                outlined
+                class="mt-3 ml-3 mb-3 edit" 
+              >
+                Unarchive
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
         <h3 class="subtitle-2 grey--text mb-3 ml-9 mr-9">Last Updated: {{disaster.created_at}}</h3>
         <v-divider class="ml-7 mr-7"></v-divider>
         <h2 class="headline mb-2 mt-7 ml-9 label-heading">General Information</h2>
@@ -180,7 +247,6 @@
       <!-- historical data section -->
       <v-container id="historical_data">
         <h2 class="headline ml-9 label-heading mb-3 mt-6">History</h2>
-        <!--<v-card id="rounded-card" class=" mx-8 pa-2" background="#ecf5ee">-->
           <v-card class="ma-4 mx-8" id="rounded-card" style="margin: auto; max-width:100%;">
           <v-simple-table class="pa-4">
             <thead>
@@ -219,7 +285,8 @@ export default {
   },
   props: {
     doc_id: String,
-    latestDisasterDocs: Object
+    latestDisasterDocs: Object,
+    list_type: String
   },
   watch: {
     doc_id: function() {
@@ -230,12 +297,12 @@ export default {
       // Download images (lazy loading)
       if(this.disaster.img_URLs != undefined && this.disaster.img_URLs.length > 0)
         this.getImageURLs(this.doc_id, this.disaster.img_URLs);
-        
       // get historical data (lazy loading)
       this.getHistoricalData(this.doc_id);
-
+      // grab stats from disaster object
       this.assignStats(this.disaster)
-      console.log(this.doc_id)
+      // grab current event list type
+      this.current_list_type = this.list_type
     }
   },
   data(){
@@ -243,30 +310,52 @@ export default {
       disaster: {},
       file_URLs: [],
       history: [],
-      dialog: false,
+      edit_dialog: false,
       editing: false,
+      archive_dialog: false,
+      archiving: false,
+      archive_status: '',
       stats: [],
-      stats_num: ''
+      stats_num: '',
+      current_list_type: ''
     }
   },
   methods: {
     toggleEdit: function () {
       this.editing = !this.editing;
-      this.dialog = !this.dialog;
+      this.edit_dialog = !this.edit_dialog;
     },
-    archiveEvent: function (doc_id) {
+    toggleArchive: function() {
+      this.archiving = !this.archiving;
+      this.archive_dialog = !this.archive_dialog;
+    },
+    changeEventStatus: function (doc_id, action){
+      this.archive_status = 'submitting'
       var doc = db.collection("disasters2").doc(doc_id);
       var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+      var archive = false
+      if(action == "to_archive"){
+        archive = true
+      }
+      else{
+        archive = false
+      }
       doc.set({
         title: this.disaster.title,
         type: this.disaster.type,
         last_updated: timestamp,
-        archived: true
+        archived: archive
       }).then(() => {
         console.log("Event " + doc_id +  " archived")
+        this.archive_status = 'success'
+        this.reloadPage()
       }).catch(err => {
         console.log("Error: " + err)
       })
+      console.log(doc_id)
+    },
+    reloadPage() {
+      window.location.reload()
     },
     clearData: function() {
       this.disaster = {};
@@ -427,5 +516,9 @@ td{
   display: block;
   margin: 0 auto;
   height: 100%;
+}
+
+.archive-dialog h1{
+  color: black;
 }
 </style>

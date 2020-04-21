@@ -71,7 +71,7 @@
 export default {
   props: {
     activeTopLevelDocs: Array,
-    archivedTopLevelDocs: Array
+    archivedTopLevelDocs: Array,
   },
   data() {
     return {
@@ -85,13 +85,18 @@ export default {
       this.$emit('displayEvent', doc_id);
       console.log(doc_id);
     },
+    getListType(type){
+      this.$emit('getListType', type)
+    },
     toggleActive() {
       this.activeList = true;
       this.archivedList = false;
+      this.getListType('active')
     },
     toggleArchived() {
       this.archivedList = true;
       this.activeList = false;
+      this.getListType('archived')
     }
   },
   created(){
