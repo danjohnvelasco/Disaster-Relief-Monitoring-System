@@ -8,7 +8,7 @@
       </v-dialog>
       <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
-        <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
+        <h1 id="title" class="display-2 pb-0 ml-9" style="color: #184725;">
           {{disaster.title}}
           <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Update</v-btn>
           <v-btn depressed medium @click="archiveEvent(doc_id)" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Archive</v-btn>

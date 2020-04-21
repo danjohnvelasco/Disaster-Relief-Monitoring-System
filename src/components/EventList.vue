@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer clipped floating fixed width="25%" class="mt-12 pt-2" id="body">
 
-      <h2 class="headline mx-6 mt-8 mb-2 font-weight-medium" style="color:#184725;">
+      <h2 class="headline mx-6 mt-8 mb-2 font-weight-medium" id="DE">
         Disaster Events
       </h2>
 
@@ -101,6 +101,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
 
 #card{
   border-radius:15px;
@@ -114,4 +115,9 @@ export default {
   background-color:white;
 }
 
+#DE{
+  font-size: 30px;
+  font-family: 'EB Garamond', serif;
+  color: #184725;
+}
 </style>
