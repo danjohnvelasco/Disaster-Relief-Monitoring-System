@@ -1,29 +1,29 @@
 <template>
   <div class="root">
-    <v-app-bar fixed elevate-on-scroll color="white">
-      <img class="mr-3" :src="require('../assets/brand.png')" height="40"/>
+    <v-app-bar height="70px" elevate-on-scroll fixed color="white">
+      <v-btn text color="white" class="mr-12 px-2" height="55px" to="/">
+        <img :src="require('../assets/brand.png')" height="55px"/>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn small text color="#184725" class="px-2 mx-2"
         to="/">
         <v-icon small class="pr-2 caption navbar">mdi-view-dashboard</v-icon>
-        <span class="font-weight-light">Dashboard</span>
+        <span class="font-weight-regular">Dashboard</span>
       </v-btn>
       <v-btn small text color="#184725" class="px-2 mx-2"
         to="/schools">
         <v-icon small class="pr-2">mdi-school</v-icon>
-        <span class="font-weight-light">Schools</span>
+        <span class="font-weight-regular">Schools</span>
       </v-btn>
-      <!-- <v-btn small text color="darkgrey" class="px-2 mx-2"
-        to="/bulletin">
-        <v-icon small class="pr-2">mdi-newspaper-variant-multiple</v-icon>
-        <span class="font-weight-light">Bulletin</span>
-      </v-btn> -->
-      <v-btn small text color="darkgrey" class="px-2 mx-2"
+      <v-btn small text color="#184725" class="px-2 mx-2"
         to="/about">
         <v-icon small class="pr-2">mdi-comment-question</v-icon>
-        <span class="font-weight-light">About</span>
+        <span class="font-weight-regular">About</span>
       </v-btn>
-      <v-btn small dark style="background:#184725;" @click="toggleForm">+ Event</v-btn>
+      <v-btn  small class="px-2 mx-2"
+              dark style="background:#184725;"
+              @click="toggleForm">+ Event
+      </v-btn>
     </v-app-bar>
     <!--Event Form Dialog-->
     <v-dialog v-model="dialog" scrollable persistent>
