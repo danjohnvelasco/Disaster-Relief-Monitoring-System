@@ -1,6 +1,6 @@
-# lsdr
+# La Salle Disaster Response
 
-`![alt text](src/assets/repoArt.png)
+![alt text](src/assets/repoArt.png)
 
 ## Project setup
 ```
