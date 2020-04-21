@@ -147,7 +147,7 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel> <!--Group 3-->
-              <v-expansion-panel-header>Call for Donations (optional)</v-expansion-panel-header>
+              <v-expansion-panel-header>Call for Donations Data (optional)</v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-row no-gutters :align="'center'">
                   <v-col :cols='1'>
