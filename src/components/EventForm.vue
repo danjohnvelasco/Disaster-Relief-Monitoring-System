@@ -67,7 +67,7 @@
                 v-model="disaster.general_fam_affected"
                 :rules="required_numbersOnly"
                 label="Number of Families Affected"  
-                suffix="families affected"            
+                suffix="families"            
               ></v-text-field>
               <v-text-field
                 outlined
@@ -75,7 +75,7 @@
                 v-model="disaster.general_indiv_affected"
                 :rules="required_numbersOnly"
                 label="Number of Individuals Affected" 
-                suffix="individuals affected"             
+                suffix="individuals"             
               ></v-text-field>
             </v-col>
             <v-col>
@@ -84,15 +84,15 @@
                 outlined
                 color="#427f50"
                 v-model="disaster.beneficiary_fam_affected"
-                label="Number of Families Affected (Beneficiary)"  
-                suffix="families affected"            
+                label="Number of Beneficiary Families (optional)"  
+                suffix="families"            
               ></v-text-field>
               <v-text-field
                 outlined
                 color="#427f50"
                 v-model="disaster.beneficiary_indiv_affected"
-                label="Number of Individuals Affected (Beneficiary)" 
-                suffix="individuals affected"             
+                label="Number of Beneficiary Individuals (optional)" 
+                suffix="individuals"             
               ></v-text-field>
             </v-col>
           </v-row>
