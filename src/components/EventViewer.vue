@@ -76,29 +76,6 @@
             <td class="px-0 pl-2 py-1 pre-formatted">{{disaster.damage_cost_additional_details}}</td>
           </tr>
         </table>
-        <!--
-        <v-row wrap class="mx-6">
-             //ESTIMATED DAMAGE COST 
-            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.damage_cost != null">
-              <v-card class="text-center" id="rounded-card" outlined>
-                <v-row>
-                 <v-col class="col-md-8 col-lg-8">
-                    <v-card-text class="title pb-0 text-left ml-4 mt-3">Estimated Damage Cost</v-card-text>
-                    <v-card-text class="headline text-left ml-4">₱{{disaster.damage_cost}}</v-card-text>
-                  </v-col>
-                  <v-col class="col-md-4 col-lg-4">
-                    <v-icon size='70' class="stats-card card-icon mr-5">mdi-cash</v-icon>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-             //ADDITIONAL DETAILS 
-            <v-card class="ma-2  pa-3" id="donation-card" v-if="disaster.damage_cost_additional_details != null">
-              <p class="title mb-1">Additional Details</p>
-              <p class="subtitle-1 mb-0 pre-formatted">{{disaster.damage_cost_additional_details}}</p>
-          </v-card>
-        </v-row>
-        -->
       </v-container>
 
       <!-- beneficiaries section -->
@@ -220,8 +197,8 @@
                 <td class="text-left">{{data.date}}</td>
                 <td class="text-right">{{data.general_indiv_affected}}</td>
                 <td class="text-right">{{data.general_fam_affected}}</td>
-                <td class="text-right">// DISASTER.CASHDONATIONS</td>
-                <td class="text-right">// DISASTER.RELIEFPACKS</td>
+                <td class="text-right">{{data.total_cash_donations_received}}</td>
+                <td class="text-right">{{data.total_relief_packs_distributed}}</td>
               </tr>
             </tbody>
           </v-simple-table>
@@ -342,20 +319,6 @@ export default {
           value: disaster.evac_fam_inside
         })
 
-      // if(disaster.damage_cost != null && disaster.damage_cost != "")
-      //   this.stats.push({
-      //     title: 'Estimated Damage Cost',
-      //     icon: 'mdi-cash',
-      //     value:'₱' + disaster.damage_cost
-      //   })
-
-      // if(disaster.structures_damaged != null && disaster.structures_damaged != "")
-      //   this.stats.push({
-      //     title: 'Structures Damaged',
-      //     icon: 'mdi-domain',
-      //     value: disaster.structures_damaged
-      //   })
-
       this.getNumberOfStats()
     },
     getNumberOfStats: function(){
@@ -380,8 +343,8 @@ export default {
             historical_data.date = this.timestampToDate(doc.data().created_at)
             historical_data.general_indiv_affected = doc.data().general_indiv_affected
             historical_data.general_fam_affected = doc.data().general_fam_affected  
-            // historical_data. CASH DONS = doc.data(). CASH DONS
-            // historical_data. RELIEF PACKS DISTRIBUTED = doc.data(). RELIEF PACKS DISTRIBUTED
+            historical_data.total_cash_donations_received = doc.data().total_cash_donations_received
+            historical_data.total_relief_packs_distributed = doc.data().total_relief_packs_distributed
             this.history.push(historical_data)
             historical_data = {}
           })
