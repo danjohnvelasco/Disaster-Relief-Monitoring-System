@@ -1,4 +1,4 @@
-# La Salle Disaster Response
+# Disaster Relief Monitoring System
 
 ![alt text](src/assets/repoArt.png)
 
