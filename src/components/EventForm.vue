@@ -131,7 +131,7 @@
                   color="#427f50"
                   v-model="disaster.damage_cost"
                   :rules="currency"
-                  hint="e.g. 330000 or 330,000 or 330,000.15"
+                  hint="e.g. 330000 or 330,000 or 330,000.15 or 3300.01"
                   persistent-hint
                   label="Estimated Damage Cost"  
                   prefix="₱"            
@@ -288,6 +288,29 @@
                 </div>
               </v-expansion-panel-content>
             </v-expansion-panel>
+            <v-expansion-panel> <!--Group 4-->
+              <v-expansion-panel-header>Donations Received Data (optional)</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-text-field
+                  outlined
+                  color="#427f50"
+                  v-model="disaster.total_cash_donations_received"
+                  :rules="currency"
+                  hint="e.g. 330000 or 330,000 or 330,000.15 or 3300.01"
+                  label="Total Cash Donations"  
+                  prefix="₱"            
+                ></v-text-field>
+                <v-text-field
+                  outlined
+                  color="#427f50"
+                  v-model="disaster.total_relief_packs_distributed"
+                  :rules="numbersOnly"
+                  persistent-hint
+                  label="Total Number of Relief Packs Distributed"    
+                  suffix="relief packs distributed"       
+                ></v-text-field>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
           </v-expansion-panels>
         </v-form>
       </v-card-text>
@@ -387,7 +410,9 @@ export default {
       in_kind_general_specs: null,
       img_URLs: [],
       beneficiary_fam_affected: null,
-      beneficiary_indiv_affected: null
+      beneficiary_indiv_affected: null,
+      total_cash_donations_received: null,
+      total_relief_packs_distributed: null
     },
     item: null,
     spec: null,
