@@ -582,8 +582,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
-
 .listButton {
   padding: 10px 0px;
 }

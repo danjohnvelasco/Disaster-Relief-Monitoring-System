@@ -230,8 +230,6 @@
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
-
 h1{
         text-align: center;
         font-family: 'EB Garamond', serif;
