@@ -3,6 +3,10 @@
       <v-alert type="success" v-if="form_status === 'success'">Submit successful! Reloading page...</v-alert>
       <v-card-title>
         Event Details
+        <v-spacer></v-spacer>
+        <v-btn icon color="#427f50" @click="closeForm" :disabled="form_status !== 'fillup'">
+              <v-icon large>mdi-close</v-icon>
+        </v-btn>
         <v-progress-linear
           v-if="form_status === 'submitting'"
           :height='6'
@@ -11,7 +15,6 @@
           color="green"
         ></v-progress-linear>
       </v-card-title>
-      
       <v-card-text>
         <v-form ref="form">
           <!--Required data fields starts here-->
@@ -67,7 +70,7 @@
                 v-model="disaster.general_fam_affected"
                 :rules="required_numbersOnly"
                 label="Number of Families Affected"  
-                suffix="families affected"            
+                suffix="families"            
               ></v-text-field>
               <v-text-field
                 outlined
@@ -75,7 +78,7 @@
                 v-model="disaster.general_indiv_affected"
                 :rules="required_numbersOnly"
                 label="Number of Individuals Affected" 
-                suffix="individuals affected"             
+                suffix="individuals"             
               ></v-text-field>
             </v-col>
             <v-col>
@@ -84,15 +87,15 @@
                 outlined
                 color="#427f50"
                 v-model="disaster.beneficiary_fam_affected"
-                label="Number of Families Affected (Beneficiary)"  
-                suffix="families affected"            
+                label="Number of Beneficiary Families (optional)"  
+                suffix="families"            
               ></v-text-field>
               <v-text-field
                 outlined
                 color="#427f50"
                 v-model="disaster.beneficiary_indiv_affected"
-                label="Number of Individuals Affected (Beneficiary)" 
-                suffix="individuals affected"             
+                label="Number of Beneficiary Individuals (optional)" 
+                suffix="individuals"             
               ></v-text-field>
             </v-col>
           </v-row>
@@ -131,7 +134,7 @@
                   color="#427f50"
                   v-model="disaster.damage_cost"
                   :rules="currency"
-                  hint="e.g. 330000 or 330,000 or 330,000.15"
+                  hint="e.g. 330000 or 330,000 or 330,000.15 or 3300.01"
                   persistent-hint
                   label="Estimated Damage Cost"  
                   prefix="₱"            
@@ -147,7 +150,7 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel> <!--Group 3-->
-              <v-expansion-panel-header>Call for Donations (optional)</v-expansion-panel-header>
+              <v-expansion-panel-header>Call for Donations Data (optional)</v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-row no-gutters :align="'center'">
                   <v-col :cols='1'>
@@ -288,6 +291,29 @@
                 </div>
               </v-expansion-panel-content>
             </v-expansion-panel>
+            <v-expansion-panel> <!--Group 4-->
+              <v-expansion-panel-header>Donations Received Data (optional)</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-text-field
+                  outlined
+                  color="#427f50"
+                  v-model="disaster.total_cash_donations_received"
+                  :rules="currency"
+                  hint="e.g. 330000 or 330,000 or 330,000.15 or 3300.01"
+                  label="Total Cash Donations"  
+                  prefix="₱"            
+                ></v-text-field>
+                <v-text-field
+                  outlined
+                  color="#427f50"
+                  v-model="disaster.total_relief_packs_distributed"
+                  :rules="numbersOnly"
+                  persistent-hint
+                  label="Total Number of Relief Packs Distributed"    
+                  suffix="relief packs distributed"       
+                ></v-text-field>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
           </v-expansion-panels>
         </v-form>
       </v-card-text>
@@ -387,7 +413,9 @@ export default {
       in_kind_general_specs: null,
       img_URLs: [],
       beneficiary_fam_affected: null,
-      beneficiary_indiv_affected: null
+      beneficiary_indiv_affected: null,
+      total_cash_donations_received: null,
+      total_relief_packs_distributed: null
     },
     item: null,
     spec: null,
