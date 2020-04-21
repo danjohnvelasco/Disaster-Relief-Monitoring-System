@@ -52,3 +52,10 @@ export default {
   } 
 }
 </script>
+
+<style scoped>
+span, v-btn{
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+}
+</style>
