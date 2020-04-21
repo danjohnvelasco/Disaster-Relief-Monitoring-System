@@ -37,13 +37,49 @@
       
       <!-- Disaster Event Content-->
       <v-container id="gen_info" align="center">
-        <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
-          {{disaster.title}}
-          <v-btn depressed medium @click="toggleEdit()" color="#184725" dark class="mt-3 ml-3 mb-3 edit">Update</v-btn>
-          <v-btn depressed medium @click="toggleArchive()" color="#184725" dark class="mt-3 ml-3 mb-3 edit" v-if="current_list_type == 'active'">Archive</v-btn>
-          <v-btn depressed medium @click="toggleArchive()" color="#184725" dark class="mt-3 ml-3 mb-3 edit" v-else>Unarchive</v-btn>
-
-        </h1>
+        <v-row>
+          <v-col cols="8">
+            <h1 class="display-2 pb-0 ml-9" style="color: #184725;">
+              {{disaster.title}}
+            </h1>
+          </v-col>
+          <v-col align="right" cols="4">
+            <div class="mr-9">
+              <v-btn 
+                depressed 
+                medium 
+                @click="toggleEdit()" 
+                color="#184725" 
+                dark 
+                class="mt-3 ml-3 mb-3 edit"
+              > 
+                Update 
+              </v-btn>
+              <v-btn 
+                v-if="current_list_type == 'active'"
+                depressed 
+                medium 
+                @click="toggleArchive()" 
+                color="#184725" 
+                outlined 
+                class="mt-3 ml-3 mb-3 edit" 
+              >
+                Archive
+              </v-btn>
+              <v-btn 
+                v-else
+                depressed 
+                medium 
+                @click="toggleArchive()" 
+                color="#184725"
+                outlined
+                class="mt-3 ml-3 mb-3 edit" 
+              >
+                Unarchive
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
         <h3 class="subtitle-2 grey--text mb-3 ml-9 mr-9">Last Updated: {{disaster.created_at}}</h3>
         <v-divider class="ml-7 mr-7"></v-divider>
         <h2 class="headline mb-2 mt-7 ml-9 label-heading">General Information</h2>
