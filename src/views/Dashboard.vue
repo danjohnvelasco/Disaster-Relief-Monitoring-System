@@ -2,7 +2,7 @@
   <v-app>
     <v-row>
       <v-col class="col-md-3 col-lg-3 mb-3">
-        <EventList :activeTopLevelDocs="activeTopLevelDocs" @displayEvent="displayEvent"></EventList>
+        <EventList :activeTopLevelDocs="activeTopLevelDocs" :archivedTopLevelDocs="archivedTopLevelDocs" @displayEvent="displayEvent"></EventList>
       </v-col>
       <v-col class="col-md-9 col-lg-9 mb-9" id="disaster-event" v-show="showEventViewer">
         <EventViewer :latestDisasterDocs="latestDisasterDocs" :doc_id="doc_id"></EventViewer>
@@ -26,6 +26,7 @@ export default {
     return {
       doc_id: '',
       activeTopLevelDocs: [],
+      archivedTopLevelDocs: [],
       latestDisasterDocs: {},
       showEventViewer: false
     }
@@ -82,11 +83,32 @@ export default {
         .catch((error) => {
           console.log("Error getting top-level documents: ", error);
         });
+    },
+    getLatestArchivedData: function() {
+      db.collection("disasters2")
+        .where("archived", "==", true) // change to active later
+        .orderBy('last_updated', 'desc')
+        .get()
+        .then((docs) => {
+          docs.forEach((doc) => {
+            // retrieve top level doc
+            var topLevelDoc = doc.data();
+            topLevelDoc.id = doc.id;
+            topLevelDoc.last_updated = this.timestampToDate(topLevelDoc.last_updated);
+            this.archivedTopLevelDocs.push(topLevelDoc);
+            // get latest data inside 'history' subcollection
+            this.getLatestDisasterDoc(doc.id);
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting top-level documents: ", error);
+        });
     }
   },
   created() {
     console.log('Dashboard created');
     this.getLatestActiveData();
+    this.getLatestArchivedData();
   }
 }
 </script>

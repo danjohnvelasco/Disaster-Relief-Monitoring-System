@@ -35,7 +35,7 @@
           <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{doc.title}}</v-list-item-title>
-              <v-list-item-subtitle >Lead School: //lead school</v-list-item-subtitle>
+              <v-list-item-subtitle >Lead School: De La Salle University</v-list-item-subtitle>
               <div class="overline mt-2" >Updated: {{doc.last_updated}}</div>
             </v-list-item-content>
           </v-list-item>
@@ -47,7 +47,20 @@
         v-if="archivedList" 
         @close="toggleArchived"
       >
-        Display Archived here.
+        <v-card 
+          width='auto' class="mb-6 mx-4 d-card" id="card" 
+          v-for="doc in archivedTopLevelDocs" :key="doc.id" 
+          @click="displayEvent(doc.id)"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+            
+              <v-list-item-title style="color:#427f50;" class="headline mb-1" >{{doc.title}}</v-list-item-title>
+              <v-list-item-subtitle >Lead School: De La Salle University</v-list-item-subtitle>
+              <div class="overline mt-2" >Updated: {{doc.last_updated}}</div>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
       </div>
 
     </v-navigation-drawer>
@@ -57,7 +70,8 @@
 <script>
 export default {
   props: {
-    activeTopLevelDocs: Array
+    activeTopLevelDocs: Array,
+    archivedTopLevelDocs: Array
   },
   data() {
     return {
