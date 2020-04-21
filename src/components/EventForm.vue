@@ -363,7 +363,9 @@ export default {
       damage_cost_additional_details: null,
       in_kind_dropoff_instructions: null,
       in_kind_general_specs: null,
-      img_URLs: []
+      img_URLs: [],
+      beneficiary_fam_affected: null,
+      beneficiary_indiv_affected: null
     },
     item: null,
     spec: null,
