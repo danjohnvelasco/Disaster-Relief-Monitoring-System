@@ -88,7 +88,7 @@
           <table class="ml-9" style="height:auto; margin: 0px auto;">
             <tr>
               <td class="text-left label px-0 py-1"><span class="info-label">Lead School</span></td> 
-              <td class="px-0 py-1">De La Salle University</td>
+              <td class="px-0 py-1">Fun University</td>
             </tr>
             <tr>
               <td class="text-left label px-0 py-1"><span class="info-label">Disaster Type</span></td>
