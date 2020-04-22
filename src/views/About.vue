@@ -38,10 +38,6 @@
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
-.about{
-  background-color: #f7f5e8;
-}
 
 #title{
   font-family: 'EB Garamond', serif;

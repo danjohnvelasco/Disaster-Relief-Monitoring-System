@@ -106,8 +106,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@100;400&display=swap');
-
 #card{
   border-radius:15px;
 }
