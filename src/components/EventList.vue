@@ -83,7 +83,6 @@ export default {
     // emits doc_id to parent component
     displayEvent(doc_id) {
       this.$emit('displayEvent', doc_id);
-      console.log(doc_id);
     },
     getListType(type){
       this.$emit('getListType', type)
@@ -98,9 +97,6 @@ export default {
       this.activeList = false;
       this.getListType('archived')
     }
-  },
-  created(){
-    console.log('EventList created');
   }
 }
 </script>

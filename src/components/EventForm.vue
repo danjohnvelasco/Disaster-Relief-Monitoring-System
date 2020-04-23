@@ -320,7 +320,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn 
-          @click="create"
+          @click="createDisasterEvent"
           v-if="editing === false"
           :disabled="form_status !== 'fillup'"
           class="white--text"
@@ -426,103 +426,90 @@ export default {
     changeFormStatus(status) {
       this.form_status = status;
     },
-    create () {
+    addDocToHistorySubcollection (parentDoc) {
+      // Create subcollection and create document inside parentDoc
+      parentDoc.collection("history").add(this.disaster)
+      .then(() => {
+        // success & reload
+        this.changeFormStatus('success');
+        this.reloadPage();
+      }).catch((error) => {
+        throw error;
+      });
+    },
+    createDisasterEvent () {
       if (this.$refs.form.validate()) {
+        // Change form status to reflect progress bar
         this.changeFormStatus('submitting');
-        console.log(JSON.stringify(this.disaster, null, 2));
         // Create doc with auto-id
-        var doc = db.collection("disasters2").doc();
+        var parentDoc = db.collection("disasters2").doc();
         var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+        this.disaster.created_at = timestamp; // add date from timestamp
         // Add top level data
-        doc.set({
+        parentDoc.set({
           title: this.disaster.title,
           type: this.disaster.type,
           last_updated: timestamp,
           archived: false
         }).then(() => {
-          console.log("Top level success: ", doc.id);
-          // Upload images (this might not be the best UX decision)
+          // Upload images (if any)
           if (this.files !== null) {
-            return this.uploadImages(doc.id); 
+            return this.uploadImages(parentDoc.id); 
           } 
         }).then(() => {
-          this.disaster.created_at = timestamp; // Add created_at field in disaster object   
-          // Create subcollection and create document
-          doc.collection("history").add(this.disaster)
-          .then((docRef) => {
-            console.log("Subcollection success", docRef.id);
-            // success & reload when there's no image to upload, else upload() should determine the success
-            if (this.files === null) {
-              this.changeFormStatus('success');
-              this.reloadPage();
-            }
-          }).catch(function(error) {
-            console.error("Error adding document: ", error);
-            this.changeFormStatus('fail');
-          });
+          this.addDocToHistorySubcollection(parentDoc);
         })
         .catch(function(error) {
-          console.error("Error adding top level data: ", error);
+          throw error;
         }); 
       }
     },
     update() {
       if (this.$refs.form.validate()) {
+        // Change form status to reflect progress bar
         this.changeFormStatus('submitting');
-        console.log(JSON.stringify(this.disaster, null, 2));
         // Create doc with auto-id
-        var doc = db.collection("disasters2").doc(this.doc_id);
+        var parentDoc = db.collection("disasters2").doc(this.doc_id);
         var timestamp = firebase.firestore.FieldValue.serverTimestamp();
-        doc.set({
+        this.disaster.created_at = timestamp; // add date from timestamp
+        parentDoc.set({
           title: this.disaster.title,
           type: this.disaster.type,
           last_updated: timestamp,
           archived: false
         }).then(() => {
-          console.log("Top level success: ", doc.id);
           // Upload images (this might not be the best UX decision)
           if (this.files !== null) {
-            return this.uploadImages(doc.id); 
+            return this.uploadImages(parentDoc.id); 
           } 
         }).then(() => {
-          this.disaster.created_at = timestamp; // Add created_at field in disaster object   
-          // Create subcollection and create document
-          doc.collection("history").add(this.disaster)
-          .then((docRef) => {
-            console.log("Subcollection success", docRef.id);
-            // success & reload when there's no image to upload, else upload() should determine the success
-            if (this.files === null) {
-              this.changeFormStatus('success');
-              this.reloadPage();
-            }
-          }).catch(function(error) {
-            console.error("Error adding document: ", error);
-            this.changeFormStatus('fail');
-          });
+          this.addDocToHistorySubcollection(parentDoc);
         })
-        .catch(function(error) {
-          console.error("Error adding top level data: ", error);
+        .catch((error) => {
+          throw error;
         });
       }
     },
     addItem() {
       if (this.item) {
+        // Add items to array
         this.disaster.reliefs.push({item: this.item, spec: this.spec});
+        // Reset variables
         this.item = null;
         this.spec = null;
-        this.add_item_feedback = false
-        console.table(this.disaster.reliefs, ['item', 'spec']);
+        // Remove item feedback
+        this.add_item_feedback = false;
       } else {
-        this.add_item_feedback = true
-        console.log('Item field is empty.');
+        // Show item feedback
+        this.add_item_feedback = true;
+        throw "Item list is empty.";
       }
     },
     deleteItem(item_index) {
       if (item_index !== null) {
         this.disaster.reliefs.splice(item_index, 1);
-        console.table(this.disaster.reliefs, ['item', 'spec']);
       } else {
-        console.log('Error deleting item.');
+        throw "Error deleting item";
       }
     },
     closeForm() { // emits close event to parent component
@@ -532,21 +519,18 @@ export default {
       window.location.reload()
     },
     saveImageName(file_name) { 
-      console.log('file name: ' + file_name);
       this.disaster.img_URLs.push(file_name);
-      console.log(this.disaster.img_URLs);
     },
-    putImage(doc_id, file) { // PUT an image to db
+    putImage(doc_id, file) { // PUT one image to db
       // Create storage ref
       var storageRef = storage.ref(`${doc_id}/${file.name}`); 
       // Upload file, return a promise
       return storageRef.put(file)
-      .then((ref) => {
-        this.saveImageName(file.name); // save img
-        console.log('One file upload success ', ref);
+      .then(() => {
+        this.saveImageName(file.name); // save img name 
       })
       .catch((error) => {
-        console.log('One failed:', error);
+        throw "One image upload failed " + error;
       });
     },
     uploadImages(doc_id) {
@@ -557,26 +541,21 @@ export default {
         files.map(file => this.putImage(doc_id, file))
       )
       .then(() => {
-        console.log(`All uploads success`)
          // Reset files
         this.files = null;
       })
       .catch((error) => {
-        console.log(`Some failed: `, error.message)
+        throw "Some uploads failed" + error; 
       });
     }
   },
   created() { // receives the data (if it exists) from parent component --only applies to editing
-    console.log('created');
     if (Object.keys(this.populateWith).length !== 0) {
       // Don't use 'this.disaster = this.populateWith;' because it references to the obj from parent. Use Object.assign instead.
       Object.assign(this.disaster, this.populateWith); 
     } else {
-      console.log('empty');
+      throw "populateWith is empty";
     }
-  },
-  beforeDestroy() {
-    console.log('beforeDestroy');
   }
 }
 </script>
