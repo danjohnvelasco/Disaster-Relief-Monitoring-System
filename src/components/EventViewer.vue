@@ -347,13 +347,11 @@ export default {
         last_updated: timestamp,
         archived: archive
       }).then(() => {
-        console.log("Event " + doc_id +  " archived")
         this.archive_status = 'success'
         this.reloadPage()
-      }).catch(err => {
-        console.log("Error: " + err)
+      }).catch((err) => {
+        throw err;
       })
-      console.log(doc_id)
     },
     reloadPage() {
       window.location.reload()
@@ -377,8 +375,8 @@ export default {
       files.forEach((file) => {
         imageRef.child(file).getDownloadURL().then((url) => {
           this.file_URLs.push(url)
-        }).catch(err => {
-          console.log('Image Error: ' + err)
+        }).catch((err) => {
+          throw "Error downloading image " + err;
         })
       })
     },
@@ -438,16 +436,10 @@ export default {
             this.history.push(historical_data)
             historical_data = {}
           })
-        }).catch(err => {
-          console.log("Error: " + err)
+        }).catch((err) => {
+          throw "Error getting historical data " + err;
         })
     }
-  },
-  created() {
-    console.log('EventViewer created');
-  },
-  beforeUpdate() {
-    console.log('EventViewer beforeUpdate');
   }
 }
 </script>
