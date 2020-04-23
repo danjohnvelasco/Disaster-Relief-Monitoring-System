@@ -62,10 +62,10 @@ export default {
             // nest the doc inside an object w/ it's doc id as key
             this.latestDisasterDocs[doc_id] = disaster;
           } else {
-            console.log('no doc found')
+            throw "No document found in history subcollection";
           }
-        }).catch(err => {
-          console.log("Error: " + err)
+        }).catch((error) => {
+          throw "No document found in history subcollection " + error;
         })
     },
     getLatestActiveData: function() {
@@ -85,7 +85,7 @@ export default {
           });
         })
         .catch((error) => {
-          console.log("Error getting top-level documents: ", error);
+          throw "Error getting top-level documents " + error;
         });
     },
     getLatestArchivedData: function() {
@@ -105,12 +105,11 @@ export default {
           });
         })
         .catch((error) => {
-          console.log("Error getting top-level documents: ", error);
+          throw "Error getting top-level documents " + error;
         });
     }
   },
   created() {
-    console.log('Dashboard created');
     this.getLatestActiveData();
     this.getLatestArchivedData();
   }
