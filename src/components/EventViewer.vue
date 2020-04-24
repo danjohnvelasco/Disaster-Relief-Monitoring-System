@@ -102,7 +102,7 @@
               <td class="text-left label px-0 py-1"><span class="info-label">Description</span></td> 
               <td class="px-0 py-1 pre-formatted">{{disaster.description}}</td>
             </tr>
-            <tr v-if="disaster.remarks != null">
+            <tr v-if="disaster.remarks != null && disaster.remarks != ''">
               <td class="text-left label px-0 py-1"><span class="info-label">Additional Remarks</span></td> 
               <td class="px-0 py-1 pre-formatted">{{disaster.remarks}}</td>
             </tr>
@@ -115,7 +115,7 @@
         <h2 id="ST" class="ml-9">National / Local Statistics</h2>
         <v-row wrap class="mx-6">
             <v-col v-for="(stat,i) in stats" v-bind:key="i" class="col-md-6 col-lg-6 mb-6" align="center">
-              <v-card class="text-center" id="rounded-card" outlined v-if="stat.value != null">
+              <v-card class="text-center" id="rounded-card" outlined v-if="stat.value != null && stat.value != ''">
                 <v-row>
                  <v-col class="col-md-8 col-lg-8 ">
                     <v-card-text class="title pb-0 text-left ml-4 mt-3">{{stat.title}}</v-card-text>
@@ -131,7 +131,7 @@
       </v-container>
 
       <!-- damage level data -->
-      <v-container class="mb-5" id="damage_level_data" v-if="disaster.damage_cost != null || disaster.damage_cost_additional_details != null" >
+      <v-container class="mb-5" id="damage_level_data" v-if="disaster.damage_cost != null && disaster.damage_cost != '' || disaster.damage_cost_additional_details != null && disaster.damage_cost_additional_details != ''" >
         <h2 id="DL" class="ml-9 mb-2">Damage Level</h2>
 
         <table class="ml-9" style="height:auto; margin: 0px auto;">
@@ -139,7 +139,7 @@
             <td class="text-left label px-0 py-1"><span class="info-label">Estimated Damage Cost</span></td> 
             <td class="px-0 pl-2 py-1">₱{{disaster.damage_cost}}</td>
           </tr>
-          <tr v-if="disaster.damage_cost_additional_details != null">
+          <tr v-if="disaster.damage_cost_additional_details != null && disaster.damage_cost_additional_details != ''">
             <td class="text-left label px-0 py-1"><span class="info-label">Additional Details</span></td> 
             <td class="px-0 pl-2 py-1 pre-formatted">{{disaster.damage_cost_additional_details}}</td>
           </tr>
@@ -147,11 +147,11 @@
       </v-container>
 
       <!-- beneficiaries section -->
-      <v-container id="beneficiaries" v-if="disaster.beneficiary_indiv_affected != null || disaster.beneficiary_fam_affected != null">
+      <v-container id="beneficiaries" v-if="disaster.beneficiary_indiv_affected != null && disaster.beneficiary_indiv_affected != '' || disaster.beneficiary_fam_affected != null && disaster.beneficiary_fam_affected != ''">
         <h2 id="LSAB" class="ml-9 mb-2">Lead School Assistance Beneficiaries</h2>
         <v-row wrap class="mx-6">
 
-            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_indiv_affected != null">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_indiv_affected != null && disaster.beneficiary_indiv_affected != ''">
               <v-card class="text-center" id="rounded-card" outlined>
                 <v-row>
                  <v-col class="col-md-8 col-lg-8 ">
@@ -165,7 +165,7 @@
               </v-card>
             </v-col>
 
-            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_fam_affected != null">
+            <v-col class="col-md-6 col-lg-6 mb-6" align="center" v-if="disaster.beneficiary_fam_affected != null && disaster.beneficiary_fam_affected != ''">
               <v-card class="text-center" id="rounded-card" outlined>
                 <v-row>
                  <v-col class="col-md-8 col-lg-8 ">
@@ -200,11 +200,11 @@
             <p class="subtitle-1 mb-0">Donation Instructions:</p>
             <p class="subtitle-1 mb-0 pre-formatted">{{disaster.in_kind_dropoff_instructions}}</p>
             <br>
-            <p class="subtitle-1 mb-0" v-if="disaster.in_kind_general_specs != null">General Specifications:</p>
-            <p class="subtitle-1 mb-0 pre-formatted" v-if="disaster.in_kind_general_specs != null">{{disaster.in_kind_general_specs}}</p>
+            <p class="subtitle-1 mb-0" v-if="disaster.in_kind_general_specs != null && disaster.in_kind_general_specs != ''">General Specifications:</p>
+            <p class="subtitle-1 mb-0 pre-formatted" v-if="disaster.in_kind_general_specs != null && disaster.in_kind_general_specs != ''">{{disaster.in_kind_general_specs}}</p>
             <br>
             <p class="subtitle-1 mb-0">Items:</p>
-            <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+            <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null && item.spec != ''">({{item.spec}})</span></p>
           </v-card>
         </v-container>
 
@@ -222,11 +222,11 @@
                 <p class="subtitle-1 mb-0">Drop-off Instructions:</p>
                 <p class="subtitle-1 mb-0 pre-formatted">{{disaster.in_kind_dropoff_instructions}}</p>
                 <br>
-                <p class="subtitle-1 mb-0" v-if="disaster.in_kind_general_specs != null">General Specifications:</p>
-                <p class="subtitle-1 mb-0 pre-formatted" v-if="disaster.in_kind_general_specs != null">{{disaster.in_kind_general_specs}}</p>
+                <p class="subtitle-1 mb-0" v-if="disaster.in_kind_general_specs != null && disaster.in_kind_general_specs != ''">General Specifications:</p>
+                <p class="subtitle-1 mb-0 pre-formatted" v-if="disaster.in_kind_general_specs != null && disaster.in_kind_general_specs != ''">{{disaster.in_kind_general_specs}}</p>
                 <br>
                 <p class="subtitle-1 mb-0">Items:</p>
-                <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null">({{item.spec}})</span></p>
+                <p class="subtitle-1 mb-0" v-for="item in disaster.reliefs" v-bind:key="item.item">- {{item.item}} <span v-if="item.spec != null && item.spec != ''">({{item.spec}})</span></p>
               </v-card>
             </v-col>
           </v-row>
