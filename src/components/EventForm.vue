@@ -221,7 +221,7 @@
                         outlined
                         color="#427f50"
                         v-model="spec"             
-                        hint="e.g. 5 liters, atleast 3 months expiration"
+                        hint="e.g. 5 liters, for adults/kids"
                         persistent-hint
                         label="Specifications (Optional)"  
                       ></v-text-field>

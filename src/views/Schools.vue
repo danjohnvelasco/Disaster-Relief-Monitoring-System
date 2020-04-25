@@ -17,7 +17,7 @@
 
                 <!-- FULL SCREEN -->                
                 <v-card-actions>
-                <v-dialog v-model="dialog" max-width="1000" id="info">
+                <v-dialog max-width="1000" id="info">
                 <template v-slot:activator="{ on }">
                 <v-btn id="vbt" color=#184725 dark v-on="on"> VISIT </v-btn>
                 </template>      
