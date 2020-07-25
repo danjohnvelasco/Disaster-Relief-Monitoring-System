@@ -3,7 +3,7 @@ import 'firebase/firestore'
 import 'firebase/storage'
 
 var firebaseConfig = {
-  apiKey: "AIzaSyBvAjQ2HdtxatVL6lWxhe6JI9SaQlfc6OM",
+  apiKey: "INSERT_API_KEY_HERE",
   authDomain: "sample-lsdr.firebaseapp.com",
   databaseURL: "https://sample-lsdr.firebaseio.com",
   projectId: "sample-lsdr",
